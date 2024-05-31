@@ -8,10 +8,30 @@
     <link href='https://fonts.googleapis.com/css?family=DM Sans' rel='stylesheet'>
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'DM Sans';
             margin: 0;
             padding: 0;
         }
+        h1{
+        	font-size: 40px;
+        }
+        h3{
+        	font-size: 24px;
+        }
+        /*horizontal scroll*/
+		.scroll-container {
+		    width: 100%;
+		    overflow-x: auto;
+		    white-space: nowrap;
+		    padding: 20px 0; /* Adjust padding as needed */
+		}
+		
+		.scroll-content {
+		    display: inline-block;
+		}
+        
+        
+        /* navbar styling */
         .navbar {
             display: flex;
             align-items: center;
@@ -19,6 +39,7 @@
             background-color: #ffffff;
             padding: 10px 20px;
         }
+        /* navbar logo styling */
         .navbar .logo {
             display: flex;
             align-items: center;
@@ -29,6 +50,7 @@
             width: 30px; 
             margin-right: 20px; 
         }
+        /* navbar search styling */
         .navbar .search-bar {
             flex-grow: 1;
             display: flex;
@@ -42,6 +64,7 @@
             background-color: #FAFAFA;
             border: none;
         }
+        /* navbar icons styling */
         .navbar .icons {
             display: flex;
             align-items: center;
@@ -52,25 +75,21 @@
             margin-left: 20px;
             font-size: 24px;
         }
+        
+        
         .full-screen-img {
         	max-width: 100%;
-        }        
+        }    
+        
+        /* landing page styling*/    
         .landingpage {
         	display: columns;
             align-items: left;
             text-align: left;
             justify-content: space-between;
             padding: 0px 54px;
-            
-            font-family: 'DM Sans';
-        	font-size: 16px;
         }
-        .landingpage h1{
-        	font-size: 40px;
-        }
-        .landingpage h3{
-        	font-size: 24px;
-        }
+        /* landing page chatter circles styling*/
 		.chattercircle {
 			display: inline-block;
 			align-items: center;
@@ -84,18 +103,6 @@
         .chattercircle img {
 			width: 200px;
 		}
-		.scroll-container {
-		    width: 100%;
-		    overflow-x: auto;
-		    white-space: nowrap;
-		    padding: 20px 0; /* Adjust padding as needed */
-		}
-		
-		.scroll-content {
-		    display: inline-block;
-		}
-			
-
     </style>
 </head>
 <body>
@@ -115,6 +122,7 @@
     <img class = "full-screen-img" src = "images/Liliad.png" alt = "Ad">
     <div class = "landingpage">	
     	<body>
+    		<!-- Recents Section -->
     		<h1>Recents</h1>
     		<div class="scroll-container">
 	        	<div class="scroll-content">
@@ -144,6 +152,10 @@
 		    		</div>
 		    	</div>
 		    </div>
+		    <!-- Categories section -->
+		    <h1>Meet New Chatters</h1>
+		    
+		    
     	</body>
     </div>
 </body>
