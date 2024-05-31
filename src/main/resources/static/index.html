@@ -58,14 +58,43 @@
         .landingpage {
         	display: columns;
             align-items: left;
+            text-align: left;
             justify-content: space-between;
-            background-color: #ffffff;
             padding: 0px 54px;
             
             font-family: 'DM Sans';
         	font-size: 16px;
         }
-
+        .landingpage h1{
+        	font-size: 40px;
+        }
+        .landingpage h3{
+        	font-size: 24px;
+        }
+		.chattercircle {
+			display: inline-block;
+			align-items: center;
+			justify-content: center;
+			max-width: 200px;
+			padding-right: 40px;
+		}
+		.chattercircle h3{
+			text-align: center;
+		}
+        .chattercircle img {
+			width: 200px;
+		}
+		.scroll-container {
+		    width: 100%;
+		    overflow-x: auto;
+		    white-space: nowrap;
+		    padding: 20px 0; /* Adjust padding as needed */
+		}
+		
+		.scroll-content {
+		    display: inline-block;
+		}
+			
 
     </style>
 </head>
@@ -87,6 +116,34 @@
     <div class = "landingpage">	
     	<body>
     		<h1>Recents</h1>
+    		<div class="scroll-container">
+	        	<div class="scroll-content">
+		    		<div class = "chattercircle">
+		    			<img src = "images/lilicircle.png" alt = "chatter profile">
+		    			<h3>Lili</h3>
+		    		</div>
+		    		<div class = "chattercircle">
+		    			<img src = "images/lilicircle.png" alt = "chatter profile">
+		    			<h3>Lili</h3>
+		    		</div>
+		    		<div class = "chattercircle">
+		    			<img src = "images/lilicircle.png" alt = "chatter profile">
+		    			<h3>Lili</h3>
+		    		</div>
+		    		<div class = "chattercircle">
+		    			<img src = "images/lilicircle.png" alt = "chatter profile">
+		    			<h3>Lili</h3>
+		    		</div>
+		    		<div class = "chattercircle">
+		    			<img src = "images/lilicircle.png" alt = "chatter profile">
+		    			<h3>Lili</h3>
+		    		</div>
+		    		<div class = "chattercircle">
+		    			<img src = "images/lilicircle.png" alt = "chatter profile">
+		    			<h3>Lili</h3>
+		    		</div>
+		    	</div>
+		    </div>
     	</body>
     </div>
 </body>
