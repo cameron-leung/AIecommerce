@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nav Bar Example</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link href='https://fonts.googleapis.com/css?family=DM Sans' rel='stylesheet'>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -51,12 +52,27 @@
             margin-left: 20px;
             font-size: 24px;
         }
+        .full-screen-img {
+        	max-width: 100%;
+        }        
+        .landingpage {
+        	display: columns;
+            align-items: left;
+            justify-content: space-between;
+            background-color: #ffffff;
+            padding: 0px 54px;
+            
+            font-family: 'DM Sans';
+        	font-size: 16px;
+        }
+
+
     </style>
 </head>
 <body>
     <nav class="navbar">
         <a href="#" class="logo">
-            <img src="/images/AIchatlogo.png" alt="Logo"> 
+            <img src="images/AIchatlogo.png" alt="Logo"> 
         </a>
         <div class="search-bar">
             <input type="text" placeholder="Search...">
@@ -67,5 +83,11 @@
             <a href="#" class="profile-icon"><i class="fa-solid fa-user"></i></a> <!-- Profile icon -->
         </div>
     </nav>
+    <img class = "full-screen-img" src = "images/Liliad.png" alt = "Ad">
+    <div class = "landingpage">	
+    	<body>
+    		<h1>Recents</h1>
+    	</body>
+    </div>
 </body>
 </html>
