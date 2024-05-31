@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nav Bar Example</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        .navbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background-color: #ffffff;
+            padding: 10px 20px;
+        }
+        .navbar .logo {
+            color: white;
+            text-decoration: none;
+            font-size: 24px;
+        }
+        .navbar .search-bar {
+            flex-grow: 1;
+            margin: 0 20px;
+        }
+        .navbar .search-bar input {
+            width: 100%;
+            padding: 5px;
+            font-size: 16px;
+            border-radius: 10px; /* Rounded corners */
+            background-color: #FAFAFA;
+            border: none;
+        }
+        .navbar .icons {
+            display: flex;
+            align-items: center;
+        }
+        .navbar .icons a {
+            color: white;
+            text-decoration: none;
+            margin-left: 20px;
+            font-size: 24px;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <a href="#" class="logo">Logo</a>
+        <div class="search-bar">
+            <input type="text" placeholder="Search...">
+        </div>
+        <div class="icons">
+            <a href="#" class="discover-icon"><i class="fa-solid fa-compass" style="color: #535355;"></i></a> <!-- Discover icon -->
+            <a href="#" class="cart-icon"><i class="fa-solid fa-cart-shopping" style="color: #535355;"></i></a> <!-- Shopping cart icon -->
+            <a href="#" class="profile-icon"><i class="fa-solid fa-user" style="color: #535355;"></i></a> <!-- Profile icon -->
+        </div>
+    </nav>
+</body>
+</html>
