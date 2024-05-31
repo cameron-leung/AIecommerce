@@ -19,19 +19,25 @@
             padding: 10px 20px;
         }
         .navbar .logo {
-            color: white;
+            display: flex;
+            align-items: center;
             text-decoration: none;
             font-size: 24px;
         }
+        .navbar .logo img {
+            width: 30px; 
+            margin-right: 20px; 
+        }
         .navbar .search-bar {
             flex-grow: 1;
-            margin: 0 20px;
+            display: flex;
+            justify-content: center; 
         }
         .navbar .search-bar input {
             width: 100%;
             padding: 5px;
             font-size: 16px;
-            border-radius: 10px; /* Rounded corners */
+            border-radius: 10px; 
             background-color: #FAFAFA;
             border: none;
         }
@@ -40,7 +46,7 @@
             align-items: center;
         }
         .navbar .icons a {
-            color: white;
+            color: #535355;
             text-decoration: none;
             margin-left: 20px;
             font-size: 24px;
@@ -49,14 +55,16 @@
 </head>
 <body>
     <nav class="navbar">
-        <a href="#" class="logo">Logo</a>
+        <a href="#" class="logo">
+            <img src="/images/AIchatlogo.png" alt="Logo"> 
+        </a>
         <div class="search-bar">
             <input type="text" placeholder="Search...">
         </div>
         <div class="icons">
-            <a href="#" class="discover-icon"><i class="fa-solid fa-compass" style="color: #535355;"></i></a> <!-- Discover icon -->
-            <a href="#" class="cart-icon"><i class="fa-solid fa-cart-shopping" style="color: #535355;"></i></a> <!-- Shopping cart icon -->
-            <a href="#" class="profile-icon"><i class="fa-solid fa-user" style="color: #535355;"></i></a> <!-- Profile icon -->
+            <a href="#" class="discover-icon"><i class="fa-solid fa-compass"></i></a> <!-- Discover icon -->
+            <a href="#" class="cart-icon"><i class="fa-solid fa-cart-shopping"></i></a> <!-- Shopping cart icon -->
+            <a href="#" class="profile-icon"><i class="fa-solid fa-user"></i></a> <!-- Profile icon -->
         </div>
     </nav>
 </body>
