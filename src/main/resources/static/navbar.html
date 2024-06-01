@@ -1,37 +1,6 @@
-<!-- This was in index.html and included navbar + javascript to load in. Instead of styles, I made a navbarstyles.css -->
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Index Page</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-    <link rel="stylesheet" href="navbarstyles.css">
-    <style>
-        /* Additional styles for your index page */
-    </style>
-</head>
-<body>
-    <div id="navbar-placeholder"></div> <!-- Placeholder for navbar -->
-
-    <!-- Your main content goes here -->
-
-    <script>
-        // JavaScript to load the navbar
-        fetch('navbar.html')
-            .then(response => response.text())
-            .then(data => {
-                document.getElementById('navbar-placeholder').innerHTML = data;
-            });
-    </script>
-</body>
-</html>
-
-
-<!-- This was in navbar.html -->
 <nav class="navbar">
          <a href="#" class="logo">
-             <img src="/images/AIchatlogo.png" alt="Logo"> <!-- Custom logo image -->
+             <img src="images/AIchatlogo.png" alt="Logo"> <!-- Custom logo image -->
          </a>
          <div class="search-bar">
              <input type="text" placeholder="Search...">
@@ -41,4 +10,4 @@
              <a href="#" class="cart-icon"><i class="fa-solid fa-cart-shopping"></i></a> <!-- Shopping cart icon -->
              <a href="#" class="profile-icon"><i class="fa-solid fa-user"></i></a> <!-- Profile icon -->
          </div>
-     </nav>
+ </nav>
