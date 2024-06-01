@@ -30,9 +30,9 @@
 		    white-space: nowrap;
 		    padding: 20px 0; /* Adjust padding as needed */
 		}
-		
-		.scroll-content {
-		    display: inline-block;
+		.horizontal {
+			display: flex;
+			flex-direction: row;
 		}
         
         
@@ -94,6 +94,7 @@
             justify-content: space-between;
             padding: 0px 54px;
         }
+        
         /* landing page chatter circles styling*/
 		.chattercirc {
 			display: inline-block;
@@ -109,22 +110,30 @@
 			width: 200px;
 		}
 		
+		/* landing page categories section styling*/
 		.categories img {
 			width: 390px;
 			padding: 10px;
 		}
 		
+		/* chatter card styling */
 		.chattercard {
+			flex: none;
 		    position: relative; /* Ensures the overlay is positioned relative to the card */
-		    width: 300px;
+		    justify-content: space-between;
+		    width: 280px;
 		    border-radius: 16px;
 		    overflow: hidden;
 		    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+		    margin-right: 10px;
 		}
 		.chattercard img{
-			width: 300px;
+			width: 100%;
+			border-radius: 16px;
+			padding-right: 50px;
 		}
 		.chattercard .overlay {
+			flex: none;
 			position: absolute;
 		    bottom: 0;
 		    width: 100%;
@@ -143,7 +152,7 @@
 		}
 		
 		.rating {
-		    margin: 5px 0;
+		    margin: 3px 20px;
 		}
 		
 		.rating .fa-star {
@@ -152,10 +161,15 @@
 		}
 		
 		.username {
+			flex: 1;
 		    margin: 5px 0;
 		    font-size: 0.9em;
 		}
-		
+		.price {
+			flex: 1;
+			text-align: right;
+			
+		}
 		.description {
 		    margin: 5px 0;
 		    font-size: 0.8em;
@@ -182,7 +196,7 @@
     		<!-- Recents Section -->
     		<h1>Recents</h1>
     		<div class="scroll-container">
-	        	<div class="scroll-content">
+	        	<div class="horizontal">
 		    		<div class = "chattercirc">
 		    			<img src = "images/lilicircle.png" alt = "chatter profile">
 		    			<h3>Lili</h3>
@@ -213,14 +227,14 @@
 		    <!-- Categories section -->
 		    <h1>Meet New Chatters</h1>
 		    <div class="scroll-container">
-	        	<div class="scroll-content categories">
+	        	<div class="horizontal categories">
 		        	<img src = "images/AllCategory.png" alt = "Shop All">
 		        	<img src = "images/HelpfulCategory.png" alt = "Helpful">
 		        	<img src = "images/RoleplayCategory.png" alt = "Role Play">
 	        	</div>
 		    </div>
 		    <div class="scroll-container">
-	        	<div class="scroll-content categories">
+	        	<div class="horizontal categories">
 		        	<img src = "images/ComedyCategory.png" alt = "Shop All">
 		        	<img src = "images/PersonalCategory.png" alt = "Helpful">
 		        	<img src = "images/PublicFiguresCategory.png" alt = "Role Play">
@@ -229,23 +243,353 @@
 	        	
 		    <!-- Friends' Chatters section -->
 		    <h1>Friends' Chatters</h1>
-		    <div class = "chattercard">
-		    	<img src = "images/LiliRectangle.png" alt = "chatter profile">
-		    	<div class="overlay">
-		            <div class="text-container">
-		                <h2 class="name">John Doe</h2>
-		                <div class="rating">
-		                    <i class="fas fa-star"></i>
-		                    <i class="fas fa-star"></i>
-		                    <i class="fas fa-star"></i>
-		                    <i class="fas fa-star"></i>
-		                    <i class="fas fa-star"></i>
-		                </div>
-		                <p class="username">@johndoe</p>
-		                <p class="description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ac libero ac nisl dapibus venenatis.</p>
-		            </div>
-		        </div>
-		    </div>
+		    <div class="scroll-container">
+	        	<div class="horizontal">
+				    <div class = "chattercard">
+				    	<img src = "images/LiliRectangle.png" alt = "chatter profile">
+				    	<div class="overlay">
+				            <div class="text-container">
+				            <div class = "horizontal">
+				                <h2 class="name">Lili</h2>
+				                <div class="rating">
+				                    <i class="fas fa-star"></i>
+				                    <i class="fas fa-star"></i>
+				                    <i class="fas fa-star"></i>
+				                    <i class="fas fa-star"></i>
+				                    <i class="fas fa-star"></i>
+				                </div>
+				                </div> 
+				                <div class= "horizontal">
+				                <p class="username">@B</p>
+				                <p class = "username price">$2.00</p>
+				                </div>
+				                <p class="description">Your guide to small talk</p>
+				            </div>
+				        </div>
+				    </div>
+				    <div class = "chattercard">
+				    	<img src = "images/LiliRectangle.png" alt = "chatter profile">
+				    	<div class="overlay">
+				            <div class="text-container">
+				            <div class = "horizontal">
+				                <h2 class="name">Lili</h2>
+				                <div class="rating">
+				                    <i class="fas fa-star"></i>
+				                    <i class="fas fa-star"></i>
+				                    <i class="fas fa-star"></i>
+				                    <i class="fas fa-star"></i>
+				                    <i class="fas fa-star"></i>
+				                </div>
+				                </div> 
+				                <div class= "horizontal">
+				                <p class="username">@B</p>
+				                <p class = "username price">$2.00</p>
+				                </div>
+				                <p class="description">Your guide to small talk</p>
+				            </div>
+				        </div>
+				    </div>
+				    <div class = "chattercard">
+				    	<img src = "images/LiliRectangle.png" alt = "chatter profile">
+				    	<div class="overlay">
+				            <div class="text-container">
+				            <div class = "horizontal">
+				                <h2 class="name">Lili</h2>
+				                <div class="rating">
+				                    <i class="fas fa-star"></i>
+				                    <i class="fas fa-star"></i>
+				                    <i class="fas fa-star"></i>
+				                    <i class="fas fa-star"></i>
+				                    <i class="fas fa-star"></i>
+				                </div>
+				                </div> 
+				                <div class= "horizontal">
+				                <p class="username">@B</p>
+				                <p class = "username price">$2.00</p>
+				                </div>
+				                <p class="description">Your guide to small talk</p>
+				            </div>
+				        </div>
+				    </div>
+				    <div class = "chattercard">
+				    	<img src = "images/LiliRectangle.png" alt = "chatter profile">
+				    	<div class="overlay">
+				            <div class="text-container">
+				            <div class = "horizontal">
+				                <h2 class="name">Lili</h2>
+				                <div class="rating">
+				                    <i class="fas fa-star"></i>
+				                    <i class="fas fa-star"></i>
+				                    <i class="fas fa-star"></i>
+				                    <i class="fas fa-star"></i>
+				                    <i class="fas fa-star"></i>
+				                </div>
+				                </div> 
+				                <div class= "horizontal">
+				                <p class="username">@B</p>
+				                <p class = "username price">$2.00</p>
+				                </div>
+				                <p class="description">Your guide to small talk</p>
+				            </div>
+				        </div>
+				    </div>
+				    <div class = "chattercard">
+				    	<img src = "images/LiliRectangle.png" alt = "chatter profile">
+				    	<div class="overlay">
+				            <div class="text-container">
+				            <div class = "horizontal">
+				                <h2 class="name">Lili</h2>
+				                <div class="rating">
+				                    <i class="fas fa-star"></i>
+				                    <i class="fas fa-star"></i>
+				                    <i class="fas fa-star"></i>
+				                    <i class="fas fa-star"></i>
+				                    <i class="fas fa-star"></i>
+				                </div>
+				                </div> 
+				                <div class= "horizontal">
+				                <p class="username">@B</p>
+				                <p class = "username price">$2.00</p>
+				                </div>
+				                <p class="description">Your guide to small talk</p>
+				            </div>
+				        </div>
+				    </div>
+				</div>
+			</div>
+			
+			<!-- Browse From Creators section -->
+		    <h1>Browse From Creators</h1>
+		    <h2>@B</h2>
+		    <div class="scroll-container">
+	        	<div class="horizontal">
+				    <div class = "chattercard">
+				    	<img src = "images/LiliRectangle.png" alt = "chatter profile">
+				    	<div class="overlay">
+				            <div class="text-container">
+				            <div class = "horizontal">
+				                <h2 class="name">Lili</h2>
+				                <div class="rating">
+				                    <i class="fas fa-star"></i>
+				                    <i class="fas fa-star"></i>
+				                    <i class="fas fa-star"></i>
+				                    <i class="fas fa-star"></i>
+				                    <i class="fas fa-star"></i>
+				                </div>
+				                </div> 
+				                <div class= "horizontal">
+				                <p class="username">@B</p>
+				                <p class = "username price">$2.00</p>
+				                </div>
+				                <p class="description">Your guide to small talk</p>
+				            </div>
+				        </div>
+				    </div>
+				    <div class = "chattercard">
+				    	<img src = "images/LiliRectangle.png" alt = "chatter profile">
+				    	<div class="overlay">
+				            <div class="text-container">
+				            <div class = "horizontal">
+				                <h2 class="name">Lili</h2>
+				                <div class="rating">
+				                    <i class="fas fa-star"></i>
+				                    <i class="fas fa-star"></i>
+				                    <i class="fas fa-star"></i>
+				                    <i class="fas fa-star"></i>
+				                    <i class="fas fa-star"></i>
+				                </div>
+				                </div> 
+				                <div class= "horizontal">
+				                <p class="username">@B</p>
+				                <p class = "username price">$2.00</p>
+				                </div>
+				                <p class="description">Your guide to small talk</p>
+				            </div>
+				        </div>
+				    </div>
+				    <div class = "chattercard">
+				    	<img src = "images/LiliRectangle.png" alt = "chatter profile">
+				    	<div class="overlay">
+				            <div class="text-container">
+				            <div class = "horizontal">
+				                <h2 class="name">Lili</h2>
+				                <div class="rating">
+				                    <i class="fas fa-star"></i>
+				                    <i class="fas fa-star"></i>
+				                    <i class="fas fa-star"></i>
+				                    <i class="fas fa-star"></i>
+				                    <i class="fas fa-star"></i>
+				                </div>
+				                </div> 
+				                <div class= "horizontal">
+				                <p class="username">@B</p>
+				                <p class = "username price">$2.00</p>
+				                </div>
+				                <p class="description">Your guide to small talk</p>
+				            </div>
+				        </div>
+				    </div>
+				    <div class = "chattercard">
+				    	<img src = "images/LiliRectangle.png" alt = "chatter profile">
+				    	<div class="overlay">
+				            <div class="text-container">
+				            <div class = "horizontal">
+				                <h2 class="name">Lili</h2>
+				                <div class="rating">
+				                    <i class="fas fa-star"></i>
+				                    <i class="fas fa-star"></i>
+				                    <i class="fas fa-star"></i>
+				                    <i class="fas fa-star"></i>
+				                    <i class="fas fa-star"></i>
+				                </div>
+				                </div> 
+				                <div class= "horizontal">
+				                <p class="username">@B</p>
+				                <p class = "username price">$2.00</p>
+				                </div>
+				                <p class="description">Your guide to small talk</p>
+				            </div>
+				        </div>
+				    </div>
+				    <div class = "chattercard">
+				    	<img src = "images/LiliRectangle.png" alt = "chatter profile">
+				    	<div class="overlay">
+				            <div class="text-container">
+				            <div class = "horizontal">
+				                <h2 class="name">Lili</h2>
+				                <div class="rating">
+				                    <i class="fas fa-star"></i>
+				                    <i class="fas fa-star"></i>
+				                    <i class="fas fa-star"></i>
+				                    <i class="fas fa-star"></i>
+				                    <i class="fas fa-star"></i>
+				                </div>
+				                </div> 
+				                <div class= "horizontal">
+				                <p class="username">@B</p>
+				                <p class = "username price">$2.00</p>
+				                </div>
+				                <p class="description">Your guide to small talk</p>
+				            </div>
+				        </div>
+				    </div>
+				</div>
+			</div>
+			<h2>@Meta</h2>
+		    <div class="scroll-container">
+	        	<div class="horizontal">
+				    <div class = "chattercard">
+				    	<img src = "images/LiliRectangle.png" alt = "chatter profile">
+				    	<div class="overlay">
+				            <div class="text-container">
+				            <div class = "horizontal">
+				                <h2 class="name">Lili</h2>
+				                <div class="rating">
+				                    <i class="fas fa-star"></i>
+				                    <i class="fas fa-star"></i>
+				                    <i class="fas fa-star"></i>
+				                    <i class="fas fa-star"></i>
+				                    <i class="fas fa-star"></i>
+				                </div>
+				                </div> 
+				                <div class= "horizontal">
+				                <p class="username">@B</p>
+				                <p class = "username price">$2.00</p>
+				                </div>
+				                <p class="description">Your guide to small talk</p>
+				            </div>
+				        </div>
+				    </div>
+				    <div class = "chattercard">
+				    	<img src = "images/LiliRectangle.png" alt = "chatter profile">
+				    	<div class="overlay">
+				            <div class="text-container">
+				            <div class = "horizontal">
+				                <h2 class="name">Lili</h2>
+				                <div class="rating">
+				                    <i class="fas fa-star"></i>
+				                    <i class="fas fa-star"></i>
+				                    <i class="fas fa-star"></i>
+				                    <i class="fas fa-star"></i>
+				                    <i class="fas fa-star"></i>
+				                </div>
+				                </div> 
+				                <div class= "horizontal">
+				                <p class="username">@B</p>
+				                <p class = "username price">$2.00</p>
+				                </div>
+				                <p class="description">Your guide to small talk</p>
+				            </div>
+				        </div>
+				    </div>
+				    <div class = "chattercard">
+				    	<img src = "images/LiliRectangle.png" alt = "chatter profile">
+				    	<div class="overlay">
+				            <div class="text-container">
+				            <div class = "horizontal">
+				                <h2 class="name">Lili</h2>
+				                <div class="rating">
+				                    <i class="fas fa-star"></i>
+				                    <i class="fas fa-star"></i>
+				                    <i class="fas fa-star"></i>
+				                    <i class="fas fa-star"></i>
+				                    <i class="fas fa-star"></i>
+				                </div>
+				                </div> 
+				                <div class= "horizontal">
+				                <p class="username">@B</p>
+				                <p class = "username price">$2.00</p>
+				                </div>
+				                <p class="description">Your guide to small talk</p>
+				            </div>
+				        </div>
+				    </div>
+				    <div class = "chattercard">
+				    	<img src = "images/LiliRectangle.png" alt = "chatter profile">
+				    	<div class="overlay">
+				            <div class="text-container">
+				            <div class = "horizontal">
+				                <h2 class="name">Lili</h2>
+				                <div class="rating">
+				                    <i class="fas fa-star"></i>
+				                    <i class="fas fa-star"></i>
+				                    <i class="fas fa-star"></i>
+				                    <i class="fas fa-star"></i>
+				                    <i class="fas fa-star"></i>
+				                </div>
+				                </div> 
+				                <div class= "horizontal">
+				                <p class="username">@B</p>
+				                <p class = "username price">$2.00</p>
+				                </div>
+				                <p class="description">Your guide to small talk</p>
+				            </div>
+				        </div>
+				    </div>
+				    <div class = "chattercard">
+				    	<img src = "images/LiliRectangle.png" alt = "chatter profile">
+				    	<div class="overlay">
+				            <div class="text-container">
+				            <div class = "horizontal">
+				                <h2 class="name">Lili</h2>
+				                <div class="rating">
+				                    <i class="fas fa-star"></i>
+				                    <i class="fas fa-star"></i>
+				                    <i class="fas fa-star"></i>
+				                    <i class="fas fa-star"></i>
+				                    <i class="fas fa-star"></i>
+				                </div>
+				                </div> 
+				                <div class= "horizontal">
+				                <p class="username">@B</p>
+				                <p class = "username price">$2.00</p>
+				                </div>
+				                <p class="description">Your guide to small talk</p>
+				            </div>
+				        </div>
+				    </div>
+				</div>
+			</div>
     	</body>
     </div>
 </body>
