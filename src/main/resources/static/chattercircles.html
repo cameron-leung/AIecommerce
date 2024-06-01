@@ -1,3 +1,4 @@
+
 			<div class="scroll-container">
 	        	<div class="horizontal">
 		    		<div class="horizontal" id="character-circ-container"></div>
@@ -9,23 +10,16 @@
 		    	</div>
 		    </div>
 		    <script>
-		        // Define the data for the character circles
-		        const characterData = {
-		            name: 'Lili',
-		            imageUrl: 'images/lilicircle.png'
-		        };
-		
-		        // Function to populate the circle with data
 		        function populateCircle(template, character) {
 		            return template
-		                .replace('IMAGE_URL', character.imageUrl)
+		                .replace('CIRC_IMAGE_URL', character.circimageUrl)
 		                .replace('NAME', character.name);
 		        }
 		
 		        // jQuery to dynamically load and add character circles to the container
 		        $(document).ready(function() {
 		            const container = $('#character-circ-container');
-		            const numberOfCircles = 6;  // Number of times to repeat the same character data
+		            const numberOfCircles = 6; 
 		
 		            $.get('chattercircle.html', function(template) {
 		                for (let i = 0; i < numberOfCircles; i++) {
