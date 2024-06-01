@@ -11,13 +11,18 @@
             font-family: 'DM Sans';
             margin: 0;
             padding: 0;
+            color: black;
         }
-        h1{
+        h1 {
         	font-size: 40px;
         }
-        h3{
+        h3 {
         	font-size: 24px;
         }
+        a {
+        	color: black;
+        }
+        
         /*horizontal scroll*/
 		.scroll-container {
 		    width: 100%;
@@ -90,18 +95,70 @@
             padding: 0px 54px;
         }
         /* landing page chatter circles styling*/
-		.chattercircle {
+		.chattercirc {
 			display: inline-block;
 			align-items: center;
 			justify-content: center;
 			max-width: 200px;
 			padding-right: 40px;
 		}
-		.chattercircle h3{
+		.chattercirc h3{
 			text-align: center;
 		}
-        .chattercircle img {
+        .chattercirc img {
 			width: 200px;
+		}
+		
+		.categories img {
+			width: 390px;
+			padding: 10px;
+		}
+		
+		.chattercard {
+		    position: relative; /* Ensures the overlay is positioned relative to the card */
+		    width: 300px;
+		    border-radius: 16px;
+		    overflow: hidden;
+		    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+		}
+		.chattercard img{
+			width: 300px;
+		}
+		.chattercard .overlay {
+			position: absolute;
+		    bottom: 0;
+		    width: 100%;
+		    background: rgba(255, 255, 255, 0.5);
+		    color: black;
+		    padding: 10px;
+		    box-sizing: border-box;
+		    border-radius: 0 0 16px 16px;
+		}
+		.chattercard .text-container {
+		    text-align: left;
+		}
+		.name {
+		    margin: 0;
+		    font-size: 1.2em;
+		}
+		
+		.rating {
+		    margin: 5px 0;
+		}
+		
+		.rating .fa-star {
+		    color: #FF206E;
+		    font-size: 1.1em;
+		}
+		
+		.username {
+		    margin: 5px 0;
+		    font-size: 0.9em;
+		}
+		
+		.description {
+		    margin: 5px 0;
+		    font-size: 0.8em;
 		}
     </style>
 </head>
@@ -126,36 +183,69 @@
     		<h1>Recents</h1>
     		<div class="scroll-container">
 	        	<div class="scroll-content">
-		    		<div class = "chattercircle">
+		    		<div class = "chattercirc">
 		    			<img src = "images/lilicircle.png" alt = "chatter profile">
 		    			<h3>Lili</h3>
 		    		</div>
-		    		<div class = "chattercircle">
+		    		<div class = "chattercirc">
 		    			<img src = "images/lilicircle.png" alt = "chatter profile">
 		    			<h3>Lili</h3>
 		    		</div>
-		    		<div class = "chattercircle">
+		    		<div class = "chattercirc">
 		    			<img src = "images/lilicircle.png" alt = "chatter profile">
 		    			<h3>Lili</h3>
 		    		</div>
-		    		<div class = "chattercircle">
+		    		<div class = "chattercirc">
 		    			<img src = "images/lilicircle.png" alt = "chatter profile">
 		    			<h3>Lili</h3>
 		    		</div>
-		    		<div class = "chattercircle">
+		    		<div class = "chattercirc">
 		    			<img src = "images/lilicircle.png" alt = "chatter profile">
 		    			<h3>Lili</h3>
 		    		</div>
-		    		<div class = "chattercircle">
+		    		<div class = "chattercirc">
 		    			<img src = "images/lilicircle.png" alt = "chatter profile">
 		    			<h3>Lili</h3>
 		    		</div>
 		    	</div>
 		    </div>
+		    
 		    <!-- Categories section -->
 		    <h1>Meet New Chatters</h1>
-		    
-		    
+		    <div class="scroll-container">
+	        	<div class="scroll-content categories">
+		        	<img src = "images/AllCategory.png" alt = "Shop All">
+		        	<img src = "images/HelpfulCategory.png" alt = "Helpful">
+		        	<img src = "images/RoleplayCategory.png" alt = "Role Play">
+	        	</div>
+		    </div>
+		    <div class="scroll-container">
+	        	<div class="scroll-content categories">
+		        	<img src = "images/ComedyCategory.png" alt = "Shop All">
+		        	<img src = "images/PersonalCategory.png" alt = "Helpful">
+		        	<img src = "images/PublicFiguresCategory.png" alt = "Role Play">
+	        	</div>
+		    </div>
+	        	
+		    <!-- Friends' Chatters section -->
+		    <h1>Friends' Chatters</h1>
+		    <div class = "chattercard">
+		    	<img src = "images/LiliRectangle.png" alt = "chatter profile">
+		    	<div class="overlay">
+		            <div class="text-container">
+		                <h2 class="name">John Doe</h2>
+		                <div class="rating">
+		                    <i class="fas fa-star"></i>
+		                    <i class="fas fa-star"></i>
+		                    <i class="fas fa-star"></i>
+		                    <i class="fas fa-star"></i>
+		                    <i class="fas fa-star"></i>
+		                </div>
+		                <p class="username">@johndoe</p>
+		                <p class="description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ac libero ac nisl dapibus venenatis.</p>
+		            </div>
+		        </div>
+		    </div>
     	</body>
     </div>
 </body>
