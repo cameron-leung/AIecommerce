@@ -1,0 +1,34 @@
+<!-- horizontal chatter card display -->
+<div class="horizontal-container">
+	<div class="horizontal">
+		<div class="horizontal cardspadding rowpadding character-card-container"></div>
+		<div class="horizontal cardspadding rowpadding character-card-container"></div>
+		<div class="horizontal cardspadding rowpadding character-card-container"></div>
+		<div class="horizontal cardspadding rowpadding character-card-container"></div>
+	</div>
+</div>
+			
+<script>
+	// Populate character card with data
+	function populateCard(template, character) {
+		return template
+		.replace('RECT_IMAGE_URL', character.rectimageUrl)
+		.replace('NAME', character.name)
+		.replace('USERNAME', character.username)
+		.replace('PRICE', character.price)
+		.replace('DESCRIPTION', character.description);
+	}
+		
+	// jQuery to load character cards
+	$(document).ready(function() {
+		const container = $('.character-card-container');
+		const numberOfCards = 1; 
+		
+		$.get('chattercard.html', function(template) {
+		    for (let i = 0; i < numberOfCards; i++) {
+		        const populatedCard = populateCard(template, characterData);
+		        container.append(populatedCard);
+		 	}
+		});
+	});
+</script>

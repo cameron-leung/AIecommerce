@@ -1,3 +1,14 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Landing Page</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link href='https://fonts.googleapis.com/css?family=DM Sans' rel='stylesheet'>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<div id="navbar-placeholder"></div> 
 <img class = "full-screen-img" src = "images/Liliad.png" alt = "Ad">
 
 <div class = "landingpage">
@@ -10,7 +21,7 @@
 		    <h1>Meet New Chatters</h1>
 		    <div class="scroll-container">
 	        	<div class="horizontal categories">
-		        	<img src = "images/AllCategory.png" alt = "Shop All">
+		        	<a href = "shopall.html"><img src = "images/AllCategory.png" alt = "Shop All"></a>
 		        	<img src = "images/HelpfulCategory.png" alt = "Helpful">
 		        	<img src = "images/RoleplayCategory.png" alt = "Role Play">
 	        	</div>
@@ -25,21 +36,26 @@
 	        	
 		    <!-- Friends' Chatters section -->
 		    <h1>Friends' Chatters</h1>
-		    <div class = "chattercards-placeholder"></div>
+		    <div class = "chattercardscroll-placeholder"></div>
 			
 			<!-- Browse From Creators section -->
 		    <h1>Browse From Creators</h1>
 		    <h2>@B</h2>
-		    <div class = "chattercards-placeholder"></div>
+		    <div class = "chattercardscroll-placeholder"></div>
 			<h2>@Meta</h2>
-		    <div class = "chattercards-placeholder"></div>
-		    
+		    <div class = "chattercardscroll-placeholder"></div>
+		    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+		    <script src="characterData.js"></script>
 		    <script>
-		    src="https://code.jquery.com/jquery-3.6.0.min.js"
-	        $(document).ready(function() {
-	            $('#chattercircles-placeholder').load('chattercircles.html');
-	            $('.chattercards-placeholder').load('chattercardscroll.html');
-	        });
+		        // jQuery to load the navbar
+		        $(document).ready(function() {
+		            $('#navbar-placeholder').load('navbar.html', function() {
+		                $('.discover-icon').addClass('active');
+		                $('#chattercircles-placeholder').load('chattercircles.html');
+			            $('.chattercardscroll-placeholder').load('chattercardscroll.html');
+		            });
+		            $('#shopall-placeholder').load('shopall.html');
+		        });
 		    </script>
     </body>
 </div>

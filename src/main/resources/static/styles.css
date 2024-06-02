@@ -19,12 +19,13 @@
 		    width: 100%;
 		    overflow-x: auto;
 		    white-space: nowrap;
-		    padding: 20px 0; /* Adjust padding as needed */
+		    padding: 20px 0;
 		}
 		.horizontal {
 			display: flex;
 			flex-direction: row;
 		}
+		
  
         /* navbar */
         .navbar {
@@ -60,7 +61,7 @@
             background-color: #FAFAFA;
             border: none;
         }
-        /* navbar icons */
+        /* icons */
         .navbar .icons {
             display: flex;
             align-items: center;
@@ -75,6 +76,16 @@
         .navbar .icons a.discover-icon.active i {
         	color: #FF206E;
         }
+        .icons .back-icon {
+		    display: inline-block; /* Ensure the element respects the width property */
+		    width: 50px;
+		    padding: 38px 0px;
+		    text-align: center; /* Optional: Center the icon within the width */
+		}
+		
+		.icons .back-icon i {
+		    font-size: 26px; /* Adjust the size of the icon if necessary */
+		}
         
         .full-screen-img {
         	max-width: 100%;
@@ -140,6 +151,13 @@
 		.chattercard .text-container {
 		    text-align: left;
 		}
+		.cardspadding {
+			padding-right: 20px;
+		}
+		.rowpadding {
+			padding-bottom: 30px;
+		}
+
 		.name {
 		    margin: 0;
 		    font-size: 1.2em;
