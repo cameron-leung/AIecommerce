@@ -81,10 +81,37 @@
 		    padding: 38px 0px;
 		    text-align: center; /* Optional: Center the icon within the width */
 		}
-		
 		.icons .back-icon i {
 		    font-size: 26px; /* Adjust the size of the icon if necessary */
 		}
+		/* Styles for filter button */
+		.filter-btn {
+		    background-color: #FAFAFA; /* Button background color */
+		    color: black; /* Button text color */
+		    border: none;
+		    border-radius: 5px;
+		    padding: 10px 20px;
+		    cursor: pointer;
+		    font-size: 20px;
+		}
+		.filter-text {
+		    margin-left: 5px; /* Add space between icon and text */
+		}
+		
+		/* Styles for filter pop-up */
+		.filter-popup {
+		    display: none;
+		    position: fixed;
+		    top: 50%;
+		    left: 50%;
+		    transform: translate(-50%, -50%);
+		    background-color: #fff;
+		    border: 1px solid #ccc;
+		    border-radius: 5px;
+		    padding: 20px;
+		    z-index: 1000; /* Ensure the pop-up is on top of other elements */
+		}
+		
         
         .full-screen-img {
         	max-width: 100%;
