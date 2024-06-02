@@ -18,6 +18,12 @@
 			</div>
 			<h1>All</h1>
 		</div>
+		<div class = "rowpadding">
+			<button id="filter-btn" class="filter-btn">
+			    <i class="fa-solid fa-filter"></i>
+			    <span class="filter-text">Filter</span>
+			</button>
+		</div>
 		<div class = "chattercards-placeholder"></div>
 		<div class = "chattercards-placeholder"></div>
 		<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -27,6 +33,11 @@
 	            $('#navbar-placeholder').load('navbar.html', function() {
 	                $('.discover-icon').addClass('active');
 	            });
+	         // Toggle filter pop-up
+	            $('#filter-btn').click(function() {
+	                $('.filter-popup').toggle();
+	            });
+
 	            $('.chattercards-placeholder').load('chattercards.html');
 	        });
 	    </script>
