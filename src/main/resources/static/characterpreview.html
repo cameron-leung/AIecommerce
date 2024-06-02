@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Character Preview Page</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link href='https://fonts.googleapis.com/css?family=DM Sans' rel='stylesheet'>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body> 
+	<div id="navbar-placeholder"></div> 
+	
+	<div class = "landingpage">
+		<div class = "horizontal">
+			<div class = "icons">
+				<a href="#" class="back-icon" onclick="goBack()"><i class="fa-solid fa-chevron-left"></i></a>
+			</div>
+			<h1>Lili</h1>
+		</div>
+	</div>
+	
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<script src="characterData.js"></script>
+	<script>
+        $(document).ready(function() {
+            $('#navbar-placeholder').load('navbar.html', function() {
+                $('.discover-icon').addClass('active');
+            });
+        });
+
+        function goBack() {
+            window.history.back();
+        }
+    </script>
+</body>
