@@ -2,34 +2,32 @@
 <div class="scroll-container">
 	<div class="horizontal">
 		<div class="horizontal character-card-container"></div>
-		<div class="horizontal character-card-container"></div>
-		<div class="horizontal character-card-container"></div>
-		<div class="horizontal character-card-container"></div>
-		<div class="horizontal character-card-container"></div>
 	</div>
 </div>
 			
 <script>
-	// Populate character card with data
-	function populateCard(template, character) {
-		return template
-		.replace('RECT_IMAGE_URL', character.rectimageUrl)
-		.replace('NAME', character.name)
-		.replace('USERNAME', character.username)
-		.replace('PRICE', character.price)
-		.replace('DESCRIPTION', character.description);
-	}
-		
-	// jQuery to load character cards
 	$(document).ready(function() {
-		const container = $('.character-card-container');
-		const numberOfCards = 5; 
-		
-		$.get('chattercard.html', function(template) {
-		    for (let i = 0; i < numberOfCards; i++) {
-		        const populatedCard = populateCard(template, characterData);
-		        container.append(populatedCard);
-		 	}
-		});
+	    const container = $('.character-card-container');
+	    const numberOfCards = 5; 
+	
+	    // Fetch chattercard 
+	    $.get('chattercard.html', function(template) {
+	        for (let i = 0; i < numberOfCards; i++) {
+	            const populatedCard = populateCard(template, characterData);
+	            container.append(populatedCard);
+	        }
+	    });
 	});
+	
+	// Function to populate card with data
+	function populateCard(template, character) {
+	    const card = $(template).clone();
+	    card.find('.name').text(character.name);
+	    card.find('.username').text(character.username);
+	    card.find('.price').text(character.price);
+	    card.find('.description').text(character.description);
+	    card.find('img').attr('src', character.rectimageUrl);
+	    return card;
+	}
+
 </script>
