@@ -1,0 +1,13 @@
+<div id="image-container" class="vertical-scroll"></div>
+<script>
+	var imageContainer = document.getElementById('image-container');
+	var imageUrl = 'RECT_IMAGE_URL'; // Replace with your image URL
+	var numberOfImages = 5; // Number of times to repeat the image
+	
+	for (var i = 0; i < numberOfImages; i++) {
+	    var img = document.createElement('img');
+	    img.src = 'images/LiliRectangle.png';
+	    img.alt = 'Chatter Card ' + (i + 1);
+	    imageContainer.appendChild(img);
+	}
+</script>
