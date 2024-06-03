@@ -25,6 +25,23 @@
 			flex-direction: row;
 		}
 		
+		/*vertical scroll*/
+		.vertical-scroll {
+		    height: 500px; 
+		    overflow-y: auto; 
+		    padding: 0px 10px; 
+		    display: flex;
+		    flex-direction: column;
+		    gap: 10px; 
+		}
+
+		.vertical-scroll img {
+			object-fit: cover;
+		    width: 150px; 
+		    height: 150px;
+		    border-radius: 10px; 
+		}
+		
  
         /* navbar */
         .navbar {
@@ -208,4 +225,11 @@
 		.description {
 		    margin: 5px 0;
 		    font-size: 0.8em;
+		}
+		
+		.square {
+			width: 500px;
+			height: 500px;
+			border-radius: 10px;
+			object-fit: cover;
 		}
