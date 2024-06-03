@@ -26,6 +26,9 @@
 		}
 		
 		/*vertical scroll*/
+		.vertical {
+			flex-direction: column;
+		}
 		.vertical-scroll {
 		    height: 500px; 
 		    overflow-y: auto; 
@@ -232,4 +235,36 @@
 			height: 500px;
 			border-radius: 10px;
 			object-fit: cover;
+		}
+		.halfscreen-text {
+			padding: 0px 10px;
+			max-width: 45%;
+		}
+		.halfscreen-text h1 {
+			margin: 0px;
+		}
+		.halfscreen-text h2 {
+			margin: 0px;
+		}
+		.halfscreen-text p {
+			margin: 0px;
+		}
+		.halfscreen-icons-container {
+			display: flex;
+		    align-items: center;
+		    gap: 40px;
+		}
+		.right-container {
+            display: flex;
+            justify-content: flex-end; /* Pushes content to the right */
+        }
+		.large-break {
+			display: block; 
+    		margin-bottom: 20px; 
+		}
+		.large-icon {
+			display: flex;
+			width: 80px;
+			font-size: 70px;
+			color: #FF206E;
 		}
