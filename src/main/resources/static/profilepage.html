@@ -1,40 +1,58 @@
-<div class = "landingpage">
-	<div class = "horizontal">
-		<i class="fa-solid fa-circle-user" style = "color:  #535355; font-size: 180px; padding-right: 20px; padding-top: 20px;"></i>
-		<div class = "vertical">
-			<h1 style = "margin-bottom: 0px;">Profile</h1>
-			<h2 style = "margin-top: 0px;">@B</h2>
-			<div class="horizontal">
-                <h2 class = "cardspadding" id="followersPlaceholder">NUM_FOLLOWERS</h2>
-                <h2 class = "cardspadding">Followers</h2>
-                <h2 class = "cardspadding" id="followingPlaceholder">NUM_FOLLOWING</h2>
-                <h2 class = "cardspadding">Following</h2>
-                <h2 class = "cardspadding" id="chattersPlaceholder">NUM_CHATTERS</h2>
-                <h2 class = "cardspadding">Chatters</h2>
-            </div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Landing Page</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link href='https://fonts.googleapis.com/css?family=DM Sans' rel='stylesheet'>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+	<div id="navbar-placeholder"></div>
+	<div class = "landingpage">
+		<div class = "horizontal">
+			<i class="fa-solid fa-circle-user" style = "color:  #535355; font-size: 180px; padding-right: 20px; padding-top: 20px;"></i>
+			<div class = "vertical">
+				<h1 style = "margin-bottom: 0px;">Profile</h1>
+				<h2 style = "margin-top: 0px;">@B</h2>
+				<div class="horizontal">
+	                <h2 class = "cardspadding" id="followersPlaceholder">NUM_FOLLOWERS</h2>
+	                <h2 class = "cardspadding">Followers</h2>
+	                <h2 class = "cardspadding" id="followingPlaceholder">NUM_FOLLOWING</h2>
+	                <h2 class = "cardspadding">Following</h2>
+	                <h2 class = "cardspadding" id="chattersPlaceholder">NUM_CHATTERS</h2>
+	                <h2 class = "cardspadding">Chatters</h2>
+	            </div>
+			</div>
 		</div>
+		<h1>Recents</h1>
+		<div class = "chattercircles-placeholder"></div>
+		<h1>Original Chatters</h1>
+		<div class = "chattercardscroll-placeholder"></div>
+		<h1>Cart</h1>
+		<div class = "chattercardscroll-placeholder"></div>
+		
 	</div>
-	<h1>Recents</h1>
-	<div class = "chattercircles-placeholder"></div>
-	<h1>Original Chatters</h1>
-	<div class = "chattercardscroll-placeholder"></div>
-	<h1>Cart</h1>
-	<div class = "chattercardscroll-placeholder"></div>
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<script src="characterData.js"></script>
+	<script>
+	$(document).ready(function() {
+		$('#navbar-placeholder').load('navbar.html', function() {
+            $('.profile-icon').addClass('active');
+        });
+	    var followersCount = 0;
+	    var followingCount = 0;
+	    var chattersCount = 1;
 	
-</div>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script>
-$(document).ready(function() {
-    var followersCount = 0;
-    var followingCount = 0;
-    var chattersCount = 1;
-
-    // Update the placeholders with the numbers
-    $('#followersPlaceholder').text(followersCount);
-    $('#followingPlaceholder').text(followingCount);
-    $('#chattersPlaceholder').text(chattersCount);
-    
-    $('.chattercircles-placeholder').load('chattercircles.html');
-    $('.chattercardscroll-placeholder').load('chattercardscroll.html');
-});
-</script>
+	    // Update the placeholders with the numbers
+	    $('#followersPlaceholder').text(followersCount);
+	    $('#followingPlaceholder').text(followingCount);
+	    $('#chattersPlaceholder').text(chattersCount);
+	    
+	    $('.chattercircles-placeholder').load('chattercircles.html');
+	    $('.chattercardscroll-placeholder').load('chattercardscroll.html');
+	});
+	</script>
+</body>
+</html>
