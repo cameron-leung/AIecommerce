@@ -18,6 +18,10 @@
 			</div>
 			<h1>Lili</h1>
 		</div>
+		<div class = "horizontal">
+			<div id="verticalscroll-placeholder"></div> 
+			<img class = "square" src = "images/LiliRectangle.png">
+		</div>
 	</div>
 	
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -27,10 +31,12 @@
             $('#navbar-placeholder').load('navbar.html', function() {
                 $('.discover-icon').addClass('active');
             });
+            $('#verticalscroll-placeholder').load('verticalscroll.html');
         });
 
         function goBack() {
             window.history.back();
         }
+        
     </script>
 </body>
