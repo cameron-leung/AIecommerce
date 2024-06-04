@@ -21,7 +21,7 @@
 		<div class = "rowpadding">
 			<button id="filter-btn" class="filter-btn">
 			    <i class="fa-solid fa-filter"></i>
-			    <span class="filter-text">Filter</span>
+			    <span class="filter-text"  onclick="openFilter()">Filter</span>
 			</button>
 		</div>
 		<div class = "chattercards-placeholder"></div>
@@ -41,6 +41,18 @@
 
 	            $('.chattercards-placeholder').load('chattercards.html');
 	        });
+	        function openFilter() {
+	            document.getElementById('filter-popup').style.display = 'block';
+	        }
+
+	        function closeFilter() {
+	            document.getElementById('filter-popup').style.display = 'none';
+	        }
+
+	        function applyFilter() {
+	            // Apply filter logic here
+	            closeFilter();
+	        }
 	    </script>
 	</div>
 </body>

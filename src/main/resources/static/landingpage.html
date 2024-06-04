@@ -9,8 +9,10 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-	<div id="navbar-placeholder"></div> 
-	<img class = "full-screen-img" src = "images/Liliad.png" alt = "Ad">
+	<div id="navbar-placeholder"></div>
+	<a href="#meet-new-chatters">
+        <img class="full-screen-img" src="images/Liliad.png" alt="Ad">
+    </a> 
 
 	<div class = "landingpage">
     		<!-- Recents Section -->
@@ -18,7 +20,7 @@
     		<div id = "chattercircles-placeholder"></div>
 		    
 		    <!-- Categories section -->
-		    <h1>Meet New Chatters</h1>
+		    <h1 id="meet-new-chatters">Meet New Chatters</h1>
 		    <div class="scroll-container">
 	        	<div class="horizontal categories">
 		        	<a href = "shopall.html"><img src = "images/AllCategory.png" alt = "Shop All"></a>
@@ -40,9 +42,9 @@
 			
 			<!-- Browse From Creators section -->
 		    <h1>Browse From Creators</h1>
-		    <h2>@B</h2>
+		    <a href = "profilepage.html"><h2>@B</h2></a>
 		    <div class = "chattercardscroll-placeholder"></div>
-			<h2>@Meta</h2>
+			<a href = "profilepage.html"><h2>@Meta</h2></a>
 		    <div class = "chattercardscroll-placeholder"></div>
 	</div>
 		    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -56,6 +58,16 @@
 			            $('.chattercardscroll-placeholder').load('chattercardscroll.html');
 		            });
 		            $('#shopall-placeholder').load('shopall.html');
+		            
+		            $('a[href^="#"]').on('click', function(event) {
+		                var target = $(this.getAttribute('href'));
+		                if (target.length) {
+		                    event.preventDefault();
+		                    $('html, body').stop().animate({
+		                        scrollTop: target.offset().top
+		                    }, 1000);
+		                }
+		            });
 		        });
 		    </script>
 	</body> 
