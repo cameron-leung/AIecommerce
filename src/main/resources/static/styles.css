@@ -12,7 +12,12 @@
         }
         a {
         	color: black;
+        	text-decoration: none;
         }
+        a:hover {
+		    color: #FF206E;
+		    text-decoration: none;
+		}
         
         /*horizontal scroll*/
 		.scroll-container {
