@@ -34,25 +34,9 @@
 	            $('#navbar-placeholder').load('navbar.html', function() {
 	                $('.discover-icon').addClass('active');
 	            });
-	         // Toggle filter pop-up
-	            $('#filter-btn').click(function() {
-	                $('.filter-popup').toggle();
-	            });
 
 	            $('.chattercards-placeholder').load('chattercards.html');
 	        });
-	        function openFilter() {
-	            document.getElementById('filter-popup').style.display = 'block';
-	        }
-
-	        function closeFilter() {
-	            document.getElementById('filter-popup').style.display = 'none';
-	        }
-
-	        function applyFilter() {
-	            // Apply filter logic here
-	            closeFilter();
-	        }
 	    </script>
 	</div>
 </body>
