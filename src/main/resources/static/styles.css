@@ -170,8 +170,9 @@
 		/* chatter card */
 		.chattercard {
 			flex: none;
-		    position: relative; /* Ensures the overlay is positioned relative to the card */
+		    position: relative; 
 		    justify-content: space-between;
+		    height: 380px;
 		    width: 280px;
 		    border-radius: 16px;
 		    overflow: hidden;
@@ -180,7 +181,7 @@
 		}
 		.chattercard img{
 			width: 100%;
-			border-radius: 16px;
+			/*border-radius: 16px;*/
 			padding-right: 50px;
 		}
 		.chattercard .overlay {
