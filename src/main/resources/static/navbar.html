@@ -7,7 +7,16 @@
          </div>
          <div class="icons">
              <a href="landingpage.html" class="discover-icon"><i class="fa-solid fa-compass"></i></a> 
-             <a href="#" class="cart-icon"><i class="fa-solid fa-cart-shopping"></i></a> 
+             <a href="#" class="cart-icon openCartPopupIcon"><i class="fa-solid fa-cart-shopping openCartPopupIcon"></i></a> 
              <a href="profilepage.html" class="profile-icon"><i class="fa-solid fa-user"></i></a> 
          </div>
  </nav>
+ <div id="cartPopup-placeholder"></div> 
+ <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<script src="characterData.js"></script>
+	<script>
+        $(document).ready(function() {
+            $('#cartPopup-placeholder').load('cartPopup.html');
+        });
+
+    </script>

@@ -10,15 +10,15 @@
 
     // Function to open the cart popup overlay
     function openCartPopup() {
-        console.log('Opening popup...');
+    	$('.cart-icon').addClass('active');
         $('#cartPopupOverlay').fadeIn();
         popupOpen = true; // Set popupOpen to true when popup is opened
     }
 
     // Function to close the cart popup overlay
     function closeCartPopup() {
-        console.log('Closing popup...');
         $('#cartPopupOverlay').fadeOut();
+        $('.cart-icon').removeClass('active');
         popupOpen = false; // Set popupOpen to false when popup is closed
     }
 
@@ -36,7 +36,7 @@
     });
 
     // Event listener for the icon click to open the popup
-    $('#openPopupIcon').on('click', function(event) {
+    $('.openCartPopupIcon').on('click', function(event) {
         event.stopPropagation(); // Prevent event propagation
         openCartPopup();
     });
