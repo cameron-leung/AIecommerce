@@ -1,0 +1,30 @@
+<div id="cartPopupOverlay" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;  overflow: auto;">
+    <!-- Container for the content of cartpopup.html -->
+    <div id="cartPopupContent" style="background-color: #fefefe; margin: 6% 10% 10% 71%; padding: 20px; border: 1px solid #888; width: 25%; height: 80%; border-radius: 10px;">
+        <p style="text-align:center;">Select a Chatter</p>
+    </div>
+</div>
+
+<script>
+    // Function to open the cart popup overlay
+    function openCartPopup() {
+        $('#cartPopupOverlay').fadeIn();
+        // Attach event listener to document to close overlay when clicked outside
+        $(document).on('click', closeCartPopupOutside);
+    }
+
+    // Function to close the cart popup overlay
+    function closeCartPopup() {
+        $('#cartPopupOverlay').fadeOut();
+        // Remove event listener when closing overlay
+        $(document).off('click', closeCartPopupOutside);
+    }
+
+    // Function to close the cart popup overlay when clicked outside
+    function closeCartPopupOutside(event) {
+        // Check if the click target is outside the overlay and is not the cartPopupContent
+        if (!$(event.target).closest('#cartPopupOverlay').length) {
+            closeCartPopup();
+        }
+    }
+</script>
