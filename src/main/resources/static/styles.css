@@ -4,6 +4,10 @@
             padding: 0;
             color: black;
         }
+        ul { padding:0 } 
+        input, button, textarea, select {
+		  font: inherit;
+		}
         h1 {
         	font-size: 40px;
         }
@@ -274,3 +278,19 @@
 			font-size: 70px;
 			color: #FF206E;
 		}
+		
+		button .logout-button {
+		    padding: 5px 10px; /* Adjust padding for a closer fit around the text */
+		    background-color: #535355 !important; /* Button background color */
+		    color: white !important; /* Button text color */
+		    border: none; /* Remove default border */
+		    border-radius: 5px; /* Rounded corners */
+		    cursor: pointer; /* Pointer cursor on hover */
+		    font-family: 'DM Sans' !important;
+		    font-size: 20px; /* Font size */
+		    transition: background-color 0.3s ease; /* Smooth transition for background color */
+		}
+
+.logout-button button:hover {
+    background-color: #333333; /* Darker background color on hover */
+}
