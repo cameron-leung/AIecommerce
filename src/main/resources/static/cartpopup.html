@@ -15,14 +15,21 @@
                         <img style="width: 25px; padding: 0px; margin: 0px;" src="images/AIchatlogopink.png" alt="Logo"> 
                     </a>
                     <i style="width: 25%;" class="fa-solid fa-trash"></i>
-                    <i style="width: 25%;" class="fa-regular fa-square-check"></i>
+                    <i id="check-icon" style="width: 25%;" class="fa-regular fa-square-check"></i>
                 </div>
             </div>
         </div>
-        <div class = "cart-item">
-        	<h2 style = "margin: 0px">Subtotal</h2>
+        
+        <div style="position: absolute; bottom: 60px; width: 100%;">
+            <div style="display: flex; justify-content: space-between; padding: 0px 30px 0px 10px;">
+                <h2 style="margin: 0;">Subtotal</h2>
+                <h2 style="margin: 0;">$2.00</h2>
+            </div>
         </div>
-        <button id="checkoutButton" class="checkoutButton" style="color: #FF206E; border-color: #FF206E;">Checkout</button>
+		<div>
+			<button id="checkoutButton" class="checkoutButton" style="color: #FF206E; border-color: #FF206E;">Checkout</button>
+		</div>
+        
     </div>
 </div>
 
@@ -61,5 +68,12 @@
     $('.openCartPopupIcon').on('click', function(event) {
         event.stopPropagation(); // Prevent event propagation
         openCartPopup();
+    });
+    
+ // Toggle check/uncheck icon
+    $(document).ready(function() {
+        $('#check-icon').on('click', function() {
+            $(this).toggleClass("f-regular fa-square");
+        });
     });
 </script>
