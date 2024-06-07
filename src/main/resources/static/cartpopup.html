@@ -1,33 +1,31 @@
-<div id="cartPopupOverlay" style="display: none; position: fixed; top: 50px; right: 0; width: 25%; height: 100vh;  overflow: auto;">
+<div id="cartPopupOverlay" >
     <!-- Container for the content of cartpopup.html -->
-    <div id="cartPopupContent" style="height: 90vh; background-color: #fefefe; border: 1px solid grey;  border-radius: 10px;">
-    <div class = "cartitem">
-    	<div class = "horizontal">
-        	<img src = "images/LiliRectangle.png" style = "width: 150px; height: 150px; margin: 10px; border-radius: 5px; object-fit: cover;">
-        	<div class = "vertical" style = "width: 36%;">
-        		<h1 style = "margin: 0px;">Lili</h1>
-        		<h2 style = "margin: 0px;">@B 
-        		<span class = "break"></span> </h2>
-        		
-        		<h2 style = "margin: 0px;">$2.00</h2>
-        	</div>
-        	<div class = "carticons">
-        		<div class = "carticons">
-	        		<a href="#">
-			             <img style = "width: 25px; padding: 0px; margin: 0px;" src="images/AIchatlogopink.png" alt="Logo"> 
-			         </a>
-	        		<i style = "width: 25%;" class="fa-solid fa-trash"></i>
-	        		<i style = "width: 25%;" class="fa-regular fa-square-check"></i>
-        		</div>
-        	</div>
-        	
+    <div id="cartPopupContent">
+        <div class="cartitem">
+            <div class="horizontal" style="display: flex; align-items: center;">
+                <img src="images/LiliRectangle.png" style="width: 150px; height: 150px;  border-radius: 5px; object-fit: cover;">
+                <div class="vertical" style="width: 36%; padding-left: 10px;">
+                    <h1 style="margin: 0px;">Lili</h1>
+                    <h2 style="margin: 0px;">@B
+                    <span class="break"></span></h2>
+                    <h2 style="margin: 0px;">$2.00</h2>
+                </div>
+                <div class="carticons">
+                    <a href="#">
+                        <img style="width: 25px; padding: 0px; margin: 0px;" src="images/AIchatlogopink.png" alt="Logo"> 
+                    </a>
+                    <i style="width: 25%;" class="fa-solid fa-trash"></i>
+                    <i style="width: 25%;" class="fa-regular fa-square-check"></i>
+                </div>
+            </div>
         </div>
-    </div>
-        
-        <button id="checkoutButton" class = "checkoutButton" style="color: #FF206E; border-color: #FF206E; ">Checkout</button>
-
+        <div class = "cart-item">
+        	<h2 style = "margin: 0px">Subtotal</h2>
+        </div>
+        <button id="checkoutButton" class="checkoutButton" style="color: #FF206E; border-color: #FF206E;">Checkout</button>
     </div>
 </div>
+
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
     var popupOpen = false; // Variable to track if popup is open
