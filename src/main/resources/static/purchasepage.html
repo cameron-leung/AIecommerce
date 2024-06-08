@@ -1,0 +1,49 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link href='https://fonts.googleapis.com/css?family=DM Sans' rel='stylesheet'>
+    <link rel="stylesheet" href="styles.css">
+<div id="navbar-placeholder"></div>
+
+<div class = "horizontal">
+	<div class = "checkout">
+		<div class = "horizontal">
+			<div class = "icons">
+				<a href="#" class="back-icon" onclick="goBack()"><i class="fa-solid fa-chevron-left"></i></a>
+			</div>
+			<h1>Checkout</h1>
+		</div>
+		<div class="cartitem" style = "padding-left: 30px;">
+            <div class="horizontal" style="display: flex; align-items: center;">
+                <img src="images/LiliRectangle.png" style="width: 150px; height: 150px;  border-radius: 5px; object-fit: cover;">
+                <div class="vertical" style="width: 36%; padding-left: 10px;">
+                    <h1 style="margin: 0px;">Lili</h1>
+                    <h2 style="margin: 0px;">@B
+                    <span class="break"></span></h2>
+                    <h2 style="margin: 0px;">$2.00</h2>
+                </div>
+                <div class="carticons">
+                    <a href="#">
+                        <img style="width: 25px; padding: 0px; margin: 0px;" src="images/AIchatlogopink.png" alt="Logo"> 
+                    </a>
+                    <i style="width: 25%;" class="fa-solid fa-trash"></i>
+                    <i id="check-icon" style="width: 25%;" class="fa-regular fa-square-check"></i>
+                </div>
+            </div>
+        </div>
+	</div>
+	<div style = "display: flex; align-items: center; height: 83vh; padding-top: 40px;">
+		<div class="vertical-line"></div>
+	</div>
+</div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="characterData.js"></script>
+<script>
+	$(document).ready(function() {
+	    $('#navbar-placeholder').load('navbar.html', function() {
+	        $('.cart-icon').addClass('active');
+	    });
+	});
+	
+	function goBack() {
+        window.history.back();
+    }
+</script>

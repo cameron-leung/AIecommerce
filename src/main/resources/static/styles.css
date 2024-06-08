@@ -347,3 +347,14 @@
 			padding: 10px; 
 			overflow: hidden;
 		}
+		.checkout {
+			width: 35%;
+			height: 90vh;
+			overflow: hidden;	
+		}
+		.vertical-line {
+		    width: 2px; /* Sets the width of the vertical line */
+		    height: 100%;
+		    background-color: grey; /* Sets the color of the line */
+
+		}
