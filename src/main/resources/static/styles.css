@@ -337,6 +337,7 @@
 			 width: 25%; 
 			 height: 90vh; 
 			 overflow: hidden;
+			 z-index: 999;
 		}
 		#cartPopupContent {
 			height: 100%; 
