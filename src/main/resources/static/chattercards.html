@@ -2,9 +2,6 @@
 <div class="horizontal-container">
 	<div class="horizontal">
 		<div class="horizontal cardspadding rowpadding character-card-container"></div>
-		<div class="horizontal cardspadding rowpadding character-card-container"></div>
-		<div class="horizontal cardspadding rowpadding character-card-container"></div>
-		<div class="horizontal cardspadding rowpadding character-card-container"></div>
 	</div>
 </div>
 			
@@ -22,7 +19,7 @@
 	// jQuery to load character cards
 	$(document).ready(function() {
 		const container = $('.character-card-container');
-		const numberOfCards = 1; 
+		const numberOfCards = 4; 
 		
 		$.get('chattercard.html', function(template) {
 		    for (let i = 0; i < numberOfCards; i++) {
