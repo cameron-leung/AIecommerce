@@ -1,5 +1,4 @@
 <div id="cartPopupOverlay" >
-    <!-- Container for the content of cartpopup.html -->
     <div id="cartPopupContent">
         <div class="cartitem">
             <div class="horizontal" style="display: flex; align-items: center;">
@@ -43,26 +42,26 @@
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
-    var popupOpen = false; // Variable to track if popup is open
+    var cartPopupOpen = false; // Variable to track if popup is open
 
     // Function to open the cart popup overlay
     function openCartPopup() {
     	$('.cart-icon').addClass('active');
         $('#cartPopupOverlay').fadeIn();
-        popupOpen = true; // Set popupOpen to true when popup is opened
+        cartPopupOpen = true; // Set popupOpen to true when popup is opened
     }
 
     // Function to close the cart popup overlay
     function closeCartPopup() {
         $('#cartPopupOverlay').fadeOut();
         $('.cart-icon').removeClass('active');
-        popupOpen = false; // Set popupOpen to false when popup is closed
+        cartPopupOpen = false; // Set popupOpen to false when popup is closed
     }
 
     // Event delegation to close the popup when clicked outside
     $(document).on('click', function(event) {
         var $target = $(event.target);
-        if (popupOpen && !$target.closest('#cartPopupContent').length && !$target.is('#cartPopupContent')) {
+        if (cartPopupOpen && !$target.closest('#cartPopupContent').length && !$target.is('#cartPopupContent')) {
             closeCartPopup();
         }
     });

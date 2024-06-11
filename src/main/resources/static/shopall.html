@@ -19,24 +19,130 @@
 			<h1>All</h1>
 		</div>
 		<div class = "rowpadding">
-			<button id="filter-btn" class="filter-btn">
-			    <i class="fa-solid fa-filter"></i>
-			    <span class="filter-text"  onclick="openFilter()">Filter</span>
+			<button id="openFilterPopupIcon" class="filter-btn">
+			    <i id="openFilterPopupIcon" class="fa-solid fa-filter"></i>
+			    <span>Filter</span>
 			</button>
 		</div>
 		<div class = "chattercards-placeholder"></div>
 		<div class = "chattercards-placeholder"></div>
+	
+		<div id="filterPopupOverlay">
+		    <div id="filterPopupContent">
+		        <h2>Price</h2>
+		        <div class="price-slider-container">
+			    <input type="range" min="0" max="100" value="50" class="price-slider" id="priceRange">
+			    <div class="price-range">Range: 0 - <span id="priceValue">$50</span></div>
+			    <div class = "horizontal-line-container">
+			    
+			    	<div class = "horizontal-line"></div>
+			    </div>
+			    <h2>Category</h2>
+			    <ul class="checkbox-list">
+				    <div class="checkbox-item">
+				        <input type="checkbox" id="checkbox1" name="checkbox1">
+				        <label for="checkbox1">Animal</label>
+				    </div>
+				    <div class="checkbox-item">
+				        <input type="checkbox" id="checkbox2" name="checkbox2">
+				        <label for="checkbox2">Celebrity</label>
+				    </div>
+				    <div class="checkbox-item">
+				        <input type="checkbox" id="checkbox3" name="checkbox3">
+				        <label for="checkbox3">Comedy</label>
+				    </div>
+				    <div class="checkbox-item">
+				        <input type="checkbox" id="checkbox1" name="checkbox1">
+				        <label for="checkbox1">Family</label>
+				    </div>
+				    <div class="checkbox-item">
+				        <input type="checkbox" id="checkbox2" name="checkbox2">
+				        <label for="checkbox2">Friends</label>
+				    </div>
+				    <div class="checkbox-item">
+				        <input type="checkbox" id="checkbox3" name="checkbox3">
+				        <label for="checkbox3">Games</label>
+				    </div>
+				    <div class="checkbox-item">
+				        <input type="checkbox" id="checkbox1" name="checkbox1">
+				        <label for="checkbox1">Helpful</label>
+				    </div>
+				    <div class="checkbox-item">
+				        <input type="checkbox" id="checkbox2" name="checkbox2">
+				        <label for="checkbox2">Personal</label>
+				    </div>
+				    <div class="checkbox-item">
+				        <input type="checkbox" id="checkbox3" name="checkbox3">
+				        <label for="checkbox3">Philosophy</label>
+				    </div>
+				    <div class="checkbox-item">
+				        <input type="checkbox" id="checkbox3" name="checkbox3">
+				        <label for="checkbox3">Public Figures</label>
+				    </div>
+				    <div class="checkbox-item">
+				        <input type="checkbox" id="checkbox3" name="checkbox3">
+				        <label for="checkbox3">Role Play</label>
+				    </div>
+				</ul>
+			</div>
+		    </div>
+		    <div>
+			<button id="applyButton" class="checkoutButton" style="color: #FF206E; border-color: #FF206E;">Apply</button>
+		</div>
+		</div>
+		
 		
 		<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 		<script src="characterData.js"></script>
 	    <script>
-	        $(document).ready(function() {
+	        	$(document).ready(function() {
+	        		var filterPopupOpen = false;
+
+                    // Function to open the filter popup overlay
+                    function openFilterPopup() {
+                        $('#filterPopupOverlay').fadeIn();
+                        filterPopupOpen = true;
+                    }
+
+                    // Function to close the filter popup overlay
+                    function closeFilterPopup() {
+                        $('#filterPopupOverlay').fadeOut();
+                        filterPopupOpen = false;
+                    }
+
+                    // Event delegation to close the popup when clicked outside
+                    $(document).on('click', function(event) {
+                        var $target = $(event.target);
+                        if (filterPopupOpen && !$target.closest('#filterPopupContent').length && !$target.is('#filterPopupContent')) {
+                            closeFilterPopup();
+                        }
+                    });
+
+                    // Prevent the popup from closing when clicked inside
+                    $('#filterPopupContent').on('click', function(event) {
+                        event.stopPropagation();
+                    });
+
+                    // Event listener for the icon click to open the popup
+                    $(document).on('click', '#openFilterPopupIcon', function(event) {
+                        event.stopPropagation(); // Prevent event propagation
+                        openFilterPopup();
+                    });
 	            $('#navbar-placeholder').load('navbar.html', function() {
 	                $('.discover-icon').addClass('active');
 	            });
-
-	            $('.chattercards-placeholder').load('chattercards.html');
 	        });
+	        	$('.chattercards-placeholder').load('chattercards.html');
+	        	var priceSlider = document.getElementById("priceRange");
+	            var priceValue = document.getElementById("priceValue");
+
+	            priceValue.innerHTML = "$" + priceSlider.value;
+
+	            priceSlider.oninput = function() {
+	                priceValue.innerHTML = "$" + this.value;
+	                var thumbPosition = (this.value / this.max) * 100 + "%";
+	                this.style.setProperty('--thumb-position', thumbPosition);
+	            }
 	    </script>
 	</div>
 </body>
