@@ -1,27 +1,32 @@
-<!--  scrollable chatter circles -->
-<div class="scroll-container">
-	<div class="horizontal">
-		<div class="horizontal" id="character-circ-container"></div>
-	</div>
-</div>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <div class="row">
+        <div class="col">
+            <div style = "overflow-x: auto; white-space: nowrap; width: 100%;">
+                <div id="character-circ-container"></div>
+            </div>
+        </div>
+    </div>
+
+
 <script>
-	//Populate character circle with data
-	function populateCircle(template, character) {
-		return template
-		.replace('CIRC_IMAGE_URL', character.circimageUrl)
-		.replace('NAME', character.name);
-	}
-		
-	// jQuery to dynamically load and add character circles to the container
-	$(document).ready(function() {
-		const container = $('#character-circ-container');
-		const numberOfCircles = 6; 
-		
-		$.get('chattercircle.html', function(template) {
-			for (let i = 0; i < numberOfCircles; i++) {
-			     const populatedCircle = populateCircle(template, characterData);
-			     container.append(populatedCircle);
-			}
-		});
-	});
+    // Populate character circle with data
+    function populateCircle(template, character) {
+        return template
+            .replace('CIRC_IMAGE_URL', character.circimageUrl)
+            .replace('NAME', character.name);
+    }
+
+    // jQuery to dynamically load and add character circles to the container
+    $(document).ready(function () {
+        const container = $('#character-circ-container');
+        const numberOfCircles = 6;
+
+        $.get('chattercircle.html', function (template) {
+            for (let i = 0; i < numberOfCircles; i++) {
+                const populatedCircle = populateCircle(template, characterData);
+                container.append(populatedCircle);
+            }
+        });
+    });
 </script>
