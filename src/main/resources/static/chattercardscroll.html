@@ -1,7 +1,8 @@
 <!-- scrollable horizontal chatter card display -->
-<div class="scroll-container">
-	<div class="horizontal">
-		<div class="horizontal character-card-container"></div>
+
+<div class="w-100" style="overflow-x: auto; white-space: nowrap;">
+	<div class="d-flex row">
+		<div class="d-flex row character-card-container"></div>
 	</div>
 </div>
 			
@@ -13,7 +14,7 @@
 	    // Fetch chattercard 
 	    $.get('chattercard.html', function(template) {
 	        for (let i = 0; i < numberOfCards; i++) {
-	            const populatedCard = populateCard(template, characterData);
+	        	const populatedCard = populateCard(template, characterData);
 	            container.append(populatedCard);
 	        }
 	    });
