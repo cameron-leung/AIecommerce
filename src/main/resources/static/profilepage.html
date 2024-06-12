@@ -3,44 +3,44 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Landing Page</title>
+    <title>Profile Page</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-    <link href='https://fonts.googleapis.com/css?family=DM Sans' rel='stylesheet'>
-   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-
+    <link href="https://fonts.googleapis.com/css?family=DM Sans" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
+
 <body>
-	<div id="navbar-placeholder"></div>
-	<div class = "landingpage">
-		<div class = "horizontal">
-			<i class="fa-solid fa-circle-user" style = "color:  #535355; font-size: 180px; padding-right: 20px; padding-top: 20px;"></i>
-			<div class = "vertical">
-				<h1 style = "margin-bottom: 0px;">Profile</h1>
-				<h2 style = "margin-top: 0px;">@B</h2>
-				<div class="horizontal">
-	                <h2 class = "cardspadding" id="followersPlaceholder">NUM_FOLLOWERS</h2>
-	                <h2 class = "cardspadding">Followers</h2>
-	                <h2 class = "cardspadding" id="followingPlaceholder">NUM_FOLLOWING</h2>
-	                <h2 class = "cardspadding">Following</h2>
-	                <h2 class = "cardspadding" id="chattersPlaceholder">NUM_CHATTERS</h2>
-	                <h2 class = "cardspadding">Chatters</h2>
+	<div id="navbar-placeholder"></div> 
+	<div class="px-5 container-fluid">
+		<div class = "d-flex row mt-3">
+			<i class="fa-solid fa-circle-user responsive-icon w-auto pr-1 pt-1" style = "color:  #535355;"></i>
+			<div class = "col">
+				<h1 class = "h-auto w-auto pb-0 mb-0">Profile</h1>
+				<h4 class = "w-auto pb-username">@B</h4>
+				<div class="row">
+	                <h4 class = "w-auto p-1" id="followersPlaceholder">NUM_FOLLOWERS</h4>
+	                <h4 class = "w-auto pr-2">Followers</h4>
+	                <h4 class = "w-auto p-1" id="followingPlaceholder">NUM_FOLLOWING</h4>
+	                <h4 class = "w-auto pr-2">Following</h4>
+	                <h4 class = "w-auto p-1" id="chattersPlaceholder">NUM_CHATTERS</h4>
+	                <h4 class = "w-auto p-1">Chatters</h4>
 	            </div>
 			</div>
-			<span class = "large-break"></span>
-			<div class = "horizontal"  style = "padding-top: 30px;">
-				<i class="fa-solid fa-pen" style = "font-size: 36px; margin: 0px 20px; color:  #535355;"></i>
+			<!--<span class = "large-break"></span> -->
+			<div class = "row w-auto h-auto"  style = "padding-top: 30px;">
+				<i class="w-auto h-auto fa-solid fa-pen" style = "font-size: 36px; margin: 0px 20px; color:  #535355;"></i>
 			
-				<div>
-					<button class = "logout-button" onclick="logout()">Log Out</button>
+				<div class="w-auto h-auto">
+					<button class = "w-auto h-auto p-1 text-white border-0 rounded fs-5" style="background: grey;"onclick="logout()">Log Out</button>
 				</div>
 			</div>
 			
 		</div>
-		<h1>Recents</h1>
+		<h1 class="mt-3">Recents</h1>
 		<div class = "chattercircles-placeholder"></div>
-		<h1>Original Chatters</h1>
+		<h1 class="mt-3">Original Chatters</h1>
 		<div class = "chattercardscroll-placeholder"></div>
-		<h1>Cart</h1>
+		<h1 class="mt-3">Cart</h1>
 		<div class = "chattercardscroll-placeholder"></div>
 		
 	</div>
@@ -65,5 +65,60 @@
 	});
 	</script>
 </body>
-<link rel="stylesheet" href="styles.css">
+<style>
+	* {
+		font-family: 'DM Sans';
+	}
+	.active i{
+		color: #FF206E;
+	}
+	h1 {
+		margin: 0px;
+        padding: 0px;
+	}
+	h2 {
+		margin: 0px;
+        padding: 0px;
+    }
+    
+	p {
+       margin: 0px;
+       padding: 0px;
+   }
+    a {
+		color: black !important;
+		text-decoration: none !important;
+	}
+
+
+        /* Smaller screens (phones) */
+        @media (max-width: 767px) {
+            .responsive-icon {
+                font-size: 80px;
+            }
+            h4 {
+                font-size: 14px; /* Smaller font size for phones */
+            }
+            .pb-username {
+                padding-bottom: 0 !important;
+            }
+        }
+
+        /* Medium screens (tablets) */
+        @media (min-width: 768px) and (max-width: 991px) {
+            .responsive-icon {
+                font-size: 120px;
+            }
+        }
+
+        /* Large screens (desktops) */
+        @media (min-width: 992px) {
+            .responsive-icon {
+                font-size: 180px;
+            }
+            .pb-username {
+            padding-bottom: 5rem; /* Padding bottom for computers */
+        }
+        }
+</style>
 </html>
