@@ -1,14 +1,30 @@
+<style>
+	* {
+		font-family: 'DM Sans';
+	}
+	.active i{
+		color: #FF206E;
+	}
+	h2 {margin: 0px;
+        padding: 0px;
+        }
+	p {
+        	margin: 0px;
+        	padding: 0px;
+        }
+</style>
+
 <a href = "characterpreview.html">
-	<div class = "chattercard">
+	<div class = "flex-none position-relative justify-content-between rounded-4 overflow-hidden shadow pr-5" style = "height: 360px; width: 260px;">
 		<!--  character card image -->
-		<img src = "RECT_IMAGE_URL" alt = "chatter card">
+		<img class = "w-100 pr-2 " src = "RECT_IMAGE_URL" alt = "chatter card">
 		<!--  character card labelling -->
-		<div class="overlay">
-			<div class="text-container">
+		<div class="flex-none position-absolute w-100  px-2 bottom-0 text-dark shadow" style = "background: rgba(255, 255, 255, 0.5);">
+			<div>
 				<!-- name & rating -->
-				<div class = "horizontal">
+				<div class = "d-flex col">
 					<h2 class="name">NAME</h2>
-					<div class="rating">
+					<div class="rating d-flex col mx-1 my-2 fs-5">
 					    <i class="fas fa-star"></i>
 					    <i class="fas fa-star"></i>
 					    <i class="fas fa-star"></i>
@@ -17,9 +33,9 @@
 					</div>
 				</div> 
 				<!-- username & price -->
-				<div class= "horizontal">
-					<p class="username">USERNAME</p>
-					<p class = "username price">PRICE</p>
+				<div class= "d-flex col justify-content-between">
+					<h5 class="username flex-1 text-start">USERNAME</h5>
+					<h5 class = "price flex-1 text-end">PRICE</h5>
 				</div>
 				<p class="description">DESCRIPTION</p>
 			</div>
