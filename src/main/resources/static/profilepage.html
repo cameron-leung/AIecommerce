@@ -15,25 +15,30 @@
 		<div class = "d-flex row mt-3">
 			<i class="fa-solid fa-circle-user responsive-icon w-auto pr-1 pt-1" style = "color:  #535355;"></i>
 			<div class = "col">
+			<div class="row">
+				<div class="col">
 				<h1 class = "h-auto w-auto pb-0 mb-0">Profile</h1>
 				<h4 class = "w-auto pb-username">@B</h4>
+				</div>
+				<div class = "row w-auto h-auto pt-0" >
+				<i class="w-auto h-auto fa-solid fa-pen" style = "color: #535355;"></i>
+			
+				<div class="w-auto h-auto">
+					<button class = "w-auto h-auto text-white border-0 rounded logout-button" style="background: #535355;" onclick="logout()">Log Out</button>
+				</div>
+			</div>
+			</div>
+				
 				<div class="row">
 	                <h4 class = "w-auto p-1" id="followersPlaceholder">NUM_FOLLOWERS</h4>
-	                <h4 class = "w-auto pr-2">Followers</h4>
+	                <h4 class = "w-auto p-1">Followers</h4>
 	                <h4 class = "w-auto p-1" id="followingPlaceholder">NUM_FOLLOWING</h4>
-	                <h4 class = "w-auto pr-2">Following</h4>
+	                <h4 class = "w-auto p-1">Following</h4>
 	                <h4 class = "w-auto p-1" id="chattersPlaceholder">NUM_CHATTERS</h4>
 	                <h4 class = "w-auto p-1">Chatters</h4>
 	            </div>
 			</div>
-			<!--<span class = "large-break"></span> -->
-			<div class = "row w-auto h-auto"  style = "padding-top: 30px;">
-				<i class="w-auto h-auto fa-solid fa-pen" style = "font-size: 36px; margin: 0px 20px; color:  #535355;"></i>
 			
-				<div class="w-auto h-auto">
-					<button class = "w-auto h-auto p-1 text-white border-0 rounded fs-5" style="background: grey;"onclick="logout()">Log Out</button>
-				</div>
-			</div>
 			
 		</div>
 		<h1 class="mt-3">Recents</h1>
@@ -102,6 +107,15 @@
             .pb-username {
                 padding-bottom: 0 !important;
             }
+            .fa-pen {
+                font-size: 1.2rem; /* Smaller font size for icons on phones */
+                
+            }
+
+            .logout-button {
+                font-size: .8rem; /* Smaller font size for buttons on phones */
+                
+            }
         }
 
         /* Medium screens (tablets) */
@@ -117,8 +131,17 @@
                 font-size: 180px;
             }
             .pb-username {
-            padding-bottom: 5rem; /* Padding bottom for computers */
-        }
+            padding-bottom: 4rem; /* Padding bottom for computers */
+        	}
+        	.fa-pen {
+                font-size: 2.2rem; /* Smaller font size for icons on phones */
+                 /* Adjust margin for phones */
+            }
+
+            .logout-button {
+                font-size: 24px; /* Smaller font size for buttons on phones */
+                
+            }
         }
 </style>
 </html>
