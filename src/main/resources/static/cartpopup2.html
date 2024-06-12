@@ -1,0 +1,55 @@
+<div id="cartPopupOverlay" class="d-none position-fixed z-2 rounded-3 shadow end-0 w-25 overflow-hidden  m-2" style=" height: 90vh;">
+	<div id="cartPopupContent" class="z-3 h-100 w-100 bg-light rounded-3 shadow-sm p-3 overflow-hidden">
+		<h1>cart</h1>
+	</div>
+</div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    var cartPopupOpen = false; // Variable to track if popup is open
+
+    // Function to open the cart popup overlay
+    function openCartPopup() {
+    	$('.cart-icon').addClass('active');
+    	$('#cartPopupOverlay').removeClass('d-none').fadeIn();
+        $('#cartPopupOverlay').fadeIn();
+        cartPopupOpen = true; // Set popupOpen to true when popup is opened
+    }
+
+    // Function to close the cart popup overlay
+    function closeCartPopup() {
+    	$('#cartPopupOverlay').fadeOut(function() {
+            $(this).addClass('d-none');
+        });
+        $('.cart-icon').removeClass('active');
+        cartPopupOpen = false; // Set popupOpen to false when popup is closed
+    }
+
+    // Event delegation to close the popup when clicked outside
+    $(document).on('click', function(event) {
+        var $target = $(event.target);
+        if (cartPopupOpen && !$target.closest('#cartPopupContent').length && !$target.is('#cartPopupContent')) {
+            closeCartPopup();
+        }
+    });
+
+    // Prevent the popup from closing when clicked inside
+    $('#cartPopupContent').on('click', function(event) {
+        event.stopPropagation();
+    });
+
+    // Event listener for the icon click to open the popup
+    $('.openCartPopupIcon').on('click', function(event) {
+        event.stopPropagation(); // Prevent event propagation
+        openCartPopup();
+    });
+    
+ // Toggle check/uncheck icon
+    $(document).ready(function() {
+        $('#check-icon').on('click', function() {
+            $(this).toggleClass("f-regular fa-square");
+        });
+    });
+    $('#checkoutButton').on('click', function() {
+        window.location.href = 'purchasepage.html';
+    });
+</script>
