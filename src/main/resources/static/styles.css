@@ -60,51 +60,7 @@
 		}
 		
  
-        /* navbar */
-        .navbar {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            background-color: #ffffff;
-            padding: 10px 20px;
-        }
-        /* navbar logo */
-        .navbar .logo {
-            display: flex;
-            align-items: center;
-            text-decoration: none;
-            font-size: 24px;
-        }
-        .navbar .logo img {
-        	color: #535355;
-            width: 30px; 
-            margin-right: 20px; 
-        }
-        /* navbar search */
-        .navbar .search-bar {
-            flex-grow: 1;
-            display: flex;
-            justify-content: center; 
-        }
-        .navbar .search-bar input {
-            width: 100%;
-            padding: 5px;
-            font-size: 16px;
-            border-radius: 10px; 
-            background-color: #FAFAFA;
-            border: none;
-        }
-        /* icons */
-        .navbar .icons {
-            display: flex;
-            align-items: center;
-        }
-        .navbar .icons a {
-            color: #535355;
-            text-decoration: none;
-            margin-left: 20px;
-            font-size: 24px;
-        }
+
         /* activate navbar icons */
         .active i {
         	color: #FF206E;
@@ -176,21 +132,7 @@
             justify-content: space-between;
             padding: 0px 54px;
         }
-        
-        /* chatter circles */
-		.chattercirc {
-			display: inline-block;
-			align-items: center;
-			justify-content: center;
-			max-width: 200px;
-			padding-right: 40px;
-		}
-		.chattercirc h3{
-			text-align: center;
-		}
-        .chattercirc img {
-			width: 200px;
-		}
+
 		
 		/* categories thumbnails*/
 		.categories img {
