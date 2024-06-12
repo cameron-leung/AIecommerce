@@ -201,16 +201,7 @@
 			color: #FF206E;
 		}
 
-		button.logout-button {
-		    padding: 5px 10px; 
-		    background-color: #535355; 
-		    color: white; 
-		    border: none; 
-		    border-radius: 5px; 
-		    cursor: pointer; 
-		    font-family: 'DM Sans';
-		    font-size: 20px; 
-		}
+		
 		
 		.checkout {
 			width: 35%;
