@@ -1,6 +1,45 @@
-<div id="cartPopupOverlay" class="d-none position-fixed z-2 rounded-3 shadow end-0 w-25 overflow-hidden  m-2" style=" height: 90vh;">
+<div id="cartPopupOverlay" class="d-none position-fixed z-2 shadow end-0 w-25 overflow-hidden  m-2" style=" height: 90vh;">
 	<div id="cartPopupContent" class="z-3 h-100 w-100 bg-light rounded-3 shadow-sm p-3 overflow-hidden">
-		<h1>cart</h1>
+		<!--  cart item -->
+		<div class="d-flex flex-column w-100 overflow-hidden" style="height: 25vh;" >
+            <div class="d-flex flex-row display-flex align-items-center justify-content-end"style="height: 20vh;" >
+                <img src="images/LiliRectangle.png" class = "object-fit-cover rounded-3 w-50"style="height: 20vh;" >
+                <div class="flex-column w-30 p-2">
+                    <h3 class = "m-0 p-0">Lili</h3>
+                    <h5 class = "mt-0">@B
+                    <span class="d-block mb-5"></span></h5>
+                    <h5 class = "mb-0">$2.00</h5>
+                </div>
+                <div class="d-flex flex-column h-100 align-items-end justify-content-end flex-grow-1">
+                    <a href="#">
+                        <img class = "m-0 p-0"  style="width: 25px;" src="images/AIchatlogopink.png" alt="Logo"> 
+                    </a>
+                    <i class="d-flex justify-content-center pt-2 w-25 fs-3 cursor-pointer fa-solid fa-trash"></i>
+                    <i id="check-icon" class="d-flex justify-content-center pt-2 w-25 fs-3 cursor-pointer fa-regular fa-square-check"></i>
+                </div>
+            </div>
+        </div>
+        
+        <!-- total texts -->
+        <div class = "position-absolute w-90" style="bottom: 60px; right: 10px; left: 10px;">
+            <div class = "d-flex justify-content-between">
+                <h5>Subtotal</h5>
+                <h5>$2.00</h5>
+            </div>
+            <div class = "d-flex justify-content-between">
+                <h5>Discounts</h5>
+                <h5>-$0.00</h5>
+            </div>
+            <div class = "d-flex justify-content-between">
+                <h5>Tax + Fees</h5>
+                <h5>$2.00</h5>
+            </div>
+        </div>
+        
+        <!-- checkout button -->
+        <div>
+			<button id="checkoutButton" class="d-block position-absolute px-1 py-2 bottom-0 mb-3 w-75 bg-light rounded-2 translate-middle-x" style="left: 50%; color: #FF206E; border-color: #FF206E;">Checkout</button>
+		</div>
 	</div>
 </div>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
