@@ -1,45 +1,47 @@
-<div id="cartPopupOverlay" >
-    <div id="cartPopupContent">
-        <div class="cartitem">
-            <div class="horizontal" style="display: flex; align-items: center;">
-                <img src="images/LiliRectangle.png" style="width: 150px; height: 150px;  border-radius: 5px; object-fit: cover;">
-                <div class="vertical" style="width: 36%; padding-left: 10px;">
-                    <h1 style="margin: 0px;">Lili</h1>
-                    <h2 style="margin: 0px;">@B
-                    <span class="break"></span></h2>
-                    <h2 style="margin: 0px;">$2.00</h2>
+<div id="cartPopupOverlay" class="d-none position-fixed z-2 shadow end-0 w-25 overflow-hidden  m-2" style=" height: 90vh;">
+	<div id="cartPopupContent" class="z-3 h-100 w-100 bg-light rounded-3 shadow-sm p-3 overflow-hidden">
+		<!--  cart item -->
+		<div class="d-flex flex-column w-100 overflow-hidden" style="height: 25vh;" >
+            <div class="d-flex flex-row display-flex align-items-center justify-content-end"style="height: 20vh;" >
+                <img src="images/LiliRectangle.png" class = "object-fit-cover rounded-3 w-50"style="height: 20vh;" >
+                <div class="flex-column w-30 p-2">
+                    <h3 class = "m-0 p-0">Lili</h3>
+                    <h5 class = "mt-0">@B
+                    <span class="d-block mb-5"></span></h5>
+                    <h5 class = "mb-0">$2.00</h5>
                 </div>
-                <div class="carticons">
+                <div class="d-flex flex-column h-100 align-items-end justify-content-end flex-grow-1">
                     <a href="#">
-                        <img style="width: 25px; padding: 0px; margin: 0px;" src="images/AIchatlogopink.png" alt="Logo"> 
+                        <img class = "m-0 p-0"  style="width: 25px;" src="images/AIchatlogopink.png" alt="Logo"> 
                     </a>
-                    <i style="width: 25%;" class="fa-solid fa-trash"></i>
-                    <i id="check-icon" style="width: 25%;" class="fa-regular fa-square-check"></i>
+                    <i class="d-flex justify-content-center pt-2 w-25 fs-3 cursor-pointer fa-solid fa-trash"></i>
+                    <i id="check-icon" class="d-flex justify-content-center pt-2 w-25 fs-3 cursor-pointer fa-regular fa-square-check"></i>
                 </div>
             </div>
         </div>
         
-        <div style="position: absolute; bottom: 60px; width: 100%;">
-            <div style="display: flex; justify-content: space-between; padding: 0px 30px 0px 10px;">
-                <h2 style="margin: 0;">Subtotal</h2>
-                <h2 style="margin: 0;">$2.00</h2>
+        <!-- total texts -->
+        <div class = "position-absolute w-90" style="bottom: 60px; right: 10px; left: 10px;">
+            <div class = "d-flex justify-content-between">
+                <h5>Subtotal</h5>
+                <h5>$2.00</h5>
             </div>
-            <div style="display: flex; justify-content: space-between; padding: 0px 30px 0px 10px;">
-                <h2 style="margin: 0;">Discounts</h2>
-                <h2 style="margin: 0;">-$0.00</h2>
+            <div class = "d-flex justify-content-between">
+                <h5>Discounts</h5>
+                <h5>-$0.00</h5>
             </div>
-            <div style="display: flex; justify-content: space-between; padding: 0px 30px 0px 10px;">
-                <h2 style="margin: 0;">Tax + Fees</h2>
-                <h2 style="margin: 0;">$2.00</h2>
+            <div class = "d-flex justify-content-between">
+                <h5>Tax + Fees</h5>
+                <h5>$2.00</h5>
             </div>
         </div>
-		<div>
-			<button id="checkoutButton" class="checkoutButton" style="color: #FF206E; border-color: #FF206E;">Checkout</button>
-		</div>
         
-    </div>
+        <!-- checkout button -->
+        <div>
+			<button id="checkoutButton" class="d-block position-absolute px-1 py-2 bottom-0 mb-3 w-75 bg-light rounded-2 translate-middle-x" style="left: 50%; color: #FF206E; border-color: #FF206E;">Checkout</button>
+		</div>
+	</div>
 </div>
-
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
     var cartPopupOpen = false; // Variable to track if popup is open
@@ -47,13 +49,16 @@
     // Function to open the cart popup overlay
     function openCartPopup() {
     	$('.cart-icon').addClass('active');
+    	$('#cartPopupOverlay').removeClass('d-none').fadeIn();
         $('#cartPopupOverlay').fadeIn();
         cartPopupOpen = true; // Set popupOpen to true when popup is opened
     }
 
     // Function to close the cart popup overlay
     function closeCartPopup() {
-        $('#cartPopupOverlay').fadeOut();
+    	$('#cartPopupOverlay').fadeOut(function() {
+            $(this).addClass('d-none');
+        });
         $('.cart-icon').removeClass('active');
         cartPopupOpen = false; // Set popupOpen to false when popup is closed
     }
