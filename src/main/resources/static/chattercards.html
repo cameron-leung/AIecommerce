@@ -1,8 +1,19 @@
 <!-- horizontal chatter card display -->
-<div class="horizontal-container">
-	<div class="horizontal">
-		<div class="horizontal cardspadding rowpadding character-card-container"></div>
-	</div>
+
+<div class="row">
+    <div class="col">
+        <div class="d-flex flex-wrap" style="width: 100%;">
+            <!-- Ensure each card has appropriate styling and width -->
+            <div class="character-card-container p-2"></div>
+            <div class="character-card-container p-2"></div>
+            <div class="character-card-container p-2"></div>
+            <div class="character-card-container p-1"></div>
+            <div class="character-card-container p-2"></div>
+            <div class="character-card-container p-2"></div>
+            <div class="character-card-container p-2"></div>
+            <div class="character-card-container p-1"></div>
+        </div>
+    </div>
 </div>
 			
 <script>
@@ -19,7 +30,7 @@
 	// jQuery to load character cards
 	$(document).ready(function() {
 		const container = $('.character-card-container');
-		const numberOfCards = 4; 
+		const numberOfCards = 1; 
 		
 		$.get('chattercard.html', function(template) {
 		    for (let i = 0; i < numberOfCards; i++) {
