@@ -32,43 +32,38 @@
 		</div>
 		<div class="px-3">
 	        <div class="row">
-	            <div class="col d-flex align-items-center p-0">
+	            <div class="col d-flex p-0">
 	            	<div id="verticalscroll-placeholder"></div> 
 	            	<img class = "square" src = "images/LiliRectangle.png">
 	            	<div class = "w-50 py-0 px-1">
-	            		
+	            		<div class = "row justify-content-between w-auto">
+							<div class = "col-auto">
+								<h1 class="w-auto">Lili</h1>
+								<a href = "profilepage.html"><h3 class="pb-5 w-auto">@B</h3></a>
+							</div>
+							<div class = "d-flex w-auto justify-content-end">
+								<div class="d-flex mt-0" style="gap: 40px;">
+									<div class = "col">
+										<i class="p-0 fas fa-cart-plus openCartPopupIcon" style="width: 80px; font-size: 50px; color: #FF206E;"></i>
+										<h3 class="text-start pt-1">$2.00</h3>
+									</div>
+							        <div class = "col">
+							        	<a href="#"><img class="p-0" src="images/AIchatlogopink.png" alt="Logo" style="width: 50px; font-size: 50px; color: #FF206E;"></a> 
+							        	<h3 class="text-center pt-1" >Trial</h3>
+							        </div>
+							    </div>
+						    </div>
+						</div>
+						<h3>Motto <i class="fa-solid fa-play"></i></h3>
+						<p class="pb-3">Your guide to small talk</p>
+						<h3>Description</h3>
+						<p>Young woman with modern, open-minded, charismatic personality. Expert in social skills and first impressions. Role-plays educational mock interactions over call and video call.</p>
 	            	</div>
 	            </div>
 	         </div>
 	    </div>
 	            	
-		<div class = "d-flex col align-items-center">
-			
-			<div class = "w-50 py-0 px-1">
-				<div class = "row justify-content-between">
-					<div class = "col">
-						<h1>Lili</h1>
-						<a href = "profilepage.html"><h2>@B<span class="large-break"></span></h2></a>
-					</div>
-					<div class = "right-container">
-						<div class="halfscreen-icons-container">
-							<div class = "vertical">
-								<i class="large-icon fas fa-cart-plus openCartPopupIcon"></i>
-								<h2 style = "text-align: center; padding-top: 5px;">$2.00</h2>
-							</div>
-					        <div class = "vertical">
-					        	<a href="#"><img class="large-icon" src="images/AIchatlogopink.png" alt="Logo"></a> 
-					        	<h2 style = "text-align: center; padding-top: 5px;">Trial</h2>
-					        </div>
-					    </div>
-				    </div>
-				</div>
-				<h2>Motto <i class="fa-solid fa-play"></i></h2>
-				<p>Your guide to small talk<span class="large-break"></span></p>
-				<h2>Description</h2>
-				<p>Young woman with modern, open-minded, charismatic personality. Expert in social skills and first impressions. Role-plays educational mock interactions over call and video call.</p>
-			</div>
-		</div>
+		
 		<h1>Reviews</h1>
 		<div class="rating" style = "font-size: 50px;">
 				<i class="fas fa-star"></i>
@@ -122,8 +117,8 @@
             $('#cartpopup-placeholder').load('cartpopup.html');
         });
 
-        function goBack() {
-            window.history.back();
-        }
+        document.getElementById('backButton').addEventListener('click', function() {
+	        window.history.back();
+	    });
     </script>
 </body>
