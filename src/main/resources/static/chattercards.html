@@ -1,21 +1,16 @@
-<!-- horizontal chatter card display -->
-
+<!-- horizontal chatter card display
 <div class="row">
     <div class="col">
         <div class="d-flex flex-wrap" style="width: 100%;">
             <!-- Ensure each card has appropriate styling and width -->
-            <div class="character-card-container p-2"></div>
-            <div class="character-card-container p-2"></div>
-            <div class="character-card-container p-2"></div>
-            <div class="character-card-container p-1"></div>
-            <div class="character-card-container p-2"></div>
-            <div class="character-card-container p-2"></div>
-            <div class="character-card-container p-2"></div>
-            <div class="character-card-container p-1"></div>
-        </div>
+			<div class="character-card-container"></div>
+
+<!--         </div>
     </div>
 </div>
-			
+ -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<script src="characterData.js"></script>	
 <script>
 	// Populate character card with data
 	function populateCard(template, character) {
@@ -24,19 +19,21 @@
 		.replace('NAME', character.name)
 		.replace('USERNAME', character.username)
 		.replace('PRICE', character.price)
-		.replace('DESCRIPTION', character.description);
+		.replace('BLURB', character.blurb);
 	}
 		
 	// jQuery to load character cards
 	$(document).ready(function() {
 		const container = $('.character-card-container');
-		const numberOfCards = 1; 
+		const numberOfCards = 6; 
 		
 		$.get('chattercard.html', function(template) {
+			let html = "";
 		    for (let i = 0; i < numberOfCards; i++) {
 		        const populatedCard = populateCard(template, characterData);
-		        container.append(populatedCard);
+		        html += populatedCard;
 		 	}
+		    container.html(html);
 		});
 	});
 </script>
