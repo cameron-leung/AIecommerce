@@ -1,51 +1,3 @@
-
-		body {
-            font-family: 'DM Sans';
-            margin: 0;
-            padding: 0;
-            color: black;
-        }
-        h1 {
-        	font-size: 40px;
-        }
-        h2 {margin: 0px;
-        padding: 0px;
-        	font-size: 20px;
-        }
-        h3 {
-        	font-size: 24px;
-        }
-        p {
-        	margin: 0px;
-        	padding: 0px;
-        }
-        a {
-        	color: black;
-        	text-decoration: none;
-        }
-        
-		
-		/*vertical scroll*/
-		.vertical {
-			flex-direction: column;
-		}
-		.vertical-scroll {
-		    height: 500px; 
-		    overflow-y: auto; 
-		    padding: 0px 10px; 
-		    display: flex;
-		    flex-direction: column;
-		    gap: 10px; 
-		}
-
-		.vertical-scroll img {
-			object-fit: cover;
-		    width: 150px; 
-		    height: 150px;
-		    border-radius: 10px; 
-		}
-		
-
         .icons .back-icon {
 		    display: inline-block; /* Ensure the element respects the width property */
 		    width: 50px;
@@ -113,18 +65,7 @@
 		    background-color: grey; /* Sets the color of the line */
 			margin: 0px 20px 0px 0px;
 		}
-		 .horizontal-line-container {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        width: 100%;
-    }
-		.horizontal-line {
-			width: 100%;
-			height: 2px;
-			background-color: grey;
-			margin: 10px 0px 5px 5px;
-		}
+
 
 		
 		label {
