@@ -5,10 +5,10 @@
 	label {
 		    margin-bottom: 8px;
 		    font-size: 16px;
-		    font-weight: bold;
+	
 		}
 		
-		input[type="text"] {
+		.purchase-form input[type="text"] {
 		    width: 50vh;
 		    padding: 10px;
 		    font-size: 14px;
@@ -72,11 +72,11 @@
 		<h2 class="pb-3"style = "color:#FF206E ">Personal Details</h2>
 		<div class="form-group">
 			<div class="d-flex flex-row pb-4">
-				<div class="d-flex flex-column" style="margin-right: 10%;">
+				<div class="d-flex flex-column purchase-form" style="margin-right: 10%;">
 					<label for="first-name">First Name</label>	
 	        		<input type="text" id="first-name" name="first-name" placeholder="Enter your first name">
 				</div>
-				<div class="d-flex flex-column">
+				<div class="d-flex flex-column purchase-form">
 					<label for="last-name">Last Name<span class = "large-break"></span></label>	
 	        		<input type="text" id="last-name" name="last-name" placeholder="Enter your last name"><span class = "large-break"></span>
 				</div>
@@ -85,21 +85,21 @@
 	    <h2 class="pb-3" style="color: #FF206E">Payment Details</h2>
 	    <div class="form-group">
 			<div class="d-flex flex-row pb-4">
-				<div class="d-flex flex-column"  style="margin-right: 10%;">
+				<div class="d-flex flex-column purchase-form"  style="margin-right: 10%;">
 					<label for="cardholder-name">Card Holder Name</label>	
 	        		<input type="text" id="cardholder-name" name="cardholder-name" placeholder="Enter your name">
 				</div>
-				<div class="d-flex flex-column">
+				<div class="d-flex flex-column purchase-form">
 					<label for="card-number">Card Number</label>	
 	        		<input type="text" id="card-number" name="card-number" placeholder="Enter your card number">
 				</div>
 			</div>	
 			<div class="d-flex flex-row pb-4">
-				<div class="d-flex flex-column" style="margin-right: 10%;">
+				<div class="d-flex flex-column purchase-form" style="margin-right: 10%;">
 					<label for="cardholder-name">CVV</label>	
 	        		<input type="text" id="cardholder-name" name="cardholder-name" placeholder="CVV">
 				</div>
-				<div class="d-flex flex-column">
+				<div class="d-flex flex-column purchase-form">
 					<label for="card-number">Expiration Date</label>	
 	        		<input type="text" id="card-number" name="card-number" placeholder="Enter your card number">
 				</div>
