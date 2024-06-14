@@ -54,10 +54,9 @@
 							    </div>
 						    </div>
 						</div>
-						<h3>Motto <i class="fa-solid fa-play"></i></h3>
-						<p class="pb-3">Your guide to small talk</p>
+
 						<h3>Description</h3>
-						<p>Young woman with modern, open-minded, charismatic personality. Expert in social skills and first impressions. Role-plays educational mock interactions over call and video call.</p>
+						<p id='character-description'></p>
 	            	</div>
 	            </div>
 	         </div>
@@ -120,5 +119,11 @@
         document.getElementById('backButton').addEventListener('click', function() {
 	        window.history.back();
 	    });
+        document.addEventListener('DOMContentLoaded', () => {
+            const characterDescriptionElement = document.getElementById('character-description');
+            if (characterData && characterDescriptionElement) {
+                characterDescriptionElement.textContent = characterData.description;
+            }
+        });
     </script>
 </body>
