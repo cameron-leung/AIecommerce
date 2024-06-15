@@ -80,3 +80,5 @@ const characterData = [
         description: 'Elderly, wise, inspired wizard mentor who loves alchemy. Harbors tough-love, fatherly, and committed traits. Will guide you through learning new worlds and conquering quests in chat, call, and video call.'
     },
  ];
+
+ 
