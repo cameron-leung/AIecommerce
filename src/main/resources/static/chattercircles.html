@@ -1,7 +1,7 @@
 <div class="row">
      <div class="col">
          <div style = "overflow-x: auto; white-space: nowrap; width: 100%;">
-            <div id="character-circ-container"></div>
+            <div class="character-circ-container"></div>
          </div>
      </div>
 </div>
@@ -10,21 +10,22 @@
 <script>
     // Populate character circle with data
     function populateCircle(template, character) {
+    	const imageName = character.name.replace(/\s+/g, '');
         return template
-            .replace('CIRC_IMAGE_URL', 'images/'+character.name+'Circle.png')
-            .replace('NAME', character.name);
+            .replace('CIRC_IMAGE_URL', 'images/' + imageName + 'Circle.png')
+            .replace('NAME', character.name)
     }
 
     // jQuery to dynamically load and add character circles to the container
     $(document).ready(function () {
-        const container = $('#character-circ-container');
-        const numberOfCircles = 6;
-
-        $.get('chattercircle.html', function (template) {
-            for (let i = 0; i < numberOfCircles; i++) {
-                const populatedCircle = populateCircle(template, characterData);
+		const container = $('.character-circ-container');
+        
+        // Fetch chattercard template
+        $.get('chattercircle.html', function(template) {
+            characterData.forEach(character => {
+                const populatedCircle = populateCircle(template, character);
                 container.append(populatedCircle);
-            }
+            });
         });
     });
 </script>
