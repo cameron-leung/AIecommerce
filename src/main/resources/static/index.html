@@ -65,7 +65,14 @@
 
             <h1 class="display-4 mt-4">Browse From Creators</h1>
             <a href="profilepage.html"><h2>@B</h2></a>
-            <div class="chattercardscroll-placeholder"></div>
+            <div class="row" style="overflow-x: auto; white-space: nowrap;">
+			    <div class="col">
+			        <div class="d-flex" style="width: 100%; overflow-x: auto; white-space: nowrap;">
+			            <!-- Ensure each card has appropriate styling and width -->
+			            <div class="B-character-card-container d-flex flex-row justify-content-start"></div>
+			        </div>
+			    </div>
+			</div>
             <a href="profilepage.html"><h2>@Meta</h2></a>
             <div class="chattercardscroll-placeholder"></div>
         </div>
@@ -92,7 +99,26 @@
                     }, 1000);
                 }
             });
+            const Bcards = $('.B-character-card-container');
+            const userBFilteredData = characterData.filter(character => character.username === '@B');
+            
+            // Fetch chattercard template
+            $.get('chattercard.html', function(template) {
+                userBFilteredData.forEach(character => {
+                    const populatedCard = populateCard(template, character);
+                    Bcards.append(populatedCard);
+                });
+            });
         });
+        function populateCard(template, character) {
+            const imageName = character.name.replace(/\s+/g, ''); // Remove spaces from the character's name for the image URL
+            return template
+                .replace('RECT_IMAGE_URL', 'images/' + imageName + 'Rectangle.png')
+                .replace('NAME', character.name)
+                .replace('USERNAME', character.username)
+                .replace('PRICE', character.price)
+                .replace('BLURB', character.blurb);
+        }
     </script>
 </body>
 </html>
