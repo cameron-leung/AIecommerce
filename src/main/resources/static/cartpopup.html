@@ -6,14 +6,11 @@
                 <img src="images/LiliRectangle.png" class = "object-fit-cover rounded-3 w-50"style="height: 20vh;" >
                 <div class="flex-column w-30 p-2">
                     <h3 class = "m-0 p-0">Lili</h3>
-                    <h5 class = "mt-0">@B
-                    <span class="d-block mb-5"></span></h5>
+                    <h5 class = "mt-0 mb-5">@B</h5>
                     <h5 class = "mb-0">$2.00</h5>
                 </div>
                 <div class="d-flex flex-column h-100 align-items-end justify-content-end flex-grow-1">
-                    <a href="#">
-                        <img class = "m-0 p-0"  style="width: 25px;" src="images/AIchatlogopink.png" alt="Logo"> 
-                    </a>
+                    <a href="#"><img class = "m-0 p-0"  style="width: 25px;" src="images/AIchatlogopink.png" alt="Logo"></a>
                     <i class="d-flex justify-content-center pt-2 w-25 fs-3 cursor-pointer fa-solid fa-trash"></i>
                     <i id="check-icon" class="d-flex justify-content-center pt-2 w-25 fs-3 cursor-pointer fa-regular fa-square-check"></i>
                 </div>
@@ -42,9 +39,9 @@
 		</div>
 	</div>
 </div>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 <script>
-    var cartPopupOpen = false; // Variable to track if popup is open
+    var cartPopupOpen = false;
     // Function to open the cart popup overlay
     function openCartPopup() {
     	$('.cart-icon').addClass('active');
@@ -60,14 +57,14 @@
         $('.cart-icon').removeClass('active');
         cartPopupOpen = false; // Set popupOpen to false when popup is closed
     }
-    // Event delegation to close the popup when clicked outside
+    // Test if user clicks outside popup
     $(document).on('click', function(event) {
         var $target = $(event.target);
         if (cartPopupOpen && !$target.closest('#cartPopupContent').length && !$target.is('#cartPopupContent')) {
             closeCartPopup();
         }
     });
-    // Prevent the popup from closing when clicked inside
+    // Prevent popup from closing when clicked inside
     $('#cartPopupContent').on('click', function(event) {
         event.stopPropagation();
     });

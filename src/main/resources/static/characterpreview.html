@@ -8,45 +8,58 @@
     <link href='https://fonts.googleapis.com/css?family=DM Sans' rel='stylesheet'>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
-<body> 
 <style>
 	.square {
-			width: 500px;
-			height: 500px;
-			border-radius: 10px;
-			object-fit: cover;
-		}
-		.halfscreen-text {
-			padding: 0px 10px;
-			max-width: 45%;
-		}
+		width: 500px;
+		height: 500px;
+		border-radius: 10px;
+		object-fit: cover;
+	}
+	.halfscreen-text {
+		padding: 0px 10px;
+		max-width: 45%;
+	}
 </style>
+<body> 
 	<div id="navbar-placeholder"></div> 
 	<div class = "px-5 container-fluid">
+	
+		<!-- header & back button -->
 		<div class = "d-flex col">
 			<div class = "icons">
-				<div id="backButton" class="d-inline-block py-1 px-3 text-center align-items-center"
-		    ><i class="fs-2 fa-solid fa-chevron-left"></i></div>
+				<div id="backButton" class="d-inline-block py-1 px-3 text-center align-items-center">
+					<i class="fs-2 fa-solid fa-chevron-left"></i>
+				</div>
 			</div>
 			<h1>Lili</h1>
 		</div>
+		
+		<!-- chatter preview body -->
 		<div class="px-3">
 	        <div class="row">
 	            <div class="col d-flex p-0">
+	            
+	            	<!-- chatter images -->
 	            	<div id="verticalscroll-placeholder"></div> 
 	            	<img class = "square" src = "images/LiliRectangle.png">
+	            	
+	            	<!-- chatter text & checkout icons -->
 	            	<div class = "w-50 py-0 px-1">
 	            		<div class = "row justify-content-between w-auto">
+	            			<!-- chatter name & username -->
 							<div class = "col-auto">
 								<h1 class="w-auto">Lili</h1>
 								<a href = "profilepage.html"><h3 class="pb-5 w-auto">@B</h3></a>
 							</div>
+							<!-- icons & text -->
 							<div class = "d-flex w-auto justify-content-end">
 								<div class="d-flex mt-0" style="gap: 40px;">
+									<!-- cart icon & price -->
 									<div class = "col">
 										<i class="p-0 fas fa-cart-plus openCartPopupIcon" style="width: 80px; font-size: 50px; color: #FF206E;"></i>
 										<h3 class="text-start pt-1">$2.00</h3>
 									</div>
+									<!-- chat logo & Trial text -->
 							        <div class = "col">
 							        	<a href="#"><img class="p-0" src="images/AIchatlogopink.png" alt="Logo" style="width: 50px; font-size: 50px; color: #FF206E;"></a> 
 							        	<h3 class="text-center pt-1" >Trial</h3>
@@ -54,15 +67,16 @@
 							    </div>
 						    </div>
 						</div>
-
+						<!-- chatter description -->
 						<h3>Description</h3>
 						<p id='character-description'></p>
 	            	</div>
+	            	
 	            </div>
 	         </div>
-	    </div>
-	            	
+	    </div>  	
 		
+		<!-- chatter preview reviews -->
 		<h1>Reviews</h1>
 		<div class="rating pb-5" style = "font-size: 50px;">
 				<i class="fas fa-star"></i>
@@ -71,6 +85,7 @@
 				<i class="fas fa-star"></i>
 				<i class="fas fa-star"></i>
 		</div>
+		<!-- Review 1 -->
 		<div class = "row">
 			<i class="col-auto pr-1 fa-solid fa-circle-user" style = "color:  #535355; font-size: 80px;"></i>
 			<div class = "col-auto">
@@ -86,6 +101,7 @@
 		</div>
 		<p class="py-1">Realistic video call responses!</p>
 		<hr>
+		<!-- Review 2 -->
 		<div class = "row">
 			<i class="col-auto pr-1 fa-solid fa-circle-user" style = "color:  #535355; font-size: 80px;"></i>
 			<div class = "col-auto">
@@ -109,16 +125,22 @@
 	<script src="characterData.js"></script>
 	<script>
         $(document).ready(function() {
+        	//load navbar & activate discover icon
             $('#navbar-placeholder').load('navbar.html', function() {
                 $('.discover-icon').addClass('active');
             });
+        	//load images vertical scroll widget
             $('#verticalscroll-placeholder').load('verticalscroll.html');
+        	//load cart popup for cart button
             $('#cartpopup-placeholder').load('cartpopup.html');
         });
-
+		
+        //back button function
         document.getElementById('backButton').addEventListener('click', function() {
 	        window.history.back();
 	    });
+        
+        //load character content
         document.addEventListener('DOMContentLoaded', () => {
             const characterDescriptionElement = document.getElementById('character-description');
             if (characterData && characterDescriptionElement) {
