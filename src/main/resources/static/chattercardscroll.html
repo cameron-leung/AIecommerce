@@ -1,13 +1,8 @@
-
 <div class="row" style="overflow-x: auto; white-space: nowrap;">
     <div class="col">
         <div class="d-flex" style="width: 100%; overflow-x: auto; white-space: nowrap;">
             <!-- Ensure each card has appropriate styling and width -->
-            <div class="character-card-container"></div>
-			<div class="character-card-container"></div>
-			<div class="character-card-container"></div>
-			<div class="character-card-container"></div>
-			<div class="character-card-container"></div>
+            <div class="character-card-container d-flex flex-row justify-content-start"></div>
         </div>
     </div>
 </div>
@@ -16,7 +11,7 @@
 <script>
 	$(document).ready(function() {
 	    const container = $('.character-card-container');
-	    const numberOfCards = 1; 
+	    const numberOfCards = 5; 
 	
 	    // Fetch chattercard 
 	    $.get('chattercard.html', function(template) {
@@ -29,13 +24,12 @@
 	
 	// Function to populate card with data
 	function populateCard(template, character) {
-	    const card = $(template).clone();
-	    card.find('.name').text(character.name);
-	    card.find('.username').text(character.username);
-	    card.find('.price').text(character.price);
-	    card.find('.blurb').text(character.blurb);
-	    card.find('img').attr('src', character.rectimageUrl);
-	    return card;
+		return template
+		.replace('RECT_IMAGE_URL', 'images/'+character.name+'Rectangle.png')
+        .replace('NAME', character.name)
+		.replace('USERNAME', character.username)
+		.replace('PRICE', character.price)
+		.replace('BLURB', character.blurb);
 	}
 
 </script> 

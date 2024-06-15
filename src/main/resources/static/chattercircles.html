@@ -1,19 +1,17 @@
-
-
-    <div class="row">
-        <div class="col">
-            <div style = "overflow-x: auto; white-space: nowrap; width: 100%;">
-                <div id="character-circ-container"></div>
-            </div>
-        </div>
-    </div>
+<div class="row">
+     <div class="col">
+         <div style = "overflow-x: auto; white-space: nowrap; width: 100%;">
+            <div id="character-circ-container"></div>
+         </div>
+     </div>
+</div>
 
 
 <script>
     // Populate character circle with data
     function populateCircle(template, character) {
         return template
-            .replace('CIRC_IMAGE_URL', character.circimageUrl)
+            .replace('CIRC_IMAGE_URL', 'images/'+character.name+'Circle.png')
             .replace('NAME', character.name);
     }
 
