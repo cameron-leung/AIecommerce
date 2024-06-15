@@ -1,39 +1,36 @@
-<!-- horizontal chatter card display
+<!-- horizontal chatter card display -->
 <div class="row">
     <div class="col">
         <div class="d-flex flex-wrap" style="width: 100%;">
             <!-- Ensure each card has appropriate styling and width -->
-			<div class="character-card-container"></div>
+			<div class="character-card-container d-flex flex-row flex-wrap justify-content-start"></div>
 
-<!--         </div>
+         </div>
     </div>
 </div>
- -->
+
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 	<script src="characterData.js"></script>	
 <script>
-	// Populate character card with data
-	function populateCard(template, character) {
-		return template
-		.replace('RECT_IMAGE_URL', character.rectimageUrl)
-		.replace('NAME', character.name)
-		.replace('USERNAME', character.username)
-		.replace('PRICE', character.price)
-		.replace('BLURB', character.blurb);
-	}
-		
-	// jQuery to load character cards
-	$(document).ready(function() {
-		const container = $('.character-card-container');
-		const numberOfCards = 6; 
-		
-		$.get('chattercard.html', function(template) {
-			let html = "";
-		    for (let i = 0; i < numberOfCards; i++) {
-		        const populatedCard = populateCard(template, characterData);
-		        html += populatedCard;
-		 	}
-		    container.html(html);
-		});
-	});
+    $(document).ready(function() {
+        const container = $('.character-card-container');
+        
+        // Fetch chattercard template
+        $.get('chattercard.html', function(template) {
+            characterData.forEach(character => {
+                const populatedCard = populateCard(template, character);
+                container.append(populatedCard);
+            });
+        });
+    });
+    
+    // Function to populate card with data
+    function populateCard(template, character) {
+        return template
+            .replace('RECT_IMAGE_URL', 'images/' + character.name + 'Rectangle.png')
+            .replace('NAME', character.name)
+            .replace('USERNAME', character.username)
+            .replace('PRICE', character.price)
+            .replace('BLURB', character.blurb);
+    }
 </script>

@@ -89,7 +89,7 @@
 <body> 
 	<div id="navbar-placeholder"></div> 
 	
-	<div class = "px-5 container-fluid">
+	<div class = "px-5 ">
 		<div class = "d-flex col">
 			<div class = "icons">
 				<div id="backButton" class="d-inline-block py-1 px-3 text-center align-items-center"
@@ -103,7 +103,15 @@
 			    <span>Filter</span>
 			</button>
 		</div>
-		<div class = "chattercards-placeholder"></div>
+		<div class="row">
+    <div class="col">
+        <div class="d-flex flex-wrap" style="width: 100%;">
+            <!-- Ensure each card has appropriate styling and width -->
+			<div class="character-card-container d-flex flex-row flex-wrap justify-content-start"></div>
+
+         </div>
+    </div>
+</div>
 		
 	
 		<div id="filterPopupOverlay">
@@ -173,6 +181,7 @@
 	    document.getElementById('backButton').addEventListener('click', function() {
 	        window.history.back();
 	    });
+	    
 	        	$(document).ready(function() {
 	        		var filterPopupOpen = false;
 
@@ -209,8 +218,17 @@
 	            $('#navbar-placeholder').load('navbar.html', function() {
 	                $('.discover-icon').addClass('active');
 	            });
+	            const container = $('.character-card-container');
+	            
+	            // Fetch chattercard template
+	            $.get('chattercard.html', function(template) {
+	                characterData.forEach(character => {
+	                    const populatedCard = populateCard(template, character);
+	                    container.append(populatedCard);
+	                });
+	            });
 	        });
-	        	$('.chattercards-placeholder').load('chattercards.html');
+	        	//$('.chattercards-placeholder').load('chattercards.html');
 	        	var priceSlider = document.getElementById("priceRange");
 	            var priceValue = document.getElementById("priceValue");
 
@@ -220,6 +238,15 @@
 	                priceValue.innerHTML = "$" + this.value;
 	                var thumbPosition = (this.value / this.max) * 100 + "%";
 	                this.style.setProperty('--thumb-position', thumbPosition);
+	            }
+	            function populateCard(template, character) {
+	            	const imageName = character.name.replace(/\s+/g, '');
+	                return template
+	                    .replace('RECT_IMAGE_URL', 'images/' + imageName + 'Rectangle.png')
+	                    .replace('NAME', character.name)
+	                    .replace('USERNAME', character.username)
+	                    .replace('PRICE', character.price)
+	                    .replace('BLURB', character.blurb);
 	            }
 	    </script>
 	</div>
