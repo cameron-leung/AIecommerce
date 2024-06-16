@@ -10,25 +10,33 @@
 </head>
 
 <body>
+	<!-- nav bar -->
 	<div id="navbar-placeholder"></div> 
+	
+	<!-- page body content -->
 	<div class="px-5 container-fluid">
+		
+		<!-- Top of Profile -->
 		<div class = "d-flex row mt-3">
+			<!-- Profile icon -->
 			<i class="fa-solid fa-circle-user responsive-icon w-auto pr-1 pt-1" style = "color:  #535355;"></i>
 			<div class = "col">
-			<div class="row">
-				<div class="col">
-				<h1 class = "h-auto w-auto pb-0 mb-0">Profile</h1>
-				<h4 class = "w-auto pb-username">@B</h4>
+				<!-- Profile user data -->
+				<div class="row">
+					<!-- Name & username -->
+					<div class="col">
+						<h1 class = "h-auto w-auto pb-0 mb-0">Profile</h1>
+						<h4 class = "w-auto pb-username">@B</h4>
+					</div>
+					<!-- Edit and Log out buttons -->
+					<div class = "row w-auto h-auto pt-0" >
+						<i class="w-auto h-auto fa-solid fa-pen" style = "color: #535355;"></i>
+						<div class="w-auto h-auto">
+							<button class = "w-auto h-auto text-white border-0 rounded logout-button" style="background: #535355;" onclick="logout()">Log Out</button>
+						</div>
+					</div>
 				</div>
-				<div class = "row w-auto h-auto pt-0" >
-				<i class="w-auto h-auto fa-solid fa-pen" style = "color: #535355;"></i>
-			
-				<div class="w-auto h-auto">
-					<button class = "w-auto h-auto text-white border-0 rounded logout-button" style="background: #535355;" onclick="logout()">Log Out</button>
-				</div>
-			</div>
-			</div>
-				
+				<!-- Followers, Following, Chatters made -->
 				<div class="row">
 	                <h4 class = "w-auto p-1" id="followersPlaceholder">NUM_FOLLOWERS</h4>
 	                <h4 class = "w-auto p-1">Followers</h4>
@@ -38,109 +46,86 @@
 	                <h4 class = "w-auto p-1">Chatters</h4>
 	            </div>
 			</div>
-			
-			
 		</div>
+		
+		<!-- Recent chatter circles -->
 		<h1 class="mt-3">Recents</h1>
 		<div class = "chattercircles-placeholder"></div>
+		<!-- Original chatters scroll -->
 		<h1 class="mt-3">Original Chatters</h1>
 		<div class = "chattercardscroll-placeholder"></div>
+		<!--  Chatters in your cart scroll -->
 		<h1 class="mt-3">Cart</h1>
 		<div class = "chattercardscroll-placeholder"></div>
 		
 	</div>
+	
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 	<script src="characterData.js"></script>
 	<script>
-	$(document).ready(function() {
-        $('#navbar-placeholder').load('navbar.html', function() {
-            $('.profile-icon').addClass('active');
-        });
-	    var followersCount = 0;
-	    var followingCount = 0;
-	    var chattersCount = 1;
-	
-	    // Update the placeholders with the numbers
-	    $('#followersPlaceholder').text(followersCount);
-	    $('#followingPlaceholder').text(followingCount);
-	    $('#chattersPlaceholder').text(chattersCount);
-	    
-	    $('.chattercircles-placeholder').load('chattercircles.html');
-	    $('.chattercardscroll-placeholder').load('chattercardscroll.html');
-	});
+		$(document).ready(function() {
+			// Load navbar
+	        $('#navbar-placeholder').load('navbar.html', function() {
+	            $('.profile-icon').addClass('active');
+	        });
+	        
+			//set followers, following, & chatters made
+		    var followersCount = 0;
+		    var followingCount = 0;
+		    var chattersCount = 1;
+		
+		    // Update the placeholders with the numbers
+		    $('#followersPlaceholder').text(followersCount);
+		    $('#followingPlaceholder').text(followingCount);
+		    $('#chattersPlaceholder').text(chattersCount);
+		    
+		    // Load chatter circles & cards
+		    $('.chattercircles-placeholder').load('chattercircles.html');
+		    $('.chattercardscroll-placeholder').load('chattercardscroll.html');
+		});
 	</script>
 </body>
 <style>
-	* {
-		font-family: 'DM Sans';
-	}
-	.active i{
-		color: #FF206E;
-	}
-	h1 {
-		margin: 0px;
-        padding: 0px;
-	}
-	h2 {
-		margin: 0px;
-        padding: 0px;
-    }
-    
-	p {
-       margin: 0px;
-       padding: 0px;
-   }
-    a {
-		color: black !important;
-		text-decoration: none !important;
-	}
-
-
         /* Smaller screens (phones) */
         @media (max-width: 767px) {
             .responsive-icon {
-                font-size: 80px;
+                font-size: 80px; /* profile icon */
             }
             h4 {
-                font-size: 14px; /* Smaller font size for phones */
+                font-size: 14px; /* text */
             }
             .pb-username {
-                padding-bottom: 0 !important;
+                padding-bottom: 0 !important; /* padding between username & followers, following & chatters */
             }
             .fa-pen {
-                font-size: 1.2rem; /* Smaller font size for icons on phones */
-                
+                font-size: 1.2rem; /* edit button */ 
             }
-
             .logout-button {
-                font-size: .8rem; /* Smaller font size for buttons on phones */
-                
+                font-size: .8rem; /* log out button */
             }
         }
 
         /* Medium screens (tablets) */
         @media (min-width: 768px) and (max-width: 991px) {
             .responsive-icon {
-                font-size: 120px;
+                font-size: 120px; /* profile icon */
             }
         }
 
         /* Large screens (desktops) */
         @media (min-width: 992px) {
             .responsive-icon {
-                font-size: 180px;
+                font-size: 180px; /* profile icon */
             }
             .pb-username {
-            padding-bottom: 4rem; /* Padding bottom for computers */
+            	padding-bottom: 4rem; /* padding between username & followers, following & chatters */
         	}
         	.fa-pen {
-                font-size: 2.2rem; /* Smaller font size for icons on phones */
-                 /* Adjust margin for phones */
+                font-size: 2.2rem; /* edit button */
             }
 
             .logout-button {
-                font-size: 24px; /* Smaller font size for buttons on phones */
-                
+                font-size: 24px; /* log out button */
             }
         }
 </style>

@@ -16,26 +16,35 @@
 <body>
 	<div id="navbar-placeholder"></div> 
     <div>
+    	
+    	<!-- Landing Page full screen image ad -->
         <a href="#meet-new-chatters" class="d-block">
            <img src="images/Liliad.png" alt="Ad" class="img-fluid" style="width: 100%; height: auto;">
         </a>
-
+		
+		<!-- landing page body content -->
         <div class="px-5 container-fluid">
+        
+        	<!-- Recents chatter circles section -->
             <h1 class="display-4">Recents</h1>
             <div id="chattercircles-placeholder"></div>
-
+			
+			<!-- Categories section -->
             <h1 id="meet-new-chatters" class="display-4 mt-4">Meet New Chatters</h1>
            <div class="row">
+           		<!-- All Category -->
 			    <div class="col-md flex-grow-1 me-md-1 mb-3 mb-md-0">
 			        <a href="shopall.html" class="d-block">
 			            <img src="images/AllCategory.png" alt="Shop All" class="w-100" style="height: 100%;">
 			        </a>
 			    </div>
+			    <!-- Helpful Category -->
 			    <div class="col-md flex-grow-1 me-md-1 mb-3 mb-md-0">
 			        <a href="shopall.html" class="d-block">
 			            <img src="images/HelpfulCategory.png" alt="Helpful" class="w-100" style="height: 100%;">
 			        </a>
 			    </div>
+			    <!-- Role play Category -->
 			    <div class="col flex-grow-1">
 			        <a href="shopall.html" class="d-block">
 			            <img src="images/RoleplayCategory.png" alt="Role Play" class="w-100" style="height: 100%;">
@@ -43,16 +52,19 @@
 			    </div>
 			</div>
 			<div class="row mt-md-4 mt-3">
+				<!-- Comedy Category -->
 			    <div class="col-md flex-grow-1 me-md-1 mb-3 mb-md-0">
 			        <a href="shopall.html" class="d-block">
 			            <img src="images/ComedyCategory.png" alt="Shop All" class="w-100" style="height: 100%;">
 			        </a>
 			    </div>
+			    <!-- Personal Category -->
 			    <div class="col-md flex-grow-1 me-md-1 mb-3 mb-md-0">
 			        <a href="shopall.html" class="d-block">
 			            <img src="images/PersonalCategory.png" alt="Helpful" class="w-100" style="height: 100%;">
 			        </a>
 			    </div>
+			    <!-- Public Figures Category -->
 			    <div class="col flex-grow-1">
 			        <a href="shopall.html" class="d-block">
 			            <img src="images/PublicFiguresCategory.png" alt="Public Figures" class="w-100" style="height: 100%;">
@@ -60,19 +72,22 @@
 			    </div>
 			</div>
 
+			<!-- Friend's Chatters horizontal card scroll section -->
             <h1 class="display-4 mt-4">Friends' Chatters</h1>
             <div class="chattercardscroll-placeholder"></div>
-
+			
+			<!-- Browse from creators horizontal card scrolls section -->
             <h1 class="display-4 mt-4">Browse From Creators</h1>
+            <!--  creator 1 B -->
             <a href="profilepage.html"><h2>@B</h2></a>
             <div class="row" style="overflow-x: auto; white-space: nowrap;">
 			    <div class="col">
 			        <div class="d-flex" style="width: 100%; overflow-x: auto; white-space: nowrap;">
-			            <!-- Ensure each card has appropriate styling and width -->
 			            <div class="B-character-card-container d-flex flex-row justify-content-start"></div>
 			        </div>
 			    </div>
 			</div>
+			<!-- creator 2 Meta -->
             <a href="profilepage.html"><h2>@Meta</h2></a>
             <div class="chattercardscroll-placeholder"></div>
         </div>
@@ -84,12 +99,15 @@
     <script src="characterData.js"></script>
     <script>
         $(document).ready(function() {
+        	// Load navbar activate discover icon
             $('#navbar-placeholder').load('navbar.html', function() {
                 $('.discover-icon').addClass('active');
             });
+        	// Load chatter circles widget
             $('#chattercircles-placeholder').load('chattercircles.html');
+        	// Load chatter cards widget
             $('.chattercardscroll-placeholder').load('chattercardscroll.html');
-            $('#shopall-placeholder').load('shopall.html');
+        	// Add scrolling functionality to image
             $('a[href^="#"]').on('click', function(event) {
                 var target = $(this.getAttribute('href'));
                 if (target.length) {
@@ -99,6 +117,8 @@
                     }, 1000);
                 }
             });
+        	
+        	// filter by username for Browse by Creator section
             const Bcards = $('.B-character-card-container');
             const userBFilteredData = characterData.filter(character => character.username === '@B');
             
@@ -110,8 +130,9 @@
                 });
             });
         });
+        // Function to fill in card data
         function populateCard(template, character) {
-            const imageName = character.name.replace(/\s+/g, ''); // Remove spaces from the character's name for the image URL
+            const imageName = character.name.replace(/\s+/g, ''); 
             return template
                 .replace('RECT_IMAGE_URL', 'images/' + imageName + 'Rectangle.png')
                 .replace('NAME', character.name)

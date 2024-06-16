@@ -13,7 +13,7 @@
 	    const container = $('.character-card-container');
 	    const numberOfCards = 5; 
 	
-	    // Fetch chattercard 
+	    // Function to populate card with for loop & fetch card file 
 	    $.get('chattercard.html', function(template) {
 	        for (let i = 0; i < numberOfCards; i++) {
 	        	const populatedCard = populateCard(template, characterData);
