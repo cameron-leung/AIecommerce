@@ -9,76 +9,99 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <style>
-	a {
-		color: black !important;
-		text-decoration: none !important;
-	}
+	/* invisible & sizing & z-index for filter overlay */
 	#filterPopupOverlay {
-            display: none;
-            position: fixed;
-            top:80px;
-            left: 10px;
-            width:25%;
-            height: 80%;
-			padding: 10px;
-            z-index: 999;
-        }
-
-        /* Styles for the popup content */
-        #filterPopupContent {
-            background-color: #fff;
-            padding: 10px;
-            border-radius: 8px;
-			border-color: grey;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            width: 100%;
-            height: 100%;
-            margin: 0;
-            position: relative;
-        }
-	.price-slider {
-        -webkit-appearance: none;
-        appearance: none;
-        width: 100%;
-        height: 15px;
-        border-radius: 10px;
-        background: #DADADA;
-        outline: none;
-        opacity: 0.7;
-        -webkit-transition: .2s;
-        transition: opacity .2s;
+        display: none;
+        position: fixed;
+        top:80px;
+        left: 10px;
+        width:25%;
+        height: 80%;
+		padding: 10px;
+        z-index: 999;
     }
-.price-slider::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    appearance: none;
-    width: 25px;
-    height: 25px;
-    border-radius: 50%;
-    background: #FF206E; /* Pink color */
-    cursor: pointer;
-    margin-top: -5px; /* Adjust the thumb's vertical position */
-    z-index: 2;
-}
-.price-slider::-moz-range-thumb {
-    width: 25px;
-    height: 25px;
-    border-radius: 50%;
-    background: #FF206E; /* Pink color */
-    cursor: pointer;
-    margin-top: -5px; /* Adjust the thumb's vertical position */
-}
+    /* filter overlay content */
+    #filterPopupContent {
+        background-color: #fff;
+        padding: 10px;
+        border-radius: 8px;
+		border-color: grey;
+		box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+		width: 100%;
+		height: 100%;
+		margin: 0;
+		position: relative;
+    }
+    
+	/* filter overlay price slider size */
+	.price-slider {
+	    -webkit-appearance: none;
+	    appearance: none;
+	    width: 100%;
+	    height: 15px;
+	    border-radius: 10px;
+	    background: #DADADA;
+	    outline: none;
+	    opacity: 0.7;
+	    transition: opacity .2s;
+	}
+	/* filter overlay price slider marker */
+	.price-slider::-webkit-slider-thumb {
+	    -webkit-appearance: none;
+	    appearance: none;
+	    width: 25px;
+	    height: 25px;
+	    border-radius: 50%;
+	    background: #FF206E;
+	    cursor: pointer;
+	    margin-top: -5px;
+	    z-index: 2;
+	}
+	/* filter overlay price slider bar */
+	.price-slider::-webkit-slider-runnable-track {
+	    background: linear-gradient(to right, #FF206E 0%, #FF206E var(--thumb-position), #DADADA var(--thumb-position), #DADADA 100%);
+	    border-radius: 10px;
+	    height: 15px;
+	}
+	/* Firefox */
+	.price-slider::-moz-range-thumb {
+	    width: 25px;
+	    height: 25px;
+	    border-radius: 50%;
+	    background: #FF206E;
+	    cursor: pointer;
+	}
+	.price-slider::-moz-range-track {
+	    background: linear-gradient(to right, #FF206E 0%, #FF206E var(--thumb-position), #DADADA var(--thumb-position), #DADADA 100%);
+	    border-radius: 10px;
+	    height: 15px;
+	}
+	/* IE */
+	.price-slider::-ms-thumb {
+	    width: 25px;
+	    height: 25px;
+	    border-radius: 50%;
+	    background: #FF206E;
+	    cursor: pointer;
+	}
+	.price-slider::-ms-track {
+	    background: transparent;
+	    border-color: transparent;
+	    border-width: 15px 0;
+	    color: transparent;
+	    height: 15px;
+	}
+	.price-slider::-ms-fill-lower {
+	    background: #FF206E;
+	    border-radius: 10px;
+	}
+	.price-slider::-ms-fill-upper {
+	    background: #DADADA;
+	    border-radius: 10px;
+	}
 
-    .price-slider::-webkit-slider-runnable-track {
-    background: linear-gradient(to right, #FF206E 0%, #FF206E var(--thumb-position), #d3d3d3 var(--thumb-position), #d3d3d3 100%);
-    border-radius: 10px;
-    height: 15px;
-}
-.price-slider::-moz-range-track {
-    background: linear-gradient(to right, #FF206E 0%, #FF206E var(--thumb-position), #d3d3d3 var(--thumb-position), #d3d3d3 100%);
-    border-radius: 10px;
-    height: 15px;
-}
 
+	/* checkboxes on filter overlay */
     .checkbox-item {
         margin-bottom: 5px;
     }
@@ -86,101 +109,106 @@
         margin-right: 5px; 
     }
 </style>
+
 <body> 
+	<!-- Navbar -->
 	<div id="navbar-placeholder"></div> 
-	
+	<!-- Shop all page body content -->
 	<div class = "px-5 ">
+	
+		<!-- Header & back button -->
 		<div class = "d-flex col">
 			<div class = "icons">
-				<div id="backButton" class="d-inline-block py-1 px-3 text-center align-items-center"
-		    ><i class="fs-2 fa-solid fa-chevron-left"></i></div>
+				<div id="backButton" class="d-inline-block py-1 px-3 text-center align-items-center"><i class="fs-2 fa-solid fa-chevron-left"></i></div>
 			</div>
 			<h1>All</h1>
 		</div>
+		
+		<!-- Filter button -->
 		<div class = "pb-2">
 			<button id="openFilterPopupIcon" class="w-auto h-auto text-black bg-light border-0 rounded fs-5">
 			    <i id="openFilterPopupIcon" class="fa-solid fa-filter"></i>
 			    <span>Filter</span>
 			</button>
 		</div>
-		<div class="row">
-    <div class="col">
-        <div class="d-flex flex-wrap" style="width: 100%;">
-            <!-- Ensure each card has appropriate styling and width -->
-			<div class="character-card-container d-flex flex-row flex-wrap justify-content-start"></div>
-
-         </div>
-    </div>
-</div>
 		
+		<!-- Chatter cards in rows -->
+		<div class="row">
+		    <div class="col">
+		        <div class="d-flex flex-wrap" style="width: 100%;">
+					<div class="character-card-container d-flex flex-row flex-wrap justify-content-start"></div>
+		         </div>
+		    </div>
+		</div>
 	
+		<!-- Filter overlay -->
 		<div id="filterPopupOverlay">
 		    <div id="filterPopupContent">
 		        <h2>Price</h2>
 		        <div style="width: 300px; margin: 20px auto;">
-			    <input type="range" min="0" max="100" value="50" class="price-slider" id="priceRange">
-			    <div class="text-center mt-1">Range: 0 - <span id="priceValue">$50</span></div>
-			    <h2>Category</h2>
-			    <ul class="p-0">
-				    <div class="checkbox-item">
-				        <input type="checkbox" id="checkbox1" name="checkbox1">
-				        <label for="checkbox1">Animal</label>
-				    </div>
-				    <div class="checkbox-item">
-				        <input type="checkbox" id="checkbox2" name="checkbox2">
-				        <label for="checkbox2">Celebrity</label>
-				    </div>
-				    <div class="checkbox-item">
-				        <input type="checkbox" id="checkbox3" name="checkbox3">
-				        <label for="checkbox3">Comedy</label>
-				    </div>
-				    <div class="checkbox-item">
-				        <input type="checkbox" id="checkbox4" name="checkbox1">
-				        <label for="checkbox4">Family</label>
-				    </div>
-				    <div class="checkbox-item">
-				        <input type="checkbox" id="checkbox5" name="checkbox2">
-				        <label for="checkbox5">Friends</label>
-				    </div>
-				    <div class="checkbox-item">
-				        <input type="checkbox" id="checkbox6" name="checkbox3">
-				        <label for="checkbox6">Games</label>
-				    </div>
-				    <div class="checkbox-item">
-				        <input type="checkbox" id="checkbox7" name="checkbox1">
-				        <label for="checkbox7">Helpful</label>
-				    </div>
-				    <div class="checkbox-item">
-				        <input type="checkbox" id="checkbox8" name="checkbox2">
-				        <label for="checkbox8">Personal</label>
-				    </div>
-				    <div class="checkbox-item">
-				        <input type="checkbox" id="checkbox9" name="checkbox3">
-				        <label for="checkbox9">Philosophy</label>
-				    </div>
-				    <div class="checkbox-item">
-				        <input type="checkbox" id="checkbox10" name="checkbox3">
-				        <label for="checkbox10">Public Figures</label>
-				    </div>
-				    <div class="checkbox-item">
-				        <input type="checkbox" id="checkbox11" name="checkbox11">
-				        <label for="checkbox11">Role Play</label>
-				    </div>
-				</ul>
+				    <input type="range" min="0" max="100" value="50" class="price-slider" id="priceRange">
+				    <div class="text-center mt-1">Range: 0 - <span id="priceValue">$50</span></div>
+				    <h2>Category</h2>
+				    <ul class="p-0">
+					    <div class="checkbox-item">
+					        <input type="checkbox" id="checkbox1" name="checkbox1">
+					        <label for="checkbox1">Animal</label>
+					    </div>
+					    <div class="checkbox-item">
+					        <input type="checkbox" id="checkbox2" name="checkbox2">
+					        <label for="checkbox2">Celebrity</label>
+					    </div>
+					    <div class="checkbox-item">
+					        <input type="checkbox" id="checkbox3" name="checkbox3">
+					        <label for="checkbox3">Comedy</label>
+					    </div>
+					    <div class="checkbox-item">
+					        <input type="checkbox" id="checkbox4" name="checkbox1">
+					        <label for="checkbox4">Family</label>
+					    </div>
+					    <div class="checkbox-item">
+					        <input type="checkbox" id="checkbox5" name="checkbox2">
+					        <label for="checkbox5">Friends</label>
+					    </div>
+					    <div class="checkbox-item">
+					        <input type="checkbox" id="checkbox6" name="checkbox3">
+					        <label for="checkbox6">Games</label>
+					    </div>
+					    <div class="checkbox-item">
+					        <input type="checkbox" id="checkbox7" name="checkbox1">
+					        <label for="checkbox7">Helpful</label>
+					    </div>
+					    <div class="checkbox-item">
+					        <input type="checkbox" id="checkbox8" name="checkbox2">
+					        <label for="checkbox8">Personal</label>
+					    </div>
+					    <div class="checkbox-item">
+					        <input type="checkbox" id="checkbox9" name="checkbox3">
+					        <label for="checkbox9">Philosophy</label>
+					    </div>
+					    <div class="checkbox-item">
+					        <input type="checkbox" id="checkbox10" name="checkbox3">
+					        <label for="checkbox10">Public Figures</label>
+					    </div>
+					    <div class="checkbox-item">
+					        <input type="checkbox" id="checkbox11" name="checkbox11">
+					        <label for="checkbox11">Role Play</label>
+					    </div>
+					</ul>
+				</div>
 			</div>
-		    </div>
-		    <div>
-			<button id="applyButton" class="d-block position-absolute px-1 py-2 bottom-0 mb-3 w-75 bg-light rounded-2 translate-middle-x" style="left: 50%; color: #FF206E; border-color: #FF206E;">Apply</button>
-		</div>
+			<div>
+				<button id="applyButton" class="d-block position-absolute px-1 py-2 bottom-0 mb-3 w-75 bg-light rounded-2 translate-middle-x" style="left: 50%; color: #FF206E; border-color: #FF206E;">Apply</button>
+			</div>
 		</div>
 		
 		
 		<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 		<script src="characterData.js"></script>
-	    <script>
-	    document.getElementById('backButton').addEventListener('click', function() {
-	        window.history.back();
-	    });
+		<script>
+		    document.getElementById('backButton').addEventListener('click', function() {
+		        window.history.back();
+		    });
 	    
 	        	$(document).ready(function() {
 	        		var filterPopupOpen = false;
@@ -215,19 +243,19 @@
                         event.stopPropagation(); // Prevent event propagation
                         openFilterPopup();
                     });
-	            $('#navbar-placeholder').load('navbar.html', function() {
-	                $('.discover-icon').addClass('active');
-	            });
-	            const container = $('.character-card-container');
-	            
-	            // Fetch chattercard template
-	            $.get('chattercard.html', function(template) {
-	                characterData.forEach(character => {
-	                    const populatedCard = populateCard(template, character);
-	                    container.append(populatedCard);
-	                });
-	            });
-	        });
+		            $('#navbar-placeholder').load('navbar.html', function() {
+		                $('.discover-icon').addClass('active');
+		            });
+		            const container = $('.character-card-container');
+		            
+		            // Fetch chattercard template
+		            $.get('chattercard.html', function(template) {
+		                characterData.forEach(character => {
+		                    const populatedCard = populateCard(template, character);
+		                    container.append(populatedCard);
+		                });
+		            });
+		        });
 	        	//$('.chattercards-placeholder').load('chattercards.html');
 	        	var priceSlider = document.getElementById("priceRange");
 	            var priceValue = document.getElementById("priceValue");
