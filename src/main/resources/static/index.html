@@ -93,7 +93,13 @@
             <a href="profilepage.html">
             	<h2>@Meta</h2>
             </a>
-            <div class="chattercardscroll-placeholder"></div>
+            <div class="row" style="overflow-x: auto; white-space: nowrap;">
+			    <div class="col">
+			        <div class="d-flex" style="width: 100%; overflow-x: auto; white-space: nowrap;">
+			            <div class="Meta-character-card-container d-flex flex-row justify-content-start"></div>
+			        </div>
+			    </div>
+			</div>
         </div>
     </div>
 
@@ -123,16 +129,25 @@
             });
         	
         	// filter by username for Browse by Creator section
+        	// Cards filtered by B username
             const Bcards = $('.B-character-card-container');
             const userBFilteredData = characterData.filter(character => character.username === '@B');
+            // Cards filtered by Meta username
+            const Metacards = $('.Meta-character-card-container');
+            const userMetaFilteredData = characterData.filter(character => character.username === '@Meta');
             
-            // Fetch chattercard template
+            // Fetch chattercard template for user B
             $.get('chattercard.html', function(template) {
                 userBFilteredData.forEach(character => {
                     const populatedCard = populateCard(template, character);
                     Bcards.append(populatedCard);
                 });
+                userMetaFilteredData.forEach(character => {
+                    const populatedCard = populateCard(template, character);
+                    Metacards.append(populatedCard);
+                });
             });
+
         });
         // Function to fill in card data
         function populateCard(template, character) {
