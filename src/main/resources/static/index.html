@@ -74,7 +74,13 @@
 
 			<!-- Friend's Chatters horizontal card scroll section -->
             <h1 class="display-4 mt-4">Friends' Chatters</h1>
-            <div class="chattercardscroll-placeholder"></div>
+            <div class="row" style="overflow-x: auto; white-space: nowrap;">
+			    <div class="col">
+			        <div class="d-flex" style="width: 100%; overflow-x: auto; white-space: nowrap;">
+			            <div class="Friends-character-card-container d-flex flex-row justify-content-start"></div>
+			        </div>
+			    </div>
+			</div>
 			
 			<!-- Browse from creators horizontal card scrolls section -->
             <h1 class="display-4 mt-4">Browse From Creators</h1>
@@ -128,6 +134,7 @@
                 }
             });
         	
+            const Friendscards = $('.Friends-character-card-container');
         	// filter by username for Browse by Creator section
         	// Cards filtered by B username
             const Bcards = $('.B-character-card-container');
@@ -145,6 +152,10 @@
                 userMetaFilteredData.forEach(character => {
                     const populatedCard = populateCard(template, character);
                     Metacards.append(populatedCard);
+                });
+                characterData.forEach(character => {
+                    const populatedCard = populateCard(template, character);
+                    Friendscards.append(populatedCard);
                 });
             });
 
