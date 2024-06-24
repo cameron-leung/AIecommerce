@@ -211,6 +211,12 @@
 		    });
 	    
 	        	$(document).ready(function() {
+	        		// Load navbar
+	        		$('#navbar-placeholder').load('navbar.html', function() {
+		                $('.discover-icon').addClass('active');
+		            });
+	        		
+	        		// Filter logic
 	        		var filterPopupOpen = false;
 
                     // Function to open the filter popup overlay
@@ -243,10 +249,14 @@
                         event.stopPropagation(); // Prevent event propagation
                         openFilterPopup();
                     });
-		            $('#navbar-placeholder').load('navbar.html', function() {
-		                $('.discover-icon').addClass('active');
-		            });
+		            
 		            const container = $('.character-card-container');
+		         	// Get category from URL
+		            const urlParams = new URLSearchParams(window.location.search);
+		            const category = urlParams.get('category') || 'All';
+		            
+		         	// Set the header to the selected category
+		            $('h1').text(category);
 		            
 		            // Fetch chattercard template
 		            $.get('chattercard.html', function(template) {
