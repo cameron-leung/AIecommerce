@@ -151,47 +151,27 @@
 				    <h2>Category</h2>
 				    <ul class="p-0">
 					    <div class="checkbox-item">
-					        <input type="checkbox" id="checkbox1" name="checkbox1">
+					        <input type="checkbox" value="Animal">
 					        <label for="checkbox1">Animal</label>
 					    </div>
 					    <div class="checkbox-item">
-					        <input type="checkbox" id="checkbox2" name="checkbox2">
-					        <label for="checkbox2">Celebrity</label>
-					    </div>
-					    <div class="checkbox-item">
-					        <input type="checkbox" id="checkbox3" name="checkbox3">
+					        <input type="checkbox" value="Comedy">
 					        <label for="checkbox3">Comedy</label>
 					    </div>
 					    <div class="checkbox-item">
-					        <input type="checkbox" id="checkbox4" name="checkbox1">
-					        <label for="checkbox4">Family</label>
-					    </div>
-					    <div class="checkbox-item">
-					        <input type="checkbox" id="checkbox5" name="checkbox2">
-					        <label for="checkbox5">Friends</label>
-					    </div>
-					    <div class="checkbox-item">
-					        <input type="checkbox" id="checkbox6" name="checkbox3">
-					        <label for="checkbox6">Games</label>
-					    </div>
-					    <div class="checkbox-item">
-					        <input type="checkbox" id="checkbox7" name="checkbox1">
+					        <input type="checkbox" value="Helpful">
 					        <label for="checkbox7">Helpful</label>
 					    </div>
 					    <div class="checkbox-item">
-					        <input type="checkbox" id="checkbox8" name="checkbox2">
+					        <input type="checkbox" value="Personal">
 					        <label for="checkbox8">Personal</label>
 					    </div>
-					    <div class="checkbox-item">
-					        <input type="checkbox" id="checkbox9" name="checkbox3">
-					        <label for="checkbox9">Philosophy</label>
-					    </div>
-					    <div class="checkbox-item">
-					        <input type="checkbox" id="checkbox10" name="checkbox3">
+					    <div class="checkbox-item" value="Public Figures">
+					        <input type="checkbox">
 					        <label for="checkbox10">Public Figures</label>
 					    </div>
 					    <div class="checkbox-item">
-					        <input type="checkbox" id="checkbox11" name="checkbox11">
+					        <input type="checkbox" value="Role Play">
 					        <label for="checkbox11">Role Play</label>
 					    </div>
 					</ul>
@@ -210,63 +190,70 @@
 		        window.history.back();
 		    });
 	    
-	        	$(document).ready(function() {
-	        		// Load navbar
-	        		$('#navbar-placeholder').load('navbar.html', function() {
-		                $('.discover-icon').addClass('active');
-		            });
-	        		
-	        		// Filter logic
-	        		var filterPopupOpen = false;
+		    $(document).ready(function() {
+		        var filterPopupOpen = false;
 
-                    // Function to open the filter popup overlay
-                    function openFilterPopup() {
-                        $('#filterPopupOverlay').fadeIn();
-                        filterPopupOpen = true;
-                    }
+		        function openFilterPopup() {
+		            $('#filterPopupOverlay').fadeIn();
+		            filterPopupOpen = true;
+		        }
 
-                    // Function to close the filter popup overlay
-                    function closeFilterPopup() {
-                        $('#filterPopupOverlay').fadeOut();
-                        filterPopupOpen = false;
-                    }
+		        function closeFilterPopup() {
+		            $('#filterPopupOverlay').fadeOut();
+		            filterPopupOpen = false;
+		        }
 
-                    // Event delegation to close the popup when clicked outside
-                    $(document).on('click', function(event) {
-                        var $target = $(event.target);
-                        if (filterPopupOpen && !$target.closest('#filterPopupContent').length && !$target.is('#filterPopupContent')) {
-                            closeFilterPopup();
-                        }
-                    });
+		        $(document).on('click', function(event) {
+		            var $target = $(event.target);
+		            if (filterPopupOpen && !$target.closest('#filterPopupContent').length && !$target.is('#filterPopupContent')) {
+		                closeFilterPopup();
+		            }
+		        });
 
-                    // Prevent the popup from closing when clicked inside
-                    $('#filterPopupContent').on('click', function(event) {
-                        event.stopPropagation();
-                    });
+		        $('#filterPopupContent').on('click', function(event) {
+		            event.stopPropagation();
+		        });
 
-                    // Event listener for the icon click to open the popup
-                    $(document).on('click', '#openFilterPopupIcon', function(event) {
-                        event.stopPropagation(); // Prevent event propagation
-                        openFilterPopup();
-                    });
-		            
-		            const container = $('.character-card-container');
-		         	// Get category from URL
-		            const urlParams = new URLSearchParams(window.location.search);
-		            const category = urlParams.get('category') || 'All';
-		            
-		         	// Set the header to the selected category
-		            $('h1').text(category);
-		            
-		         	// Filter character data by category
-		            const filteredData = characterData.filter(character => 
-		                character.category.includes(category) || category === 'All'
-		            );
+		        $(document).on('click', '#openFilterPopupIcon', function(event) {
+		            event.stopPropagation();
+		            openFilterPopup();
+		        });
 
-		            // Fetch chattercard template
+		        $('#navbar-placeholder').load('navbar.html', function() {
+		            $('.discover-icon').addClass('active');
+		        });
+
+		        const container = $('.character-card-container');
+
+		        // Function to populate card
+		        function populateCard(template, character) {
+		            const imageName = character.name.replace(/\s+/g, '');
+		            return template
+		                .replace('RECT_IMAGE_URL', 'images/' + imageName + 'Rectangle.png')
+		                .replace('NAME', character.name)
+		                .replace('USERNAME', character.username)
+		                .replace('PRICE', character.price)
+		                .replace('BLURB', character.blurb);
+		        }
+
+		        // Function to filter character data based on categories and price
+		        function filterCharacterData(selectedCategories = [], selectedPrice = 100) {
+		            const filteredData = characterData
+		                .filter(character => {
+		                    const matchesCategory = selectedCategories.length === 0 || character.category.some(cat => selectedCategories.includes(cat));
+		                    const matchesPrice = parseFloat(character.price.replace('$', '')) <= selectedPrice || character.price === 'Free';
+		                    return matchesCategory && matchesPrice;
+		                });
+
+		            // Update header
+		            const headerText = selectedCategories.length > 0 ? selectedCategories.join(', ') : 'All';
+		            $('h1').text(headerText);
+
+		            // Display filtered data
+		            container.empty();
 		            $.get('chattercard.html', function(template) {
 		                if (filteredData.length === 0) {
-		                    console.error(`No data found for category ${category}`);
+		                    console.error(`No data found for selected filters`);
 		                }
 		                filteredData.forEach(character => {
 		                    const populatedCard = populateCard(template, character);
@@ -275,27 +262,32 @@
 		            }).fail(function() {
 		                console.error("Failed to load chattercard.html");
 		            });
+		        }
+
+		        // Event listener for the apply button
+		        $('#applyButton').on('click', function() {
+		            // Get selected categories
+		            const selectedCategories = [];
+		            $('input[type=checkbox]:checked').each(function() {
+		                selectedCategories.push($(this).val());
+		            });
+
+		            // Get selected price
+		            const selectedPrice = parseFloat($('#priceRange').val());
+
+		            // Apply filters
+		            filterCharacterData(selectedCategories, selectedPrice);
+		            closeFilterPopup();
 		        });
-	        	//$('.chattercards-placeholder').load('chattercards.html');
-	        	var priceSlider = document.getElementById("priceRange");
-	            var priceValue = document.getElementById("priceValue");
 
-	            priceValue.innerHTML = "$" + priceSlider.value;
+		        // Initial data load based on URL category
+		        const urlParams = new URLSearchParams(window.location.search);
+		        const category = urlParams.get('category') || 'All';
+		        const initialCategories = category === 'All' ? [] : [category];
 
-	            priceSlider.oninput = function() {
-	                priceValue.innerHTML = "$" + this.value;
-	                var thumbPosition = (this.value / this.max) * 100 + "%";
-	                this.style.setProperty('--thumb-position', thumbPosition);
-	            }
-	            function populateCard(template, character) {
-	            	const imageName = character.name.replace(/\s+/g, '');
-	                return template
-	                    .replace('RECT_IMAGE_URL', 'images/' + imageName + 'Rectangle.png')
-	                    .replace('NAME', character.name)
-	                    .replace('USERNAME', character.username)
-	                    .replace('PRICE', character.price)
-	                    .replace('BLURB', character.blurb);
-	            }
+		        filterCharacterData(initialCategories);
+		    });
+
 	    </script>
 	</div>
 </body>
