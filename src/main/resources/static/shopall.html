@@ -258,12 +258,22 @@
 		         	// Set the header to the selected category
 		            $('h1').text(category);
 		            
+		         	// Filter character data by category
+		            const filteredData = characterData.filter(character => 
+		                character.category.includes(category) || category === 'All'
+		            );
+
 		            // Fetch chattercard template
 		            $.get('chattercard.html', function(template) {
-		                characterData.forEach(character => {
+		                if (filteredData.length === 0) {
+		                    console.error(`No data found for category ${category}`);
+		                }
+		                filteredData.forEach(character => {
 		                    const populatedCard = populateCard(template, character);
 		                    container.append(populatedCard);
 		                });
+		            }).fail(function() {
+		                console.error("Failed to load chattercard.html");
 		            });
 		        });
 	        	//$('.chattercards-placeholder').load('chattercards.html');
