@@ -168,7 +168,7 @@
 					        <label for="checkbox8">Personal</label>
 					    </div>
 					    <div class="checkbox-item">
-					        <input type="checkbox"  value="Public Figures">
+					        <input type="checkbox" value="Public Figures">
 					        <label for="checkbox10">Public Figures</label>
 					    </div>
 					    <div class="checkbox-item">
@@ -304,6 +304,18 @@
 
             filterCharacterData(initialCategories);
             updateFilterLabels(initialCategories);
+            
+         // Update the displayed price value dynamically and adjust the slider's appearance
+            function updateSliderBackground(slider) {
+                const value = slider.value;
+                slider.style.setProperty('--thumb-position', `${value}%`);
+            }
+
+            $('#priceRange').on('input', function() {
+                const selectedPrice = $(this).val();
+                $('#priceValue').text(`$${selectedPrice}`);
+                updateSliderBackground(this);
+            });
 
             // Check the checkboxes for the initial categories
             initialCategories.forEach(category => {
