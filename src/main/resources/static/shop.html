@@ -121,7 +121,7 @@
 			<div class = "icons">
 				<div id="backButton" class="d-inline-block py-1 px-3 text-center align-items-center"><i class="fs-2 fa-solid fa-chevron-left"></i></div>
 			</div>
-			<h1>All</h1>
+			<h1>Shop</h1>
 		</div>
 		
 		<!-- Filter button -->
@@ -130,6 +130,7 @@
 			    <i id="openFilterPopupIcon" class="fa-solid fa-filter"></i>
 			    <span>Filter</span>
 			</button>
+			
 		</div>
 		
 		<!-- Chatter cards in rows -->
@@ -166,8 +167,8 @@
 					        <input type="checkbox" value="Personal">
 					        <label for="checkbox8">Personal</label>
 					    </div>
-					    <div class="checkbox-item" value="Public Figures">
-					        <input type="checkbox">
+					    <div class="checkbox-item">
+					        <input type="checkbox"  value="Public Figures">
 					        <label for="checkbox10">Public Figures</label>
 					    </div>
 					    <div class="checkbox-item">
@@ -186,107 +187,129 @@
 		<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 		<script src="characterData.js"></script>
 		<script>
-		    document.getElementById('backButton').addEventListener('click', function() {
-		        window.history.back();
-		    });
-	    
-		    $(document).ready(function() {
-		        var filterPopupOpen = false;
+		document.getElementById('backButton').addEventListener('click', function() {
+            window.history.back();
+        });
 
-		        function openFilterPopup() {
-		            $('#filterPopupOverlay').fadeIn();
-		            filterPopupOpen = true;
-		        }
+        $(document).ready(function() {
+            var filterPopupOpen = false;
 
-		        function closeFilterPopup() {
-		            $('#filterPopupOverlay').fadeOut();
-		            filterPopupOpen = false;
-		        }
+            function openFilterPopup() {
+                $('#filterPopupOverlay').fadeIn();
+                filterPopupOpen = true;
+            }
 
-		        $(document).on('click', function(event) {
-		            var $target = $(event.target);
-		            if (filterPopupOpen && !$target.closest('#filterPopupContent').length && !$target.is('#filterPopupContent')) {
-		                closeFilterPopup();
-		            }
-		        });
+            function closeFilterPopup() {
+                $('#filterPopupOverlay').fadeOut();
+                filterPopupOpen = false;
+            }
 
-		        $('#filterPopupContent').on('click', function(event) {
-		            event.stopPropagation();
-		        });
+            $(document).on('click', function(event) {
+                var $target = $(event.target);
+                if (filterPopupOpen && !$target.closest('#filterPopupContent').length && !$target.is('#filterPopupContent')) {
+                    closeFilterPopup();
+                }
+            });
 
-		        $(document).on('click', '#openFilterPopupIcon', function(event) {
-		            event.stopPropagation();
-		            openFilterPopup();
-		        });
+            $('#filterPopupContent').on('click', function(event) {
+                event.stopPropagation();
+            });
 
-		        $('#navbar-placeholder').load('navbar.html', function() {
-		            $('.discover-icon').addClass('active');
-		        });
+            $(document).on('click', '#openFilterPopupIcon', function(event) {
+                event.stopPropagation();
+                openFilterPopup();
+            });
 
-		        const container = $('.character-card-container');
+            $('#navbar-placeholder').load('navbar.html', function() {
+                $('.discover-icon').addClass('active');
+            });
 
-		        // Function to populate card
-		        function populateCard(template, character) {
-		            const imageName = character.name.replace(/\s+/g, '');
-		            return template
-		                .replace('RECT_IMAGE_URL', 'images/' + imageName + 'Rectangle.png')
-		                .replace('NAME', character.name)
-		                .replace('USERNAME', character.username)
-		                .replace('PRICE', character.price)
-		                .replace('BLURB', character.blurb);
-		        }
+            const container = $('.character-card-container');
+            const filterLabelsContainer = $('#filterLabelsContainer');
 
-		        // Function to filter character data based on categories and price
-		        function filterCharacterData(selectedCategories = [], selectedPrice = 100) {
-		            const filteredData = characterData
-		                .filter(character => {
-		                    const matchesCategory = selectedCategories.length === 0 || character.category.some(cat => selectedCategories.includes(cat));
-		                    const matchesPrice = parseFloat(character.price.replace('$', '')) <= selectedPrice || character.price === 'Free';
-		                    return matchesCategory && matchesPrice;
-		                });
+            // Function to populate card
+            function populateCard(template, character) {
+                const imageName = character.name.replace(/\s+/g, '');
+                return template
+                    .replace('RECT_IMAGE_URL', 'images/' + imageName + 'Rectangle.png')
+                    .replace('NAME', character.name)
+                    .replace('USERNAME', character.username)
+                    .replace('PRICE', character.price)
+                    .replace('BLURB', character.blurb);
+            }
 
-		            // Update header
-		            const headerText = selectedCategories.length > 0 ? selectedCategories.join(', ') : 'All';
-		            $('h1').text(headerText);
+            // Function to filter character data based on categories and price
+            function filterCharacterData(selectedCategories = [], selectedPrice = 100) {
+                const filteredData = characterData
+                    .filter(character => {
+                        const matchesCategory = selectedCategories.length === 0 || character.category.some(cat => selectedCategories.includes(cat));
+                        const matchesPrice = parseFloat(character.price.replace('$', '')) <= selectedPrice || character.price === 'Free';
+                        return matchesCategory && matchesPrice;
+                    });
 
-		            // Display filtered data
-		            container.empty();
-		            $.get('chattercard.html', function(template) {
-		                if (filteredData.length === 0) {
-		                    console.error(`No data found for selected filters`);
-		                }
-		                filteredData.forEach(character => {
-		                    const populatedCard = populateCard(template, character);
-		                    container.append(populatedCard);
-		                });
-		            }).fail(function() {
-		                console.error("Failed to load chattercard.html");
-		            });
-		        }
+                // Display filtered data
+                container.empty();
+                $.get('chattercard.html', function(template) {
+                    if (filteredData.length === 0) {
+                        console.error(`No data found for selected filters`);
+                    }
+                    filteredData.forEach(character => {
+                        const populatedCard = populateCard(template, character);
+                        container.append(populatedCard);
+                    });
+                }).fail(function() {
+                    console.error("Failed to load chattercard.html");
+                });
+            }
 
-		        // Event listener for the apply button
-		        $('#applyButton').on('click', function() {
-		            // Get selected categories
-		            const selectedCategories = [];
-		            $('input[type=checkbox]:checked').each(function() {
-		                selectedCategories.push($(this).val());
-		            });
+            // Function to update filter labels
+            function updateFilterLabels(selectedCategories) {
+                filterLabelsContainer.empty();
+                selectedCategories.forEach(category => {
+                    const label = $('<div class="filter-label">' + category + '<span class="remove-label">&times;</span></div>');
+                    label.find('.remove-label').on('click', function() {
+                        const index = selectedCategories.indexOf(category);
+                        if (index > -1) {
+                            selectedCategories.splice(index, 1);
+                            filterCharacterData(selectedCategories, parseFloat($('#priceRange').val()));
+                            updateFilterLabels(selectedCategories);
+                            $('input[type=checkbox][value="' + category + '"]').prop('checked', false);
+                        }
+                    });
+                    filterLabelsContainer.append(label);
+                });
+            }
 
-		            // Get selected price
-		            const selectedPrice = parseFloat($('#priceRange').val());
+            // Event listener for the apply button
+            $('#applyButton').on('click', function() {
+                // Get selected categories
+                const selectedCategories = [];
+                $('input[type=checkbox]:checked').each(function() {
+                    selectedCategories.push($(this).val());
+                });
 
-		            // Apply filters
-		            filterCharacterData(selectedCategories, selectedPrice);
-		            closeFilterPopup();
-		        });
+                // Get selected price
+                const selectedPrice = parseFloat($('#priceRange').val());
 
-		        // Initial data load based on URL category
-		        const urlParams = new URLSearchParams(window.location.search);
-		        const category = urlParams.get('category') || 'All';
-		        const initialCategories = category === 'All' ? [] : [category];
+                // Apply filters
+                filterCharacterData(selectedCategories, selectedPrice);
+                updateFilterLabels(selectedCategories);
+                closeFilterPopup();
+            });
 
-		        filterCharacterData(initialCategories);
-		    });
+            // Initial data load based on URL category
+            const urlParams = new URLSearchParams(window.location.search);
+            const category = urlParams.get('category') || 'All';
+            const initialCategories = category === 'All' ? [] : [category];
+
+            filterCharacterData(initialCategories);
+            updateFilterLabels(initialCategories);
+
+            // Check the checkboxes for the initial categories
+            initialCategories.forEach(category => {
+                $('input[type=checkbox][value="' + category + '"]').prop('checked', true);
+            });
+        });
 
 	    </script>
 	</div>
