@@ -145,6 +145,7 @@
             
             // Fetch chattercard template for user B
             $.get('chattercard.html', function(template) {
+            	console.log('Template Loaded:', template);
                 userBFilteredData.forEach(character => {
                     const populatedCard = populateCard(template, character);
                     Bcards.append(populatedCard);
@@ -164,11 +165,11 @@
         function populateCard(template, character) {
 	         const imageName = character.name.replace(/\s+/g, '');
 	         return template
-	             .replace('RECT_IMAGE_URL', 'images/' + imageName + 'Rectangle.png')
-	             .replace('NAME', character.name)
-	             .replace('USERNAME', character.username)
-	             .replace('PRICE', character.price)
-	             .replace('BLURB', character.blurb);
+	             .replace(/RECT_IMAGE_URL/g, 'images/' + imageName + 'Rectangle.png')
+	             .replace(/NAME/g, character.name)
+	             .replace(/USER/g, character.username)
+	             .replace(/PRICE/g, character.price)
+	             .replace(/BLURB/g, character.blurb);
 	    }
     </script>
 </body>
