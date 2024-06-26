@@ -31,7 +31,7 @@
 					<i class="fs-2 fa-solid fa-chevron-left"></i>
 				</div>
 			</div>
-			<h1>Lili</h1>
+			<h1 class="chatter-name"></h1>
 		</div>
 		
 		<!-- chatter preview body -->
@@ -41,15 +41,15 @@
 	            
 	            	<!-- chatter images -->
 	            	<div id="verticalscroll-placeholder"></div> 
-	            	<img class = "square" src = "images/LiliRectangle.png">
+	            	<img id="chatter-image" class="square" src="">
 	            	
 	            	<!-- chatter text & checkout icons -->
 	            	<div class = "w-50 py-0 px-1">
 	            		<div class = "row justify-content-between w-auto">
 	            			<!-- chatter name & username -->
 							<div class = "col-auto">
-								<h1 class="w-auto">Lili</h1>
-								<a href = "profilepage.html"><h3 class="pb-5 w-auto">@B</h3></a>
+								<h1 class="chatter-name w-auto"></h1>
+								<a href = "profilepage.html"><h3 id="chatter-username" class="pb-5 w-auto"></h3></a>
 							</div>
 							<!-- icons & text -->
 							<div class = "d-flex w-auto justify-content-end">
@@ -57,7 +57,7 @@
 									<!-- cart icon & price -->
 									<div class = "col">
 										<i class="p-0 fas fa-cart-plus openCartPopupIcon" style="width: 80px; font-size: 50px; color: #FF206E;"></i>
-										<h3 class="text-start pt-1">$2.00</h3>
+										<h3 id="chatter-price" class="text-start pt-1">$</h3>
 									</div>
 									<!-- chat logo & Trial text -->
 							        <div class = "col">
@@ -69,7 +69,7 @@
 						</div>
 						<!-- chatter description -->
 						<h3>Description</h3>
-						<p id='character-description'></p>
+						<p id="chatter-description"></p>
 	            	</div>
 	            	
 	            </div>
@@ -133,6 +133,33 @@
             $('#verticalscroll-placeholder').load('verticalscroll.html');
         	//load cart popup for cart button
             $('#cartpopup-placeholder').load('cartpopup.html');
+        	
+            //load character content
+            function populateDetails(character) {
+                const imageName = character.name.replace(/\s+/g, '');
+                $('#chatter-image').attr('src', 'images/' + imageName + 'Rectangle.png');
+                $('.chatter-name').text(character.name);
+                $('#chatter-username').text(character.username);
+                $('#chatter-price').text('$' + character.price);
+                $('#chatter-description').text(character.description);
+            }
+            function loadCharacterDetails(characterName) {
+                const character = characterData.find(c => c.name === characterName);
+                if (!character) {
+                    console.error(`Character with name ${characterName} not found.`);
+                    return;
+                }
+
+                // Update the preview page with character details
+                populateDetails(character);
+            }
+
+            // Extract character name from URL
+            const urlParams = new URLSearchParams(window.location.search);
+            const characterName = urlParams.get('name');
+            if (characterName) {
+                loadCharacterDetails(characterName);
+            }
         });
 		
         //back button function
@@ -140,12 +167,6 @@
 	        window.history.back();
 	    });
         
-        //load character content
-        document.addEventListener('DOMContentLoaded', () => {
-            const characterDescriptionElement = document.getElementById('character-description');
-            if (characterData && characterDescriptionElement) {
-                characterDescriptionElement.textContent = characterData.description;
-            }
-        });
+        
     </script>
 </body>
