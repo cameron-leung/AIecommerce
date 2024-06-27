@@ -63,7 +63,7 @@
 	            			<!-- chatter name & username -->
 							<div class = "col-auto">
 								<h1 class="chatter-name w-auto"></h1>
-								<a href = "profilepage.html"><h3 id="chatter-username" class="pb-5 w-auto"></h3></a>
+								<a href = "profilepage.html"><h3 class="chatter-username pb-5 w-auto"></h3></a>
 							</div>
 							<!-- icons & text -->
 							<div class = "d-flex w-auto justify-content-end">
@@ -71,7 +71,7 @@
 									<!-- cart icon & price -->
 									<div class = "col">
 										<i class="p-0 fas fa-cart-plus openCartPopupIcon" style="width: 80px; font-size: 50px; color: #FF206E;"></i>
-										<h3 id="chatter-price" class="text-start pt-1">$</h3>
+										<h3 class="chatter-price text-start pt-1">$</h3>
 									</div>
 									<!-- chat logo & Trial text -->
 							        <div class = "col">
@@ -83,7 +83,7 @@
 						</div>
 						<!-- chatter description -->
 						<h3>Description</h3>
-						<p id="chatter-description"></p>
+						<p class="chatter-description"></p>
 	            	</div>
 	            	
 	            </div>
@@ -163,9 +163,9 @@
 	            const imageName = character.name.replace(/\s+/g, '');
 	            $('.chatter-image').attr('src', 'images/' + imageName + 'Rectangle.png');
 	            $('.chatter-name').text(character.name);
-	            $('#chatter-username').text(character.username);
-	            $('#chatter-price').text('$' + character.price);
-	            $('#chatter-description').text(character.description);
+	            $('.chatter-username').text(character.username);
+	            $('.chatter-price').text('$' + character.price);
+	            $('.chatter-description').text(character.description);
 	        }
 	
 	        function loadCharacterDetails(characterName) {
@@ -192,6 +192,7 @@
 	        }
 	
 	        // Cart button functionality
+	        var cartPopupOpen = false;
 	        function addToCart(chatter) {
 	            $.ajax({
 	                url: '/add-to-cart',

@@ -4,11 +4,11 @@
         <!--  cart item -->
         <div class="d-flex flex-column w-100 overflow-hidden" style="height: 25vh;">
             <div class="d-flex flex-row display-flex align-items-center justify-content-end" style="height: 20vh;">
-                <img id="cart-chatter-image" class="object-fit-cover rounded-3 w-50" style="height: 20vh;">
+                <img class="chatter-image object-fit-cover rounded-3 w-50" style="height: 20vh;">
                 <div class="flex-column w-30 p-2">
-                    <h3 id="cart-chatter-name" class="m-0 p-0"></h3>
-                    <h5 id="cart-chatter-username" class="mt-0 mb-5"></h5>
-                    <h5 id="cart-chatter-price" class="mb-0"></h5>
+                    <h3 class="chatter-name m-0 p-0"></h3>
+                    <h5 class="chatter-username mt-0 mb-5"></h5>
+                    <h5 class="chatter-price mb-0"></h5>
                 </div>
                 <div class="d-flex flex-column h-100 align-items-end justify-content-end flex-grow-1">
                     <a href="#"><img class="m-0 p-0" style="width: 25px;" src="images/AIchatlogopink.png" alt="Logo"></a>
@@ -40,48 +40,3 @@
 		</div>
 	</div>
 </div>
-
-<script>
-    var cartPopupOpen = false;
-    // Function to open the cart popup overlay
-    function openCartPopup() {
-    	$('.cart-icon').addClass('active');
-    	$('#cartPopupOverlay').removeClass('d-none').fadeIn();
-        $('#cartPopupOverlay').fadeIn();
-        cartPopupOpen = true; // Set popupOpen to true when popup is opened
-    }
-    // Function to close the cart popup overlay
-    function closeCartPopup() {
-    	$('#cartPopupOverlay').fadeOut(function() {
-            $(this).addClass('d-none');
-        });
-        $('.cart-icon').removeClass('active');
-        cartPopupOpen = false; // Set popupOpen to false when popup is closed
-    }
-    // Test if user clicks outside popup
-    $(document).on('click', function(event) {
-        var $target = $(event.target);
-        if (cartPopupOpen && !$target.closest('#cartPopupContent').length && !$target.is('#cartPopupContent')) {
-            closeCartPopup();
-        }
-    });
-    // Prevent popup from closing when clicked inside
-    $('#cartPopupContent').on('click', function(event) {
-        event.stopPropagation();
-    });
-    // Event listener for the icon click to open the popup
-    $('.openCartPopupIcon').on('click', function(event) {
-        event.stopPropagation(); // Prevent event propagation
-        openCartPopup();
-    });
-    
- // Toggle check/uncheck icon
-    $(document).ready(function() {
-        $('#check-icon').on('click', function() {
-            $(this).toggleClass("f-regular fa-square");
-        });
-    });
-    $('#checkoutButton').on('click', function() {
-        window.location.href = 'purchasepage.html';
-    });
-</script>
