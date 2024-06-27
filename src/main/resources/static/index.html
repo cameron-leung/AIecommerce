@@ -112,7 +112,7 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/js/bootstrap.min.js"></script>
-    <script src="chatterData.js"></script>
+    
     <script>
         $(document).ready(function() {
         	// Load navbar activate discover icon
@@ -135,31 +135,49 @@
             });
         	
             const Friendscards = $('.Friends-character-card-container');
-        	// filter by username for Browse by Creator section
-        	// Cards filtered by B username
             const Bcards = $('.B-character-card-container');
-            const userBFilteredData = characterData.filter(character => character.username === '@B');
-            // Cards filtered by Meta username
             const Metacards = $('.Meta-character-card-container');
-            const userMetaFilteredData = characterData.filter(character => character.username === '@Meta');
-            
-            // Fetch chattercard template for user B
-            $.get('chattercard.html', function(template) {
-            	console.log('Template Loaded:', template);
-                userBFilteredData.forEach(character => {
-                    const populatedCard = populateCard(template, character);
-                    Bcards.append(populatedCard);
-                });
-                userMetaFilteredData.forEach(character => {
-                    const populatedCard = populateCard(template, character);
-                    Metacards.append(populatedCard);
-                });
-                characterData.forEach(character => {
-                    const populatedCard = populateCard(template, character);
-                    Friendscards.append(populatedCard);
-                });
-            });
 
+            function populateCard(template, character) {
+                const imageName = character.name.replace(/\s+/g, '');
+                return template
+                    .replace(/RECT_IMAGE_URL/g, 'images/' + imageName + 'Rectangle.png')
+                    .replace(/NAME/g, character.name)
+                    .replace(/USER/g, character.username)
+                    .replace(/PRICE/g, character.price)
+                    .replace(/BLURB/g, character.blurb);
+            }
+
+            // Fetch character data from the backend
+            $.getJSON('/chatters', function(characterData) {
+                // Filter by username for Browse by Creator section
+                const userBFilteredData = characterData.filter(character => character.username === '@B');
+                const userMetaFilteredData = characterData.filter(character => character.username === '@Meta');
+
+                // Fetch chattercard template
+                $.get('chattercard.html', function(template) {
+                    console.log('Template Loaded:', template);
+
+                    userBFilteredData.forEach(character => {
+                        const populatedCard = populateCard(template, character);
+                        Bcards.append(populatedCard);
+                    });
+
+                    userMetaFilteredData.forEach(character => {
+                        const populatedCard = populateCard(template, character);
+                        Metacards.append(populatedCard);
+                    });
+
+                    characterData.forEach(character => {
+                        const populatedCard = populateCard(template, character);
+                        Friendscards.append(populatedCard);
+                    });
+                }).fail(function() {
+                    console.error('Failed to load chattercard.html');
+                });
+            }).fail(function() {
+                console.error('Failed to fetch chatters from API');
+            });
         });
         // Function to fill in card data
         function populateCard(template, character) {

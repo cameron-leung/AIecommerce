@@ -21,12 +21,20 @@
     $(document).ready(function () {
 		const container = $('.character-circ-container');
         
-        // Fetch chattercard template
-        $.get('chattercircle.html', function(template) {
-            characterData.forEach(character => {
-                const populatedCircle = populateCircle(template, character);
-                container.append(populatedCircle);
-            });
-        });
+		$.getJSON('/chatters', function(characterData) {
+	        // Fetch chattercard template
+	        $.get('chattercircle.html', function(template) {
+	            console.log('Template Loaded:', template);
+
+	            characterData.forEach(character => {
+	                const populatedCircle = populateCircle(template, character);
+	                container.append(populatedCircle);
+	            });
+	        }).fail(function() {
+	            console.error('Failed to load chattercircle.html');
+	        });
+	    }).fail(function() {
+	        console.error('Failed to fetch chatters from API');
+	    });
     });
 </script>
