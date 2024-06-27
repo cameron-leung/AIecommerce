@@ -210,11 +210,7 @@
 	
 	        // Open the cart popup with the chatter details
 	        function openCartPopup(chatter) {
-	            const imageName = chatter.name.replace(/\s+/g, '');
-	            $('#cart-chatter-image').attr('src', 'images/' + imageName + 'Rectangle.png');
-	            $('#cart-chatter-name').text(chatter.name);
-	            $('#cart-chatter-username').text(chatter.username);
-	            $('#cart-chatter-price').text('$' + chatter.price);
+	            loadCharacterDetails(characterName);
 	            $('#cart-subtotal').text('$' + chatter.price);
 	            $('#cart-tax').text('$' + (chatter.price * 0.1).toFixed(2)); // Assuming 10% tax for example
 	
