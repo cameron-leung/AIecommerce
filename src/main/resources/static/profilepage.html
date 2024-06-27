@@ -90,9 +90,11 @@
 		 	// Cards filtered by B username
             const Bcards = $('.B-character-card-container');
             
+         
+         
          	// Fetch character data from the backend
             $.getJSON('/chatters', function(characterData) {
-                // Filter data for '@B' username
+                // Filter by username for Browse by Creator section
                 const userBFilteredData = characterData.filter(character => character.username === '@B');
 
                 // Fetch chattercard template
@@ -103,6 +105,7 @@
                         const populatedCard = populateCard(template, character);
                         Bcards.append(populatedCard);
                     });
+
                 }).fail(function() {
                     console.error('Failed to load chattercard.html');
                 });
@@ -110,16 +113,7 @@
                 console.error('Failed to fetch chatters from API');
             });
 		});
-		// Function to fill in card data
-        function populateCard(template, character) {
-	         const imageName = character.name.replace(/\s+/g, '');
-	         return template
-	             .replace(/RECT_IMAGE_URL/g, 'images/' + imageName + 'Rectangle.png')
-	             .replace(/NAME/g, character.name)
-	             .replace(/USER/g, character.username)
-	             .replace(/PRICE/g, character.price)
-	             .replace(/BLURB/g, character.blurb);
-	    }
+		
 	</script>
 </body>
 <style>
