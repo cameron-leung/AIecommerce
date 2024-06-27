@@ -41,7 +41,7 @@
 	            
 	            	<!-- chatter images -->
 	            	<div id="verticalscroll-placeholder"></div> 
-	            	<img id="chatter-image" class="square" src="">
+	            	<img class="chatter-image square" src="">
 	            	
 	            	<!-- chatter text & checkout icons -->
 	            	<div class = "w-50 py-0 px-1">
@@ -137,7 +137,7 @@
             //load character content
             function populateDetails(character) {
                 const imageName = character.name.replace(/\s+/g, '');
-                $('#chatter-image').attr('src', 'images/' + imageName + 'Rectangle.png');
+                $('.chatter-image').attr('src', 'images/' + imageName + 'Rectangle.png');
                 $('.chatter-name').text(character.name);
                 $('#chatter-username').text(character.username);
                 $('#chatter-price').text('$' + character.price);
