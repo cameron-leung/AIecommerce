@@ -90,14 +90,25 @@
 		    $('.chattercardscroll-placeholder').load('chattercardscroll.html');
 		 	// Cards filtered by B username
             const Bcards = $('.B-character-card-container');
-            const userBFilteredData = characterData.filter(character => character.username === '@B');
             
-         	// Fetch chattercard template for user B
-            $.get('chattercard.html', function(template) {
-                userBFilteredData.forEach(character => {
-                    const populatedCard = populateCard(template, character);
-                    Bcards.append(populatedCard);
+         	// Fetch character data from the backend
+            $.getJSON('/chatters', function(characterData) {
+                // Filter data for '@B' username
+                const userBFilteredData = characterData.filter(character => character.username === '@B');
+
+                // Fetch chattercard template
+                $.get('chattercard.html', function(template) {
+                    console.log('Template Loaded:', template);
+
+                    userBFilteredData.forEach(character => {
+                        const populatedCard = populateCard(template, character);
+                        Bcards.append(populatedCard);
+                    });
+                }).fail(function() {
+                    console.error('Failed to load chattercard.html');
                 });
+            }).fail(function() {
+                console.error('Failed to fetch chatters from API');
             });
 		});
 		// Function to fill in card data
