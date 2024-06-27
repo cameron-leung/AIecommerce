@@ -6,7 +6,7 @@ public class Chatter {
 	private String name;
 	private List<String> category;
 	private String username;
-	private int price;
+	private double price;
 	private String blurb;
 	private String description;
 	
@@ -16,7 +16,7 @@ public class Chatter {
     }
 
     // Parameterized constructor
-    public Chatter(String name, List<String> category, String username, int price, String blurb, String description) {
+    public Chatter(String name, List<String> category, String username, double price, String blurb, String description) {
         this.name = name;
         this.category = category;
         this.username = username;
@@ -50,11 +50,11 @@ public class Chatter {
         this.username = username;
     }
 
-    public int getPrice() {
+    public double getPrice() {
         return price;
     }
 
-    public void setPrice(int price) {
+    public void setPrice(double price) {
         this.price = price;
     }
 
