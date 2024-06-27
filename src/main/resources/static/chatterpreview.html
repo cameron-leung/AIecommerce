@@ -137,62 +137,134 @@
     
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 	<script>
-        $(document).ready(function() {
-        	//load navbar & activate discover icon
-            $('#navbar-placeholder').load('navbar.html', function() {
-                $('.discover-icon').addClass('active');
-            });
-        	//load cart popup for cart button
-            $('#cartpopup-placeholder').load('cartpopup.html');
-        	
-        	//vertical scroll images
-            var imageContainer = document.getElementById('image-container');
-            var numberOfImages = 5; // Number of times to repeat the image
-            
-            for (var i = 0; i < numberOfImages; i++) {
-                var img = document.createElement('img');
-                img.classList.add('chatter-image'); // Add chatter-image class
-                //img.src = 'images/' + imageName + 'Rectangle.png';
-                img.alt = 'Chatter Card ' + (i + 1);
-                imageContainer.appendChild(img);
-            }
-            
-            //load character content
-            function populateDetails(character) {
-                const imageName = character.name.replace(/\s+/g, '');
-                $('.chatter-image').attr('src', 'images/' + imageName + 'Rectangle.png');
-                $('.chatter-name').text(character.name);
-                $('#chatter-username').text(character.username);
-                $('#chatter-price').text('$' + character.price);
-                $('#chatter-description').text(character.description);
-            }
-            function loadCharacterDetails(characterName) {
-            	// Fetch character details from the backend
-                $.getJSON('/chatters', function(characterData) {
-                    const character = characterData.find(c => c.name === characterName);
-                    if (!character) {
-                        console.error(`Character with name ${characterName} not found.`);
-                        return;
-                    }
-
-                    // Update the preview page with character details
-                    populateDetails(character);
-                }).fail(function() {
-                    console.error('Failed to fetch chatters from API');
-                });
-            }
-
-            // Extract character name from URL
-            const urlParams = new URLSearchParams(window.location.search);
-            const characterName = urlParams.get('name');
-            if (characterName) {
-                loadCharacterDetails(characterName);
-            }
-        });
-		
-        //back button function
-        document.getElementById('backButton').addEventListener('click', function() {
-	        window.history.back();
+	    $(document).ready(function() {
+	        // Load navbar & activate discover icon
+	        $('#navbar-placeholder').load('navbar.html', function() {
+	            $('.discover-icon').addClass('active');
+	        });
+	
+	        // Load cart popup for cart button
+	        $('#cartpopup-placeholder').load('cartpopup.html');
+	
+	        // Vertical scroll images
+	        var imageContainer = document.getElementById('image-container');
+	        var numberOfImages = 5; // Number of times to repeat the image
+	
+	        for (var i = 0; i < numberOfImages; i++) {
+	            var img = document.createElement('img');
+	            img.classList.add('chatter-image'); // Add chatter-image class
+	            //img.src = 'images/' + imageName + 'Rectangle.png';
+	            img.alt = 'Chatter Card ' + (i + 1);
+	            imageContainer.appendChild(img);
+	        }
+	
+	        // Load character content
+	        function populateDetails(character) {
+	            const imageName = character.name.replace(/\s+/g, '');
+	            $('.chatter-image').attr('src', 'images/' + imageName + 'Rectangle.png');
+	            $('.chatter-name').text(character.name);
+	            $('#chatter-username').text(character.username);
+	            $('#chatter-price').text('$' + character.price);
+	            $('#chatter-description').text(character.description);
+	        }
+	
+	        function loadCharacterDetails(characterName) {
+	            // Fetch character details from the backend
+	            $.getJSON('/chatters', function(characterData) {
+	                const character = characterData.find(c => c.name === characterName);
+	                if (!character) {
+	                    console.error(`Character with name ${characterName} not found.`);
+	                    return;
+	                }
+	
+	                // Update the preview page with character details
+	                populateDetails(character);
+	            }).fail(function() {
+	                console.error('Failed to fetch chatters from API');
+	            });
+	        }
+	
+	        // Extract character name from URL
+	        const urlParams = new URLSearchParams(window.location.search);
+	        const characterName = urlParams.get('name');
+	        if (characterName) {
+	            loadCharacterDetails(characterName);
+	        }
+	
+	        // Cart button functionality
+	        function addToCart(chatter) {
+	            $.ajax({
+	                url: '/add-to-cart',
+	                type: 'POST',
+	                contentType: 'application/json',
+	                data: JSON.stringify(chatter),
+	                success: function(response) {
+	                    console.log('Added to cart:', response);
+	                },
+	                error: function(xhr, status, error) {
+	                    console.error('Failed to add to cart:', error);
+	                }
+	            });
+	        }
+	
+	        // Open the cart popup with the chatter details
+	        function openCartPopup(chatter) {
+	            const imageName = chatter.name.replace(/\s+/g, '');
+	            $('#cart-chatter-image').attr('src', 'images/' + imageName + 'Rectangle.png');
+	            $('#cart-chatter-name').text(chatter.name);
+	            $('#cart-chatter-username').text(chatter.username);
+	            $('#cart-chatter-price').text('$' + chatter.price);
+	            $('#cart-subtotal').text('$' + chatter.price);
+	            $('#cart-tax').text('$' + (chatter.price * 0.1).toFixed(2)); // Assuming 10% tax for example
+	
+	            $('#cartPopupOverlay').removeClass('d-none').fadeIn();
+	            cartPopupOpen = true;
+	        }
+	
+	        // Event listener for the icon click to open the popup and add to cart
+	        $('.openCartPopupIcon').on('click', function(event) {
+	            event.stopPropagation(); // Prevent event propagation
+	
+	            // Extract currently displayed chatter details
+	            const chatter = {
+	                name: $('.chatter-name').text().trim(),
+	                username: $('#chatter-username').text().trim(),
+	                price: parseFloat($('#chatter-price').text().replace('$', '').trim()),
+	                description: $('#chatter-description').text().trim()
+	            };
+	
+	            openCartPopup(chatter);
+	            addToCart(chatter);
+	        });
+	
+	        // Event listener for the checkout button
+	        $('#checkoutButton').on('click', function() {
+	            window.location.href = 'purchasepage.html';
+	        });
+	
+	        // Back button function
+	        document.getElementById('backButton').addEventListener('click', function() {
+	            window.history.back();
+	        });
+	
+	        // Close the cart popup when clicking outside
+	        $(document).on('click', function(event) {
+	            var $target = $(event.target);
+	            if (cartPopupOpen && !$target.closest('#cartPopupContent').length && !$target.is('#cartPopupContent')) {
+	                closeCartPopup();
+	            }
+	        });
+	
+	        // Prevent popup from closing when clicked inside
+	        $('#cartPopupContent').on('click', function(event) {
+	            event.stopPropagation();
+	        });
+	
+	        // Toggle check/uncheck icon
+	        $('#check-icon').on('click', function() {
+	            $(this).toggleClass("fa-square fa-square-check");
+	        });
 	    });
-    </script>
+	</script>
+
 </body>
