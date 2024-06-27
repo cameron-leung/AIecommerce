@@ -185,7 +185,7 @@
 		
 		
 		<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-		<script src="chatterData.js"></script>
+		
 		<script>
 		document.getElementById('backButton').addEventListener('click', function() {
             window.history.back();
@@ -240,25 +240,28 @@
 
             // Function to filter character data based on categories and price
             function filterCharacterData(selectedCategories = [], selectedPrice = 100) {
-                const filteredData = characterData
-                    .filter(character => {
+            	$.getJSON('/chatters', function(characterData) {
+                    const filteredData = characterData.filter(character => {
                         const matchesCategory = selectedCategories.length === 0 || character.category.some(cat => selectedCategories.includes(cat));
-                        const matchesPrice = parseFloat(character.price.replace('$', '')) <= selectedPrice || character.price === 'Free';
+                        const matchesPrice = character.price <= selectedPrice;
                         return matchesCategory && matchesPrice;
                     });
 
                 // Display filtered data
-                container.empty();
-                $.get('chattercard.html', function(template) {
-                    if (filteredData.length === 0) {
-                        console.error(`No data found for selected filters`);
-                    }
-                    filteredData.forEach(character => {
-                        const populatedCard = populateCard(template, character);
-                        container.append(populatedCard);
+                    container.empty();
+                    $.get('chattercard.html', function(template) {
+                        if (filteredData.length === 0) {
+                            console.error('No data found for selected filters');
+                        }
+                        filteredData.forEach(character => {
+                            const populatedCard = populateCard(template, character);
+                            container.append(populatedCard);
+                        });
+                    }).fail(function() {
+                        console.error('Failed to load chattercard.html');
                     });
                 }).fail(function() {
-                    console.error("Failed to load chattercard.html");
+                    console.error('Failed to fetch chatters from API');
                 });
             }
 
