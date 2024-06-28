@@ -153,7 +153,6 @@
 	        for (var i = 0; i < numberOfImages; i++) {
 	            var img = document.createElement('img');
 	            img.classList.add('chatter-image'); // Add chatter-image class
-	            //img.src = 'images/' + imageName + 'Rectangle.png';
 	            img.alt = 'Chatter Card ' + (i + 1);
 	            imageContainer.appendChild(img);
 	        }
@@ -179,6 +178,11 @@
 	
 	                // Update the preview page with character details
 	                populateDetails(character);
+	                
+	             // Attach event handler to the cart icon
+	                $('.openCartPopupIcon').off('click').on('click', function() {
+	                    addToCart(character);
+	                });
 	            }).fail(function() {
 	                console.error('Failed to fetch chatters from API');
 	            });
@@ -190,49 +194,22 @@
 	        if (characterName) {
 	            loadCharacterDetails(characterName);
 	        }
-	
-	        // Cart button functionality
-	        var cartPopupOpen = false;
-	        function addToCart(chatter) {
+	        
+	        function addToCart(character) {
 	            $.ajax({
-	                url: '/add-to-cart',
 	                type: 'POST',
+	                url: '/addToCart',
 	                contentType: 'application/json',
-	                data: JSON.stringify(chatter),
+	                data: JSON.stringify(character),
 	                success: function(response) {
-	                    console.log('Added to cart:', response);
+	                    console.log(response);
 	                },
-	                error: function(xhr, status, error) {
-	                    console.error('Failed to add to cart:', error);
+	                error: function() {
+	                    console.error('Failed to add chatter to cart');
 	                }
 	            });
 	        }
 	
-	        // Open the cart popup with the chatter details
-	        function openCartPopup(chatter) {
-	            loadCharacterDetails(characterName);
-	            $('#cart-subtotal').text('$' + chatter.price);
-	            $('#cart-tax').text('$' + (chatter.price * 0.1).toFixed(2)); // Assuming 10% tax for example
-	
-	            $('#cartPopupOverlay').removeClass('d-none').fadeIn();
-	            cartPopupOpen = true;
-	        }
-	
-	        // Event listener for the icon click to open the popup and add to cart
-	        $('.openCartPopupIcon').on('click', function(event) {
-	            event.stopPropagation(); // Prevent event propagation
-	
-	            // Extract currently displayed chatter details
-	            const chatter = {
-	                name: $('.chatter-name').text().trim(),
-	                username: $('#chatter-username').text().trim(),
-	                price: parseFloat($('#chatter-price').text().replace('$', '').trim()),
-	                description: $('#chatter-description').text().trim()
-	            };
-	
-	            openCartPopup(chatter);
-	            addToCart(chatter);
-	        });
 	
 	        // Event listener for the checkout button
 	        $('#checkoutButton').on('click', function() {
