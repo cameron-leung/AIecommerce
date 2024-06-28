@@ -61,18 +61,23 @@ public class CartRest {
         .orElse(null);
     }
     
-    @DeleteMapping("/removeFromCart")
-    public String removeFromCart(@RequestParam(name = "name") String name) {
-        Iterator<Chatter> iterator = cart.iterator();
-        while (iterator.hasNext()) {
-            Chatter chatter = iterator.next();
-            if (chatter.getName().equalsIgnoreCase(name)) {
-                iterator.remove();
-                return "Chatter removed from cart successfully";
-            }
+    @PostMapping("/removeFromCart")
+    public String removeFromCart(@RequestBody String name) {
+        // Check if the chatter already exists in the cart
+    	System.out.println("removing from cart");
+    	
+        boolean chatterExists = cart.stream()
+                .anyMatch(c -> c.getName().equalsIgnoreCase(name));
+        
+        System.out.println(chatterExists);
+        if (chatterExists) {
+            cart.removeIf(c -> c.getName().equalsIgnoreCase(name));
+            return "Chatter removed from cart successfully";
+        } else {
+            return "Chatter not found in the cart";
         }
-        return "Chatter not found in the cart";
     }
+
     
     @GetMapping("/contents")
     public List<Chatter> getCartContents() {

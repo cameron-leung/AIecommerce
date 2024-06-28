@@ -23,10 +23,28 @@
         </div>
     </div>
 </div>
-
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
     $(document).ready(function() {
         var cartPopupOpen = false;
+        
+        function removeFromCart(name) {
+            console.log("Removing chatter: " + name);
+            $.ajax({
+                url: '/removeFromCart',
+                type: 'POST',
+                contentType: 'application/json', // Specify the content type
+                data: JSON.stringify(name), // Convert the Chatter object to JSON
+                success: function(response) {
+                    console.log(response); // Handle success response as needed
+                    fetchCartItems(); // Refresh cart items after removal
+                },
+                error: function(xhr, status, error) {
+                    console.error('Failed to remove item from cart', error);
+                }
+            });
+        }
+
 
         // Function to fetch and display cart items
         function fetchCartItems() {
@@ -45,7 +63,7 @@
                                 </div>
                                 <div class="d-flex flex-column h-100 align-items-end justify-content-end flex-grow-1">
                                     <a href="#"><img class="m-0 p-0" style="width: 25px;" src="images/AIchatlogopink.png" alt="Logo"></a>
-                                    <i class="d-flex justify-content-center pt-2 w-25 fs-3 cursor-pointer fa-solid fa-trash"></i>
+                                    <i id="${item.name}" class="d-flex justify-content-center pt-2 w-25 fs-3 cursor-pointer fa-solid fa-trash"></i>
                                     <i id="check-icon" class="d-flex justify-content-center pt-2 w-25 fs-3 cursor-pointer fa-regular fa-square-check"></i>
                                 </div>
                             </div>
@@ -65,6 +83,7 @@
                 console.error('Failed to fetch cart items');
             });
         }
+       
 
         // Open the cart popup
         function openCartPopup() {
@@ -90,6 +109,17 @@
                 closeCartPopup();
             }
         });
+
+        // Event listener for checkbox delegation
+	    $(document).on('click', '#check-icon', function() {
+	        $(this).toggleClass("fa-square fa-square-check");
+	    });
+	 	// Event listener for trash
+	    $(document).on('click', '.fa-trash', function() {
+	        var chatterName = $(this).attr('id'); 
+	        console.log(chatterName);
+	        removeFromCart(chatterName);
+	    });
 
         // Event listener for the checkout button
         $('#checkoutButton').on('click', function() {
