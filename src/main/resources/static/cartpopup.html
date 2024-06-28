@@ -1,21 +1,8 @@
-<div id="cartPopupOverlay" class="d-none position-fixed z-2 shadow end-0 w-25 overflow-hidden  m-2" style=" height: 90vh;">
-	<div id="cartPopupContent" class="z-3 h-100 w-100 bg-light rounded-3 shadow-sm p-3 overflow-hidden">
-        
-        <!--  cart item -->
-        <div class="d-flex flex-column w-100 overflow-hidden" style="height: 25vh;">
-            <div class="d-flex flex-row display-flex align-items-center justify-content-end" style="height: 20vh;">
-                <img class="chatter-image object-fit-cover rounded-3 w-50" style="height: 20vh;">
-                <div class="flex-column w-30 p-2">
-                    <h3 class="chatter-name m-0 p-0"></h3>
-                    <h5 class="chatter-username mt-0 mb-5"></h5>
-                    <h5 class="chatter-price mb-0"></h5>
-                </div>
-                <div class="d-flex flex-column h-100 align-items-end justify-content-end flex-grow-1">
-                    <a href="#"><img class="m-0 p-0" style="width: 25px;" src="images/AIchatlogopink.png" alt="Logo"></a>
-                    <i class="d-flex justify-content-center pt-2 w-25 fs-3 cursor-pointer fa-solid fa-trash"></i>
-                    <i id="check-icon" class="d-flex justify-content-center pt-2 w-25 fs-3 cursor-pointer fa-regular fa-square-check"></i>
-                </div>
-            </div>
+<div id="cartPopupOverlay" class="d-none position-fixed z-2 shadow end-0 w-25 overflow-hidden m-2" style="height: 90vh;">
+    <div id="cartPopupContent" class="z-3 h-100 w-100 bg-light rounded-3 shadow-sm p-3 overflow-hidden">
+        <!-- cart items container -->
+        <div id="cartItemsContainer" class="overflow-auto" style="max-height: 70vh;">
+            <!-- Cart items will be dynamically added here -->
         </div>
 
         <!-- total texts -->
@@ -25,10 +12,6 @@
                 <h5 id="cart-subtotal"></h5>
             </div>
             <div class="d-flex justify-content-between">
-                <h5>Discounts</h5>
-                <h5>-$0.00</h5>
-            </div>
-            <div class="d-flex justify-content-between">
                 <h5>Tax + Fees</h5>
                 <h5 id="cart-tax"></h5>
             </div>
@@ -36,7 +19,81 @@
 
         <!-- checkout button -->
         <div>
-			<button id="checkoutButton" class="d-block position-absolute px-1 py-2 bottom-0 mb-3 w-75 bg-light rounded-2 translate-middle-x" style="left: 50%; color: #FF206E; border-color: #FF206E;">Checkout</button>
-		</div>
-	</div>
+            <button id="checkoutButton" class="d-block position-absolute px-1 py-2 bottom-0 mb-3 w-75 bg-light rounded-2 translate-middle-x" style="left: 50%; color: #FF206E; border-color: #FF206E;">Checkout</button>
+        </div>
+    </div>
 </div>
+
+<script>
+    $(document).ready(function() {
+        var cartPopupOpen = false;
+
+        // Function to fetch and display cart items
+        function fetchCartItems() {
+            $.getJSON('/contents', function(cartItems) {
+                $('#cartItemsContainer').empty(); // Clear existing items
+
+                cartItems.forEach(function(item) {
+                    var itemHtml = `
+                        <div class="d-flex flex-column w-100 overflow-hidden mb-3">
+                            <div class="d-flex flex-row align-items-center justify-content-end">
+                                <img class="chatter-image object-fit-cover rounded-3 w-50" src="images/${item.name.replace(/\s+/g, '')}Rectangle.png" style="height: 20vh;">
+                                <div class="flex-column w-30 p-2">
+                                    <h3 class="chatter-name m-0 p-0">${item.name}</h3>
+                                    <h5 class="chatter-username mt-0 mb-5">${item.username}</h5>
+                                    <h5 class="chatter-price mb-0">$${item.price}</h5>
+                                </div>
+                                <div class="d-flex flex-column h-100 align-items-end justify-content-end flex-grow-1">
+                                    <a href="#"><img class="m-0 p-0" style="width: 25px;" src="images/AIchatlogopink.png" alt="Logo"></a>
+                                    <i class="d-flex justify-content-center pt-2 w-25 fs-3 cursor-pointer fa-solid fa-trash"></i>
+                                    <i id="check-icon" class="d-flex justify-content-center pt-2 w-25 fs-3 cursor-pointer fa-regular fa-square-check"></i>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    $('#cartItemsContainer').append(itemHtml);
+                });
+
+                // Calculate subtotal and tax
+                var subtotal = cartItems.reduce((total, item) => total + item.price, 0);
+                $('#cart-subtotal').text('$' + subtotal.toFixed(2));
+                $('#cart-tax').text('$' + (subtotal * 0.1).toFixed(2)); // Assuming 10% tax
+
+                // Show the popup
+                openCartPopup();
+            }).fail(function() {
+                console.error('Failed to fetch cart items');
+            });
+        }
+
+        // Open the cart popup
+        function openCartPopup() {
+            $('#cartPopupOverlay').removeClass('d-none').fadeIn();
+            cartPopupOpen = true;
+        }
+
+        // Close the cart popup
+        function closeCartPopup() {
+            $('#cartPopupOverlay').addClass('d-none').fadeOut();
+            cartPopupOpen = false;
+        }
+
+        // Event listener for the icon click to open the popup and add to cart
+        $('.openCartPopupIcon').on('click', function(event) {
+            event.stopPropagation(); // Prevent event propagation
+            fetchCartItems(); // Fetch and display cart items
+        });
+
+        // Close the cart popup when clicking outside
+        $(document).on('click', function(event) {
+            if (cartPopupOpen && !$(event.target).closest('#cartPopupContent').length) {
+                closeCartPopup();
+            }
+        });
+
+        // Event listener for the checkout button
+        $('#checkoutButton').on('click', function() {
+            window.location.href = 'purchasepage.html';
+        });
+    });
+</script>

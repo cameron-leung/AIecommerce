@@ -42,22 +42,11 @@
 				<!-- Cart summary -->
 				<div class="p-3">
 					
-					<!--  Cart item -->
-					<div>
-			            <div class="d-flex col align-items-center">
-			            	<!-- chatter image -->
-			                <img src="images/LiliRectangle.png" class = "object-fit-cover rounded-3" style="height: 20vh; width: 20vh;" >
-			                <!-- Chatter details -->
-			                <div class="flex-column col w-25 pl-1">
-			                    <h1 class="m-0 p-0">Lili</h1>
-			                    <h5 class = "mt-0 mb-5">@B</h5>
-		                    	<div class="d-flex row justify-content-between w-auto">
-		                    		 <h5 class="m-0 w-auto">Price</h5>
-		                    		 <h5 class="w-auto">$2.00</h5>
-		                    	</div>
-			                </div> 
-			            </div>
+					<!-- Cart items container -->
+        			<div id="cartItemsContainer" class="overflow-auto" style="max-height: 63vh;">
+			            <!-- Cart items will be dynamically added here -->
 			        </div>
+					
 			        
 			        <!-- Prices summary -->
 			        <div class="row">
@@ -65,22 +54,18 @@
 				        	<!-- Subtotal -->
 					        <div class = "row justify-content-between">
 						        <h4 class="col-auto m-0">Subtotal</h4>
-					            <h4 class="col-auto m-0 pb-0" style="padding-right: 30px;">$2.00</h4>
+					            <h4 id="cart-subtotal" class="col-auto m-0 pb-0" style="padding-right: 30px;"></h4>
 						     </div>
-						     <!-- Discount -->
-						     <div class = "row" style = "justify-content: space-between;">
-						        <h4 class="col-auto m-0">Discount</h4>
-					            <h4 class="col-auto m-0 pb-0" style="padding-right: 30px;">-$0.00</h4>
-						     </div>
+						     
 						     <!-- Tax + Fees -->
 						     <div class = "row" style = "justify-content: space-between;">
 						        <h4 class="col-auto m-0">Tax + Fees</h4>
-					            <h4 class="col-auto m-0  pb-3" style="padding-right: 30px;">$0.00</h4>
+					            <h4 id="cart-tax" class="col-auto m-0  pb-3" style="padding-right: 30px;"></h4>
 						     </div>
 						     <!-- Total -->
 						     <div class = "row" style = "justify-content: space-between; color: black;">
 						        <h4 class="col-auto m-0">Total</h4>
-					            <h4 class="col-auto " style="padding-right: 30px;">$2.00</h4>
+					            <h4 id="cart-total" class="col-auto " style="padding-right: 30px;"></h4>
 						     </div>
 						 </div>
 					 </div>
@@ -155,14 +140,54 @@
 		</div>
 		
 		<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-		<script src="chatterData.js"></script>
 		<script>
 			// Load navbar
 			$(document).ready(function() {
+				// Load navbar
 			    $('#navbar-placeholder').load('navbar.html', function() {
 			        $('.cart-icon').addClass('active');
 			    });
+			    
+			 	// Function to fetch and display cart items
+		        function fetchCartItems() {
+		        	console.log('Fetching cart items...');
+		            $.getJSON('/contents', function(cartItems) {
+		            	console.log('Received cart items:', cartItems);
+
+		                $('#cartItemsContainer').empty(); // Clear existing items
+
+		                cartItems.forEach(function(item) {
+		                    var itemHtml = `
+		                    	<!--  Cart item -->
+		                        <div class="d-flex flex-column w-100 overflow-hidden mb-3">
+		                            <div class="d-flex flex-row align-items-flex-start justify-content-start">
+		                                <img class="chatter-image object-fit-cover rounded-3 w-50" src="images/${item.name.replace(/\s+/g, '')}Rectangle.png" style="height: 20vh;">
+		                                <div class="flex-column w-50 pl-1">
+		                                    <h3 class="chatter-name m-0 p-0">${item.name}</h3>
+		                                    <h5 class="chatter-username mt-0 mb-5">${item.username}</h5>
+		                                    <div class="d-flex flex-row justify-content-between">
+		                                    	<h5 class="m-0 w-auto">Price</h5>
+		                                    	<h5 class="chatter-price w-auto mr-0 text-end">$${item.price}</h5>
+		                                    </div>
+		                                </div>
+		                            </div>
+		                       </div>
+		                    `;
+		                    $('#cartItemsContainer').append(itemHtml);
+		                });
+
+		                // Calculate subtotal and tax
+		                var subtotal = cartItems.reduce((total, item) => total + item.price, 0);
+		                var tax = subtotal * 0.1;
+		                var total = subtotal + tax;
+		                $('#cart-subtotal').text('$' + subtotal.toFixed(2));
+		                $('#cart-tax').text('$' + tax.toFixed(2)); 
+		                $('#cart-total').text('$'+ total.toFixed(2));
+		            })
+			 	}
+		        fetchCartItems();
 			});
+			
 			
 			//Add function to back button
 			document.getElementById('backButton').addEventListener('click', function() {
