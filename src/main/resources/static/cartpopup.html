@@ -80,8 +80,8 @@
 
         // Event listener for the icon click to open the popup and add to cart
         $('.openCartPopupIcon').on('click', function(event) {
+        	fetchCartItems(); // Fetch and display cart items
             event.stopPropagation(); // Prevent event propagation
-            fetchCartItems(); // Fetch and display cart items
         });
 
         // Close the cart popup when clicking outside

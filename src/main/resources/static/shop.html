@@ -233,7 +233,7 @@
     	             .replace(/RECT_IMAGE_URL/g, 'images/' + imageName + 'Rectangle.png')
     	             .replace(/NAME/g, character.name)
     	             .replace(/USER/g, character.username)
-    	             .replace(/PRICE/g, character.price)
+    	             .replace(/PRICE/g, character.price.toFixed(2))
     	             .replace(/BLURB/g, character.blurb);
     	    }
 
