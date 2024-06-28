@@ -163,7 +163,7 @@
 	            $('.chatter-image').attr('src', 'images/' + imageName + 'Rectangle.png');
 	            $('.chatter-name').text(character.name);
 	            $('.chatter-username').text(character.username);
-	            $('.chatter-price').text('$' + character.price);
+	            $('.chatter-price').text('$' + character.price.toFixed(2));
 	            $('.chatter-description').text(character.description);
 	        }
 	

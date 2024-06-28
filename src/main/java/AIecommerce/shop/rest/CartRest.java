@@ -1,9 +1,11 @@
 package AIecommerce.shop.rest;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -57,6 +59,19 @@ public class CartRest {
         .filter(chatter -> chatter.getName().equalsIgnoreCase(name))
         .findFirst()
         .orElse(null);
+    }
+    
+    @DeleteMapping("/removeFromCart")
+    public String removeFromCart(@RequestParam(name = "name") String name) {
+        Iterator<Chatter> iterator = cart.iterator();
+        while (iterator.hasNext()) {
+            Chatter chatter = iterator.next();
+            if (chatter.getName().equalsIgnoreCase(name)) {
+                iterator.remove();
+                return "Chatter removed from cart successfully";
+            }
+        }
+        return "Chatter not found in the cart";
     }
     
     @GetMapping("/contents")
