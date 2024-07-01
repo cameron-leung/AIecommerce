@@ -35,7 +35,7 @@
     
     <!-- search bar -->
     <div class = "d-flex justify-content-center flex-grow-1">
-         <input type="text" class="form-control rounded-pill" placeholder="Search...">
+         <input type="text"  id="searchInput" class="form-control rounded-pill" placeholder="Search...">
     </div>
     
     <!-- icons -->
@@ -50,7 +50,15 @@
 <div id="cartpopup-placeholder"></div> 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
-	// Load cart pop up
-
+	  // Load cart pop up
         $('#cartpopup-placeholder').load('cartpopup.html');
+        document.getElementById('searchInput').addEventListener('keypress', function(event) {
+            if (event.key === 'Enter') {
+                const query = event.target.value.trim();
+                console.log(query);
+                if (query) {
+                    window.location.href = `searchResults.html?query=${encodeURIComponent(query)}`;
+                }
+            }
+        });	
 </script>

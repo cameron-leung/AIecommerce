@@ -264,23 +264,6 @@
                 });
             }
 
-            // Function to update filter labels
-            function updateFilterLabels(selectedCategories) {
-                filterLabelsContainer.empty();
-                selectedCategories.forEach(category => {
-                    const label = $('<div class="filter-label">' + category + '<span class="remove-label">&times;</span></div>');
-                    label.find('.remove-label').on('click', function() {
-                        const index = selectedCategories.indexOf(category);
-                        if (index > -1) {
-                            selectedCategories.splice(index, 1);
-                            filterCharacterData(selectedCategories, parseFloat($('#priceRange').val()));
-                            updateFilterLabels(selectedCategories);
-                            $('input[type=checkbox][value="' + category + '"]').prop('checked', false);
-                        }
-                    });
-                    filterLabelsContainer.append(label);
-                });
-            }
 
             // Event listener for the apply button
             $('#applyButton').on('click', function() {
