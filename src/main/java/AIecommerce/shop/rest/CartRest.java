@@ -68,12 +68,14 @@ public class CartRest {
     	boolean chatterExists = cart.stream().anyMatch(c -> (c.getName().replaceAll("[^a-zA-Z]", "")).equalsIgnoreCase(trimmedName));
     	
 
-        if (chatterExists) {
-        	cart.removeIf(c -> c.getName().equalsIgnoreCase(trimmedName));
-        	System.out.print(cart);
-            return "Chatter removed from cart successfully";
-        } else {
-            return "Chatter not found in the cart";
+    	synchronized (cart) {
+            
+            if (chatterExists) {
+                cart.removeIf(c -> (c.getName().replaceAll("[^a-zA-Z]", "")).equalsIgnoreCase(name));
+                return "Chatter removed from cart successfully";
+            } else {
+                return "Chatter not found in the cart";
+            }
         }
     }
 

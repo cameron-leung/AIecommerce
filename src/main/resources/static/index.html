@@ -156,8 +156,6 @@
 
                 // Fetch chattercard template
                 $.get('chattercard.html', function(template) {
-                    console.log('Template Loaded:', template);
-
                     userBFilteredData.forEach(character => {
                         const populatedCard = populateCard(template, character);
                         Bcards.append(populatedCard);
