@@ -50,7 +50,7 @@
             $.getJSON('/contents', function(cartItems) {
                 $('#cartItemsContainer').empty(); // Clear existing items
 
-                
+                console.log(cartItems);
                 if(cartItems.length > 0){
 	                cartItems.forEach(function(item) {
 	                    var itemHtml = `
