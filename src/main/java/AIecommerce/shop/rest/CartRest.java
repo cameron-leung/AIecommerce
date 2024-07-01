@@ -64,14 +64,12 @@ public class CartRest {
     @PostMapping("/removeFromCart")
     public String removeFromCart(@RequestBody String name) {
         // Check if the chatter already exists in the cart
-    	System.out.println("removing from cart");
+    	String trimmedName = name.replaceAll("[^a-zA-Z]", "");
     	
-        boolean chatterExists = cart.stream()
-                .anyMatch(c -> c.getName().equalsIgnoreCase(name));
-        
-        System.out.println(chatterExists);
+    	boolean chatterExists = cart.stream().anyMatch(c -> c.getName().equalsIgnoreCase(trimmedName));
+
         if (chatterExists) {
-            cart.removeIf(c -> c.getName().equalsIgnoreCase(name));
+        	cart.removeIf(c -> c.getName().equalsIgnoreCase(trimmedName));
             return "Chatter removed from cart successfully";
         } else {
             return "Chatter not found in the cart";

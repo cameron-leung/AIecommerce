@@ -176,11 +176,11 @@
 	                    return;
 	                }
 	
-	                // Update the preview page with character details
+	                // Update with character details
 	                populateDetails(character);
 	                
 	             // Attach event handler to the cart icon
-	                $('.openCartPopupIcon').off('click').on('click', function() {
+	                $('.fa-cart-plus').off('click').on('click', function() {
 	                    addToCart(character);
 	                });
 	            }).fail(function() {
@@ -208,9 +208,8 @@
 	                    console.error('Failed to add chatter to cart');
 	                }
 	            });
+	            populateDetails(character);
 	        }
-	     	
-	
 
 	        // Back button function
 	        document.getElementById('backButton').addEventListener('click', function() {
