@@ -55,7 +55,8 @@
                         character.name.toLowerCase().includes(query.toLowerCase()) ||
                         character.username.toLowerCase().includes(query.toLowerCase()) ||
                         character.blurb.toLowerCase().includes(query.toLowerCase()) ||
-                        character.description.toLowerCase().includes(query.toLowerCase())
+                        character.description.toLowerCase().includes(query.toLowerCase()) || 
+                        character.category.some(c => c.toLowerCase().includes(query))
                     );
 
                     const container = $('.character-card-container');
