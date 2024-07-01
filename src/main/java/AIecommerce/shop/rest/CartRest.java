@@ -28,25 +28,22 @@ public class CartRest {
 
 	    // Check if the chatter already exists in the cart
 	    boolean chatterExists = cart.stream()
-	            .anyMatch(c -> c.getName().equalsIgnoreCase(chatter.getName()));
+	            .anyMatch(c -> (c.getName().replaceAll("[^a-zA-Z]", "")).equalsIgnoreCase(chatter.getName().replaceAll("[^a-zA-Z]", "")));
 	    
 	    
 	    if (chatterExists) {
+	    	System.out.println("Chatter is already in the cart");
 	        return "Chatter is already in the cart";
 	    }
 
 	    // Find the chatter by name to ensure valid data
-	    Chatter chatterToAdd = chatterRest.getChatters().stream()
-	            .filter(c -> c.getName().equalsIgnoreCase(chatter.getName()))
-	            .findFirst()
-	            .orElse(null);
-
+	    Chatter chatterToAdd = findByName(chatter.getName());
+	    System.out.println(cart);
 	    if (chatterToAdd != null) {
 	        cart.add(chatterToAdd);
-	        System.out.println(cart);
 	        return "Chatter added to cart successfully";
 	    } else {
-	    	System.out.println(cart);
+	    	
 	        return "Chatter not found";
 	    }
 	}
