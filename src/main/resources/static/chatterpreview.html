@@ -138,6 +138,7 @@
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 	<script>
 	    $(document).ready(function() {
+	    	var cartPopupOpen = false;
 	        // Load navbar & activate discover icon
 	        $('#navbar-placeholder').load('navbar.html', function() {
 	            $('.discover-icon').addClass('active');
@@ -216,18 +217,8 @@
 	        document.getElementById('backButton').addEventListener('click', function() {
 	            window.history.back();
 	        });
-	
-
-	
-	        // Prevent popup from closing when clicked inside
-	        $('#cartPopupContent').on('click', function(event) {
-	            event.stopPropagation();
-	        });
-	
-	        // Toggle check/uncheck icon
-	        $('#check-icon').on('click', function() {
-	            $(this).toggleClass("fa-square fa-square-check");
-	        });
+		
+	     
 	    });
 	</script>
 
