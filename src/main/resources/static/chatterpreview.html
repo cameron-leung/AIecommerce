@@ -213,11 +213,28 @@
 	            });    
 	        }
 
-	        // Back button function
+	     // Back button function
 	        document.getElementById('backButton').addEventListener('click', function() {
 	            window.history.back();
 	        });
-		
+	
+	        // Close the cart popup when clicking outside
+	        $(document).on('click', function(event) {
+	            var $target = $(event.target);
+	            if (cartPopupOpen && !$target.closest('#cartPopupContent').length && !$target.is('#cartPopupContent')) {
+	                closeCartPopup();
+	            }
+	        });
+	
+	        // Prevent popup from closing when clicked inside
+	        $('#cartPopupContent').on('click', function(event) {
+	            event.stopPropagation();
+	        });
+	
+	        // Toggle check/uncheck icon
+	        $('#check-icon').on('click', function() {
+	            $(this).toggleClass("fa-square fa-square-check");
+	        });
 	     
 	    });
 	</script>

@@ -87,34 +87,31 @@
         }
        
 
-        // Open the cart popup
+     // Open the cart popup
         function openCartPopup() {
+    	 if(!cartPopupOpen){
             $('#cartPopupOverlay').removeClass('d-none').fadeIn();
             fetchCartItems();
             cartPopupOpen = true;
+    	 }
         }
 
         // Close the cart popup
         function closeCartPopup() {
-	            $('#cartPopupOverlay').addClass('d-none').fadeOut();
-	            cartPopupOpen = false;
-	            console.log('closing cart popup2: ', cartPopupOpen);
-	        }
-
-        // Event listener for the icon click to open the popup 
+            $('#cartPopupOverlay').addClass('d-none').fadeOut();
+            cartPopupOpen = false;
+        }
+        // Event listener for the icon click to open the popup and add to cart
         $('.openCartPopupIcon').on('click', function(event) {
         	fetchCartItems(); // Fetch and display cart items
             event.stopPropagation(); // Prevent event propagation
         });
-
         // Close the cart popup when clicking outside
         $(document).on('click', function(event) {
-	        	console.log('clicked outside2: ', cartPopupOpen);
-	            if (cartPopupOpen && !$(event.target).closest('#cartPopupContent').length) {
-	            	console.log('aaa');
-	                closeCartPopup();
-	            }
-	        });
+            if (cartPopupOpen && !$(event.target).closest('#cartPopupContent').length) {
+                closeCartPopup();
+            }
+        });
 
         // Event listener for checkbox delegation
 	    $(document).on('click', '#check-icon', function() {
