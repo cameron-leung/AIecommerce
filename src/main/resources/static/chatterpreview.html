@@ -202,13 +202,14 @@
 	                contentType: 'application/json',
 	                data: JSON.stringify(character),
 	                success: function(response) {
-	                    console.log(response);
+	                    console.log('Added chatter to cart'); // Log success message
+	                    //fetchCartItems(); // Update cart display after adding
+	                    populateDetails(character); // Update character details on the page
 	                },
 	                error: function() {
 	                    console.error('Failed to add chatter to cart');
 	                }
-	            });
-	            populateDetails(character);
+	            });    
 	        }
 
 	        // Back button function
@@ -216,13 +217,7 @@
 	            window.history.back();
 	        });
 	
-	        // Close the cart popup when clicking outside
-	        $(document).on('click', function(event) {
-	            var $target = $(event.target);
-	            if (cartPopupOpen && !$target.closest('#cartPopupContent').length && !$target.is('#cartPopupContent')) {
-	                closeCartPopup();
-	            }
-	        });
+
 	
 	        // Prevent popup from closing when clicked inside
 	        $('#cartPopupContent').on('click', function(event) {

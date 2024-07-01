@@ -24,8 +24,6 @@
 		$.getJSON('/chatters', function(characterData) {
 	        // Fetch chattercard template
 	        $.get('chattercircle.html', function(template) {
-	            console.log('Template Loaded:', template);
-
 	            characterData.forEach(character => {
 	                const populatedCircle = populateCircle(template, character);
 	                container.append(populatedCircle);
