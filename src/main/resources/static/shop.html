@@ -137,7 +137,7 @@
 		<div class="row">
 		    <div class="col">
 		        <div class="d-flex flex-wrap" style="width: 100%;">
-					<div class="character-card-container d-flex flex-row flex-wrap justify-content-start"></div>
+					<div class="filtered-character-card-container d-flex flex-row flex-wrap justify-content-start"></div>
 		         </div>
 		    </div>
 		</div>
@@ -185,10 +185,9 @@
 		
 		
 		<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+		<script src="aiecommerce.js"></script>
 		<script>
-		document.getElementById('backButton').addEventListener('click', function() {
-            window.history.back();
-        });
+		
 
         $(document).ready(function() {
             var filterPopupOpen = false;
@@ -223,9 +222,8 @@
                 $('.discover-icon').addClass('active');
             });
 
-            const container = $('.character-card-container');
-            const filterLabelsContainer = $('#filterLabelsContainer');
-
+            const container = $('.filtered-character-card-container');
+            
          	// Function to fill in card data
             function populateCard(template, character) {
     	         const imageName = character.name.replace(/\s+/g, '');
