@@ -201,6 +201,7 @@
 	                data: JSON.stringify(character),
 	                success: function(response) {
 	                    console.log(response); // Log success message
+	                    fetchCartItems();
 	                    populateDetails(character); // Update character details on the page
 	                },
 	                error: function() {
