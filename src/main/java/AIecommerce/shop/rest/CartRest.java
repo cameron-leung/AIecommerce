@@ -25,7 +25,6 @@ public class CartRest {
 
 	@PostMapping("/addToCart")
 	public String addToCart(@RequestBody Chatter chatter) {
-	    System.out.println("Received chatter: " + chatter.getName());
 
 	    // Check if the chatter already exists in the cart
 	    boolean chatterExists = cart.stream()
@@ -66,10 +65,12 @@ public class CartRest {
         // Check if the chatter already exists in the cart
     	String trimmedName = name.replaceAll("[^a-zA-Z]", "");
     	
-    	boolean chatterExists = cart.stream().anyMatch(c -> c.getName().equalsIgnoreCase(trimmedName));
+    	boolean chatterExists = cart.stream().anyMatch(c -> (c.getName().replaceAll("[^a-zA-Z]", "")).equalsIgnoreCase(trimmedName));
+    	
 
         if (chatterExists) {
         	cart.removeIf(c -> c.getName().equalsIgnoreCase(trimmedName));
+        	System.out.print(cart);
             return "Chatter removed from cart successfully";
         } else {
             return "Chatter not found in the cart";
