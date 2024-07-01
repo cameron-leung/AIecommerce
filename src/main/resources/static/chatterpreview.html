@@ -144,9 +144,6 @@
 	            $('.discover-icon').addClass('active');
 	        });
 	
-	        // Load cart popup for cart button
-	        $('#cartpopup-placeholder').load('cartpopup.html');
-	
 	        // Vertical scroll images
 	        var imageContainer = document.getElementById('image-container');
 	        var numberOfImages = 5; // Number of times to repeat the image
@@ -203,8 +200,7 @@
 	                contentType: 'application/json',
 	                data: JSON.stringify(character),
 	                success: function(response) {
-	                    console.log('Added chatter to cart'); // Log success message
-	                    fetchCartItems(); // Update cart display after adding
+	                    console.log(response); // Log success message
 	                    populateDetails(character); // Update character details on the page
 	                },
 	                error: function() {
