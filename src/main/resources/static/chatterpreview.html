@@ -204,7 +204,7 @@
 	                data: JSON.stringify(character),
 	                success: function(response) {
 	                    console.log('Added chatter to cart'); // Log success message
-	                    //fetchCartItems(); // Update cart display after adding
+	                    fetchCartItems(); // Update cart display after adding
 	                    populateDetails(character); // Update character details on the page
 	                },
 	                error: function() {
