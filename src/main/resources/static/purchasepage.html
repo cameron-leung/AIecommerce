@@ -43,7 +43,7 @@
 				<div class="p-3">
 					
 					<!-- Cart items container -->
-        			<div id="cartItemsContainer" class="overflow-auto" style="max-height: 63vh;">
+        			<div id="purchaseItemsContainer" class="overflow-auto" style="max-height: 63vh;">
 			            <!-- Cart items will be dynamically added here -->
 			        </div>
 					
@@ -140,6 +140,7 @@
 		</div>
 		
 		<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+		<script src="AIecommerce.js"></script>
 		<script>
 			// Load navbar
 			$(document).ready(function() {
@@ -148,51 +149,10 @@
 			        $('.cart-icon').addClass('active');
 			    });
 			    
-			 	// Function to fetch and display cart items
-		        function fetchCartItems() {
-		        	console.log('Fetching cart items...');
-		            $.getJSON('/contents', function(cartItems) {
-		            	console.log('Received cart items:', cartItems);
-
-		                $('#cartItemsContainer').empty(); // Clear existing items
-
-		                cartItems.forEach(function(item) {
-		                    var itemHtml = `
-		                    	<!--  Cart item -->
-		                        <div class="d-flex flex-column w-100 overflow-hidden mb-3">
-		                            <div class="d-flex flex-row align-items-flex-start justify-content-start">
-		                                <img class="chatter-image object-fit-cover rounded-3 w-50" src="images/${item.name.replace(/\s+/g, '')}Rectangle.png" style="height: 20vh;">
-		                                <div class="flex-column w-50 pl-1">
-		                                    <h3 class="chatter-name m-0 p-0">${item.name}</h3>
-		                                    <h5 class="chatter-username mt-0 mb-5">${item.username}</h5>
-		                                    <div class="d-flex flex-row justify-content-between">
-		                                    	<h5 class="m-0 w-auto">Price</h5>
-		                                    	<h5 class="chatter-price w-auto mr-0 text-end">$${item.price}</h5>
-		                                    </div>
-		                                </div>
-		                            </div>
-		                       </div>
-		                    `;
-		                    $('#cartItemsContainer').append(itemHtml);
-		                });
-
-		                // Calculate subtotal and tax
-		                var subtotal = cartItems.reduce((total, item) => total + item.price, 0);
-		                var tax = subtotal * 0.1;
-		                var total = subtotal + tax;
-		                $('#cart-subtotal').text('$' + subtotal.toFixed(2));
-		                $('#cart-tax').text('$' + tax.toFixed(2)); 
-		                $('#cart-total').text('$'+ total.toFixed(2));
-		            })
-			 	}
+			 	
 		        fetchCartItems();
 			});
-			
-			
-			//Add function to back button
-			document.getElementById('backButton').addEventListener('click', function() {
-		        window.history.back();
-		    });
+
 		</script>
 	</body>
 </html>
