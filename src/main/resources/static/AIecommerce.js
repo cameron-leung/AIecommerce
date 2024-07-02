@@ -24,6 +24,7 @@ function populateCard(template, character) {
 		.replace(/PRICE/g, character.price.toFixed(2))
 		.replace(/BLURB/g, character.blurb);
 }
+
 // Function to fill in circle data
 function populateCircle(template, character) {
 	const imageName = character.name.replace(/\s+/g, '');
@@ -49,17 +50,14 @@ function populateChatterCircles() {
 		console.error('Failed to fetch chatters from API');
 	});
 }
-// Index page cards filtering
-function populateIndexChatters() {
-	const Friendscards = $('.Friends-character-card-container');
-	const Bcards = $('.B-character-card-container');
-	const Metacards = $('.Meta-character-card-container');
 
+// B cards filtering
+function loadBChatters() {
+	const Bcards = $('.B-character-card-container');
 	// Fetch character data from the backend
 	$.getJSON('/chatters', function(characterData) {
 		// Filter by username for Browse by Creator section
 		const userBFilteredData = characterData.filter(character => character.username === '@B');
-		const userMetaFilteredData = characterData.filter(character => character.username === '@Meta');
 
 		// Fetch chattercard template
 		$.get('chattercard.html', function(template) {
@@ -68,6 +66,28 @@ function populateIndexChatters() {
 				Bcards.append(populatedCard);
 			});
 
+		}).fail(function() {
+			console.error('Failed to load chattercard.html');
+		});
+	}).fail(function() {
+		console.error('Failed to fetch chatters from API');
+	});
+}
+// Index page cards filtering
+function populateIndexChatters() {
+	const Friendscards = $('.Friends-character-card-container');
+	const Metacards = $('.Meta-character-card-container');
+
+	loadBChatters();
+	// Fetch character data from the backend
+	$.getJSON('/chatters', function(characterData) {
+		// Filter by username for Browse by Creator section
+		const userBFilteredData = characterData.filter(character => character.username === '@B');
+		const userMetaFilteredData = characterData.filter(character => character.username === '@Meta');
+
+
+		// Fetch chattercard template
+		$.get('chattercard.html', function(template) {
 			userMetaFilteredData.forEach(character => {
 				const populatedCard = populateCard(template, character);
 				Metacards.append(populatedCard);
@@ -84,7 +104,6 @@ function populateIndexChatters() {
 		console.error('Failed to fetch chatters from API');
 	});
 }
-
 // Shop page cards filtering
 const shopContainer = $('.shop-character-card-container');
 // Function to filter character data based on categories and price
@@ -115,71 +134,64 @@ function filterShopCharacterData(selectedCategories = [], selectedPrice = 100) {
 }
 
 // Filter logic
-var filterPopupOpen = false;
-// Initial data load based on URL category
-const category = urlParams.get('category') || 'All';
-const initialCategories = category === 'All' ? [] : [category];
-// Open and close filter
-function openFilterPopup() {
-	$('#filterPopupOverlay').fadeIn();
-	filterPopupOpen = true;
-}
-function closeFilterPopup() {
-	$('#filterPopupOverlay').fadeOut();
-	filterPopupOpen = false;
-}
-// Check conditions to open/close filter
-$(document).on('click', function(event) {
-	var $target = $(event.target);
-	if (filterPopupOpen && !$target.closest('#filterPopupContent').length && !$target.is('#filterPopupContent')) {
-		closeFilterPopup();
+function loadFilterLogic() {
+	var filterPopupOpen = false;
+	// Initial data load based on URL category
+	const category = urlParams.get('category') || 'All';
+	const initialCategories = category === 'All' ? [] : [category];
+	// Open and close filter
+	function openFilterPopup() {
+		$('#filterPopupOverlay').fadeIn();
+		filterPopupOpen = true;
 	}
-});
-$('#filterPopupContent').on('click', function(event) {
-	event.stopPropagation();
-});
-$(document).on('click', '#openFilterPopupIcon', function(event) {
-	event.stopPropagation();
-	openFilterPopup();
-});
-// Update the displayed price value dynamically and adjust the slider's appearance
-function updateSliderBackground(slider) {
-	const value = slider.value;
-	slider.style.setProperty('--thumb-position', `${value}%`);
-}
-$('#priceRange').on('input', function() {
-	const selectedPrice = $(this).val();
-	$('#priceValue').text(`$${selectedPrice}`);
-	updateSliderBackground(this);
-});
-// Check the checkboxes for the initial categories
-initialCategories.forEach(category => {
-	$('input[type=checkbox][value="' + category + '"]').prop('checked', true);
-});
-filterShopCharacterData(initialCategories);
-// Event listener for the apply button
-$('#applyButton').on('click', function() {
-	// Get selected categories
-	const selectedCategories = [];
-	$('input[type=checkbox]:checked').each(function() {
-		selectedCategories.push($(this).val());
+	function closeFilterPopup() {
+		$('#filterPopupOverlay').fadeOut();
+		filterPopupOpen = false;
+	}
+	// Check conditions to open/close filter
+	$(document).on('click', function(event) {
+		var $target = $(event.target);
+		if (filterPopupOpen && !$target.closest('#filterPopupContent').length && !$target.is('#filterPopupContent')) {
+			closeFilterPopup();
+		}
 	});
-	// Get selected price
-	const selectedPrice = parseFloat($('#priceRange').val());
-	// Apply filters
-	filterShopCharacterData(selectedCategories, selectedPrice);
-	closeFilterPopup();
-})
-
-// Load character content
-function populateDetails(character) {
-	const imageName = character.name.replace(/\s+/g, '');
-	$('.chatter-image').attr('src', 'images/' + imageName + 'Rectangle.png');
-	$('.chatter-name').text(character.name);
-	$('.chatter-username').text(character.username);
-	$('.chatter-price').text('$' + character.price.toFixed(2));
-	$('.chatter-description').text(character.description);
+	$('#filterPopupContent').on('click', function(event) {
+		event.stopPropagation();
+	});
+	$(document).on('click', '#openFilterPopupIcon', function(event) {
+		event.stopPropagation();
+		openFilterPopup();
+	});
+	// Update the displayed price value dynamically and adjust the slider's appearance
+	function updateSliderBackground(slider) {
+		const value = slider.value;
+		slider.style.setProperty('--thumb-position', `${value}%`);
+	}
+	$('#priceRange').on('input', function() {
+		const selectedPrice = $(this).val();
+		$('#priceValue').text(`$${selectedPrice}`);
+		updateSliderBackground(this);
+	});
+	// Check the checkboxes for the initial categories
+	initialCategories.forEach(category => {
+		$('input[type=checkbox][value="' + category + '"]').prop('checked', true);
+	});
+	filterShopCharacterData(initialCategories);
+	// Event listener for the apply button
+	$('#applyButton').on('click', function() {
+		// Get selected categories
+		const selectedCategories = [];
+		$('input[type=checkbox]:checked').each(function() {
+			selectedCategories.push($(this).val());
+		});
+		// Get selected price
+		const selectedPrice = parseFloat($('#priceRange').val());
+		// Apply filters
+		filterShopCharacterData(selectedCategories, selectedPrice);
+		closeFilterPopup();
+	})
 }
+
 // Frontend for purchase page cart
 function purchaseItemHtml(item) {
 	return `
@@ -199,6 +211,7 @@ function purchaseItemHtml(item) {
         </div>
     `;
 }
+
 // Frontend for cart popup
 function cartItemHtml(item) {
 	return `
@@ -276,7 +289,17 @@ function removeFromCart(name) {
 	});
 }
 
-//Chatter Preview logic
+// Chatter Preview logic
+// Populate details on chatter preview
+function populateDetails(character) {
+	const imageName = character.name.replace(/\s+/g, '');
+	$('.chatter-image').attr('src', 'images/' + imageName + 'Rectangle.png');
+	$('.chatter-name').text(character.name);
+	$('.chatter-username').text(character.username);
+	$('.chatter-price').text('$' + character.price.toFixed(2));
+	$('.chatter-description').text(character.description);
+}
+// Find chatter for chatter preview
 function loadCharacterDetails(characterName) {
 	if (characterName) {
 		// Fetch character details from the backend
