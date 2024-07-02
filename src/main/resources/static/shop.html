@@ -191,63 +191,6 @@
             $('#navbar-placeholder').load('navbar.html', function() {
                 $('.discover-icon').addClass('active');
             });
-
-            const shopContainer = $('.shop-character-card-container');
-            
-         	
-
-            // Function to filter character data based on categories and price
-            function filterShopCharacterData(selectedCategories = [], selectedPrice = 100) {
-            	$.getJSON('/chatters', function(characterData) {
-                    const filteredData = characterData.filter(character => {
-                        const matchesCategory = selectedCategories.length === 0 || character.category.some(cat => selectedCategories.includes(cat));
-                        const matchesPrice = character.price <= selectedPrice;
-                        return matchesCategory && matchesPrice;
-                    });
-
-                // Display filtered data
-                    shopContainer.empty();
-                    $.get('chattercard.html', function(template) {
-                        if (filteredData.length === 0) {
-                            console.error('No data found for selected filters');
-                        }
-                        filteredData.forEach(character => {
-                            const populatedCard = populateCard(template, character);
-                            shopContainer.append(populatedCard);
-                        });
-                    }).fail(function() {
-                        console.error('Failed to load chattercard.html');
-                    });
-                }).fail(function() {
-                    console.error('Failed to fetch chatters from API');
-                });
-            }
-
-
-            // Event listener for the apply button
-            $('#applyButton').on('click', function() {
-                // Get selected categories
-                const selectedCategories = [];
-                $('input[type=checkbox]:checked').each(function() {
-                    selectedCategories.push($(this).val());
-                });
-
-                // Get selected price
-                const selectedPrice = parseFloat($('#priceRange').val());
-
-                // Apply filters
-                filterShopCharacterData(selectedCategories, selectedPrice);
-                closeFilterPopup();
-            });
-
-            // Initial data load based on URL category
-            const urlParams = new URLSearchParams(window.location.search);
-            const category = urlParams.get('category') || 'All';
-            const initialCategories = category === 'All' ? [] : [category];
-
-            filterShopCharacterData(initialCategories);
-            
-         
         });
 
 	    </script>
