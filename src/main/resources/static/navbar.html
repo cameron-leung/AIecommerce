@@ -3,55 +3,62 @@
 	* {
 		font-family: 'DM Sans';
 	}
-	.active i{
+
+	.active i {
 		color: #FF206E;
-	} 
+	}
+
 	h1 {
 		width: auto;
 		margin: 0px;
-        padding: 0px;
+		padding: 0px;
 	}
+
 	h2 {
 		margin: 0px;
-        padding: 0px;
-        font-size: 30px;
-    }
+		padding: 0px;
+		font-size: 30px;
+	}
+
 	p {
-       margin: 0px;
-       padding: 0px;
-   }
-    a {
+		margin: 0px;
+		padding: 0px;
+	}
+
+	a {
 		color: black !important;
 		text-decoration: none !important;
 	}
 </style>
 <!--  nav bar -->
 <nav class="navbar d-flex justify-content-between align-items-center px-2 py-2">
-	
+
 	<!-- AI chat logo -->
-    <a href="#" class="navbar-brand d-flex align-items-center text-decoration-none fs-3">
-        <img src="images/AIchatlogo.png" alt="Logo" style="width: 30px; margin-right: 20px;">
-    </a>
-    
-    <!-- search bar -->
-    <div class = "d-flex justify-content-center flex-grow-1">
-         <input type="text"  id="searchInput" class="form-control rounded-pill" placeholder="Search...">
-    </div>
-    
-    <!-- icons -->
-    <div class = "d-flex align-items-center">
-        <a href="index.html" class="discover-icon text-decoration-none ms-4 fs-3"><i class="fa-solid fa-compass"></i></a> 
-        <a class="cart-icon openCartPopupIcon text-decoration-none ms-4 fs-3"><i class="fa-solid fa-cart-shopping openCartPopupIcon"></i></a> 
-        <a href="profilepage.html" class="profile-icon text-decoration-none ms-4 fs-3"><i class="fa-solid fa-user"></i></a> 
-    </div>
-    
- </nav>
- 
-<div id="cartpopup-placeholder"></div> 
+	<a href="#" class="navbar-brand d-flex align-items-center text-decoration-none fs-3">
+		<img src="images/AIchatlogo.png" alt="Logo" style="width: 30px; margin-right: 20px;">
+	</a>
+
+	<!-- search bar -->
+	<div class="d-flex justify-content-center flex-grow-1">
+		<input type="text" id="searchInput" class="form-control rounded-pill" placeholder="Search...">
+	</div>
+
+	<!-- icons -->
+	<div class="d-flex align-items-center">
+		<a href="index.html" class="discover-icon text-decoration-none ms-4 fs-3"><i
+				class="fa-solid fa-compass"></i></a>
+		<a class="cart-icon openCartPopupIcon text-decoration-none ms-4 fs-3"><i
+				class="fa-solid fa-cart-shopping openCartPopupIcon"></i></a>
+		<a href="profilepage.html" class="profile-icon text-decoration-none ms-4 fs-3"><i
+				class="fa-solid fa-user"></i></a>
+	</div>
+
+</nav>
+
+<div id="cartpopup-placeholder"></div>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="AIecommerce.js"></script>
 <script>
-	  // Load cart pop up
-        $('#cartpopup-placeholder').load('cartpopup.html');
-        
+	// Load cart pop up
+	$('#cartpopup-placeholder').load('cartpopup.html');
 </script>

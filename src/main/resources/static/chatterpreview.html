@@ -1,12 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chatter Preview Page</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-    <link href='https://fonts.googleapis.com/css?family=DM Sans' rel='stylesheet'>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Chatter Preview Page</title>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+	<link href='https://fonts.googleapis.com/css?family=DM Sans' rel='stylesheet'>
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <style>
 	.square {
@@ -15,96 +16,104 @@
 		border-radius: 10px;
 		object-fit: cover;
 	}
+
 	.halfscreen-text {
 		padding: 0px 10px;
 		max-width: 45%;
 	}
+
 	.vertical-scroll {
-		height: 500px; 
-		overflow-x:none;
-		overflow-y: auto; 
-		padding: 0px; 
+		height: 500px;
+		overflow-x: none;
+		overflow-y: auto;
+		padding: 0px;
 		padding-right: 10px;
-		gap: 10px; 
+		gap: 10px;
 	}
+
 	.vertical-scroll img {
 		object-fit: cover;
-		width: 150px; 
+		width: 150px;
 		height: 150px;
-		border-radius: 10px; 
+		border-radius: 10px;
 	}
 </style>
-<body> 
-	<div id="navbar-placeholder"></div> 
-	<div class = "px-5 container-fluid">
-	
+
+<body>
+	<div id="navbar-placeholder"></div>
+	<div class="px-5 container-fluid">
+
 		<!-- header & back button -->
-		<div class = "d-flex col">
-			<div class = "icons">
+		<div class="d-flex col">
+			<div class="icons">
 				<div id="backButton" class="d-inline-block py-1 px-3 text-center align-items-center">
 					<i class="fs-2 fa-solid fa-chevron-left"></i>
 				</div>
 			</div>
 			<h1 class="chatter-name"></h1>
 		</div>
-		
+
 		<!-- chatter preview body -->
 		<div class="px-3">
-	        <div class="row">
-	            <div class="col d-flex p-0">
-	            
-	            	<!-- chatter images -->
-	            	<div id="image-container" class="d-flex flex-column vertical-scroll"></div>
-	            	<img class="chatter-image square" src="">
-	            	
-	            	<!-- chatter text & checkout icons -->
-	            	<div class = "w-50 py-0 px-1">
-	            		<div class = "row justify-content-between w-auto">
-	            			<!-- chatter name & username -->
-							<div class = "col-auto">
+			<div class="row">
+				<div class="col d-flex p-0">
+
+					<!-- chatter images -->
+					<div id="image-container" class="d-flex flex-column vertical-scroll"></div>
+					<img class="chatter-image square" src="">
+
+					<!-- chatter text & checkout icons -->
+					<div class="w-50 py-0 px-1">
+						<div class="row justify-content-between w-auto">
+							<!-- chatter name & username -->
+							<div class="col-auto">
 								<h1 class="chatter-name w-auto"></h1>
-								<a href = "profilepage.html"><h3 class="chatter-username pb-5 w-auto"></h3></a>
+								<a href="profilepage.html">
+									<h3 class="chatter-username pb-5 w-auto"></h3>
+								</a>
 							</div>
 							<!-- icons & text -->
-							<div class = "d-flex w-auto justify-content-end">
+							<div class="d-flex w-auto justify-content-end">
 								<div class="d-flex mt-0" style="gap: 40px;">
 									<!-- cart icon & price -->
-									<div class = "col">
-										<i class="p-0 fas fa-cart-plus openCartPopupIcon" style="width: 80px; font-size: 50px; color: #FF206E;"></i>
+									<div class="col">
+										<i class="p-0 fas fa-cart-plus openCartPopupIcon"
+											style="width: 80px; font-size: 50px; color: #FF206E;"></i>
 										<h3 class="chatter-price text-start pt-1">$</h3>
 									</div>
 									<!-- chat logo & Trial text -->
-							        <div class = "col">
-							        	<a href="#"><img class="p-0" src="images/AIchatlogopink.png" alt="Logo" style="width: 50px; font-size: 50px; color: #FF206E;"></a> 
-							        	<h3 class="text-center pt-1" >Trial</h3>
-							        </div>
-							    </div>
-						    </div>
+									<div class="col">
+										<a href="#"><img class="p-0" src="images/AIchatlogopink.png" alt="Logo"
+												style="width: 50px; font-size: 50px; color: #FF206E;"></a>
+										<h3 class="text-center pt-1">Trial</h3>
+									</div>
+								</div>
+							</div>
 						</div>
 						<!-- chatter description -->
 						<h3>Description</h3>
 						<p class="chatter-description"></p>
-	            	</div>
-	            	
-	            </div>
-	         </div>
-	    </div>  	
-		
+					</div>
+
+				</div>
+			</div>
+		</div>
+
 		<!-- chatter preview reviews -->
 		<h1>Reviews</h1>
-		<div class="rating pb-5" style = "font-size: 50px;">
-				<i class="fas fa-star"></i>
-				<i class="fas fa-star"></i>
-				<i class="fas fa-star"></i>
-				<i class="fas fa-star"></i>
-				<i class="fas fa-star"></i>
+		<div class="rating pb-5" style="font-size: 50px;">
+			<i class="fas fa-star"></i>
+			<i class="fas fa-star"></i>
+			<i class="fas fa-star"></i>
+			<i class="fas fa-star"></i>
+			<i class="fas fa-star"></i>
 		</div>
 		<!-- Review 1 -->
-		<div class = "row">
-			<i class="col-auto pr-1 fa-solid fa-circle-user" style = "color:  #535355; font-size: 80px;"></i>
-			<div class = "col-auto">
+		<div class="row">
+			<i class="col-auto pr-1 fa-solid fa-circle-user" style="color:  #535355; font-size: 80px;"></i>
+			<div class="col-auto">
 				<h2 class="py-1">Profile</h2>
-				<div class="col" style = "margin: 0px;">
+				<div class="col" style="margin: 0px;">
 					<i class="fas fa-star"></i>
 					<i class="fas fa-star"></i>
 					<i class="fas fa-star"></i>
@@ -116,11 +125,11 @@
 		<p class="py-1">Realistic video call responses!</p>
 		<hr>
 		<!-- Review 2 -->
-		<div class = "row">
-			<i class="col-auto pr-1 fa-solid fa-circle-user" style = "color:  #535355; font-size: 80px;"></i>
-			<div class = "col-auto">
+		<div class="row">
+			<i class="col-auto pr-1 fa-solid fa-circle-user" style="color:  #535355; font-size: 80px;"></i>
+			<div class="col-auto">
 				<h2 class="py-1">Profile</h2>
-				<div class="col" style = "margin: 0px;">
+				<div class="col" style="margin: 0px;">
 					<i class="fas fa-star"></i>
 					<i class="fas fa-star"></i>
 					<i class="fas fa-star"></i>
@@ -132,86 +141,22 @@
 		<p class="py-1">Realistic video call responses!</p>
 		<hr>
 	</div>
-	
-	<div id="cartpopup-placeholder"></div> 
-    
+
+	<div id="cartpopup-placeholder"></div>
+
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 	<script src="AIecommerce.js"></script>
 	<script>
-	    $(document).ready(function() {
-	    	
-	        // Load navbar & activate discover icon
-	        $('#navbar-placeholder').load('navbar.html', function() {
-	            $('.discover-icon').addClass('active');
-	        });
-	
-	        // Vertical scroll images
-	        var imageContainer = document.getElementById('image-container');
-	        var numberOfImages = 5; // Number of times to repeat the image
-	
-	        for (var i = 0; i < numberOfImages; i++) {
-	            var img = document.createElement('img');
-	            img.classList.add('chatter-image'); // Add chatter-image class
-	            img.alt = 'Chatter Card ' + (i + 1);
-	            imageContainer.appendChild(img);
-	        }
-	
-	        // Load character content
-	        function populateDetails(character) {
-	            const imageName = character.name.replace(/\s+/g, '');
-	            $('.chatter-image').attr('src', 'images/' + imageName + 'Rectangle.png');
-	            $('.chatter-name').text(character.name);
-	            $('.chatter-username').text(character.username);
-	            $('.chatter-price').text('$' + character.price.toFixed(2));
-	            $('.chatter-description').text(character.description);
-	        }
-	
-	        function loadCharacterDetails(characterName) {
-	            // Fetch character details from the backend
-	            $.getJSON('/chatters', function(characterData) {
-	                const character = characterData.find(c => c.name === characterName);
-	                if (!character) {
-	                    console.error(`Character with name ${characterName} not found.`);
-	                    return;
-	                }
-	
-	                // Update with character details
-	                populateDetails(character);
-	                
-	             // Attach event handler to the cart icon
-	                $('.fa-cart-plus').off('click').on('click', function() {
-	                    addToCart(character);
-	                });
-	            }).fail(function() {
-	                console.error('Failed to fetch chatters from API');
-	            });
-	        }
-	
-	        // Extract character name from URL
-	        const urlParams = new URLSearchParams(window.location.search);
-	        const characterName = urlParams.get('name');
-	        if (characterName) {
-	            loadCharacterDetails(characterName);
-	        }
-	        
-	        function addToCart(character) {
-	            $.ajax({
-	                type: 'POST',
-	                url: '/addToCart',
-	                contentType: 'application/json',
-	                data: JSON.stringify(character),
-	                success: function(response) {
-	                    console.log(response); // Log success message
-	                    fetchCartItems();
-	                    populateDetails(character); // Update character details on the page
-	                },
-	                error: function() {
-	                    console.error('Failed to add chatter to cart');
-	                }
-	            });    
-	        }
-	     
-	    });
+		$(document).ready(function () {
+			// Load navbar & activate discover icon
+			$('#navbar-placeholder').load('navbar.html', function () {
+				$('.discover-icon').addClass('active');
+			});
+			// Load details
+			const characterName = urlParams.get('name');
+			loadCharacterDetails(characterName);
+			populateVerticalScroll();
+		});
 	</script>
 
 </body>
