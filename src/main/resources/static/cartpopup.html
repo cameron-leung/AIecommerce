@@ -19,7 +19,7 @@
 
         <!-- checkout button -->
         <div>
-            <button id="checkoutButton" class="d-block position-absolute px-1 py-2 bottom-0 mb-3 w-75 bg-light rounded-2 translate-middle-x" style="left: 50%; color: #FF206E; border-color: #FF206E;">Checkout</button>
+            <a href="purchasepage.html"><button id="checkoutButton" class="d-block position-absolute px-1 py-2 bottom-0 mb-3 w-75 bg-light rounded-2 translate-middle-x" style="left: 50%; color: #FF206E; border-color: #FF206E;">Checkout</button></a>
         </div>
     </div>
 </div>
@@ -28,21 +28,7 @@
 <script>
     $(document).ready(function() {
 
-        // Event listener for checkbox delegation
-	    $(document).on('click', '#check-icon', function() {
-	        $(this).toggleClass("fa-square fa-square-check");
-	    });
-	 	// Event listener for trash
-	    $(document).on('click', '.fa-trash', function() {
-	        var chatterName = $(this).attr('id'); 
-	        console.log(chatterName);
-	        removeFromCart(chatterName);
-	    });
-
-        // Event listener for the checkout button
-        $('#checkoutButton').on('click', function() {
-            window.location.href = 'purchasepage.html';
-        });
+        
     });
     var cartPopupOpen = false;
  	// Open the cart popup
@@ -71,23 +57,6 @@
         }
     });
     
- 
-    
-    
-    function removeFromCart(name) {
-        $.ajax({
-            url: '/removeFromCart',
-            type: 'POST',
-            contentType: 'text/plain', // Specify the content type
-            data: name, // Convert the Chatter object to JSON
-            success: function(response) {
-                console.log(response); // Handle success response as needed
-                fetchCartItems(); // Refresh cart items after removal
-            },
-            error: function(xhr, status, error) {
-                console.error('Failed to remove item from cart', error);
-            }
-        });
-    }
+
     
 </script>

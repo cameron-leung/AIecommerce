@@ -138,15 +138,6 @@
             const Bcards = $('.B-character-card-container');
             const Metacards = $('.Meta-character-card-container');
 
-            function populateCard(template, character) {
-                const imageName = character.name.replace(/\s+/g, '');
-                return template
-                    .replace(/RECT_IMAGE_URL/g, 'images/' + imageName + 'Rectangle.png')
-                    .replace(/NAME/g, character.name)
-                    .replace(/USER/g, character.username)
-                    .replace(/PRICE/g, character.price)
-                    .replace(/BLURB/g, character.blurb);
-            }
 
             // Fetch character data from the backend
             $.getJSON('/chatters', function(characterData) {
@@ -177,16 +168,7 @@
                 console.error('Failed to fetch chatters from API');
             });
         });
-        // Function to fill in card data
-        function populateCard(template, character) {
-	         const imageName = character.name.replace(/\s+/g, '');
-	         return template
-	             .replace(/RECT_IMAGE_URL/g, 'images/' + imageName + 'Rectangle.png')
-	             .replace(/NAME/g, character.name)
-	             .replace(/USER/g, character.username)
-	             .replace(/PRICE/g, character.price)
-	             .replace(/BLURB/g, character.blurb);
-	    }
+
     </script>
 </body>
 </html>

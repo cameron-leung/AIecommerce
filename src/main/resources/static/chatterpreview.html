@@ -139,7 +139,7 @@
 	<script src="AIecommerce.js"></script>
 	<script>
 	    $(document).ready(function() {
-	    	var cartPopupOpen = false;
+	    	
 	        // Load navbar & activate discover icon
 	        $('#navbar-placeholder').load('navbar.html', function() {
 	            $('.discover-icon').addClass('active');
@@ -211,19 +211,6 @@
 	            });    
 	        }
 
-	
-	        // Close the cart popup when clicking outside
-	        $(document).on('click', function(event) {
-	            var $target = $(event.target);
-	            if (cartPopupOpen && !$target.closest('#cartPopupContent').length && !$target.is('#cartPopupContent')) {
-	                closeCartPopup();
-	            }
-	        });
-	
-	        // Prevent popup from closing when clicked inside
-	        $('#cartPopupContent').on('click', function(event) {
-	            event.stopPropagation();
-	        });
 	
 	        // Toggle check/uncheck icon
 	        $('#check-icon').on('click', function() {

@@ -41,7 +41,7 @@
     <!-- icons -->
     <div class = "d-flex align-items-center">
         <a href="index.html" class="discover-icon text-decoration-none ms-4 fs-3"><i class="fa-solid fa-compass"></i></a> 
-        <a href="#" class="cart-icon openCartPopupIcon text-decoration-none ms-4 fs-3"><i class="fa-solid fa-cart-shopping openCartPopupIcon"></i></a> 
+        <a class="cart-icon openCartPopupIcon text-decoration-none ms-4 fs-3"><i class="fa-solid fa-cart-shopping openCartPopupIcon"></i></a> 
         <a href="profilepage.html" class="profile-icon text-decoration-none ms-4 fs-3"><i class="fa-solid fa-user"></i></a> 
     </div>
     
@@ -53,13 +53,5 @@
 <script>
 	  // Load cart pop up
         $('#cartpopup-placeholder').load('cartpopup.html');
-        document.getElementById('searchInput').addEventListener('keypress', function(event) {
-            if (event.key === 'Enter') {
-                const query = event.target.value.trim();
-                console.log(query);
-                if (query) {
-                    window.location.href = `searchResults.html?query=${encodeURIComponent(query)}`;
-                }
-            }
-        });	
+        
 </script>

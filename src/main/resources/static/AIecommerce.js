@@ -19,6 +19,15 @@ const query = urlParams.get('query');
 if (query) {
 	queryCharacterData(query);
 }
+document.getElementById('searchInput').addEventListener('keypress', function(event) {
+	if (event.key === 'Enter') {
+		const query = event.target.value.trim();
+		console.log(query);
+		if (query) {
+			window.location.href = `searchResults.html?query=${encodeURIComponent(query)}`;
+		}
+	}
+});
 function queryCharacterData(query) {
 	$.getJSON('/chatters', function(characterData) {
 		const filteredData = characterData.filter(character =>
@@ -49,11 +58,6 @@ function queryCharacterData(query) {
 		console.error('Failed to fetch chatters from API');
 	});
 }
-
-
-
-
-
 
 // Function to fill in card data
 function populateCard(template, character) {
@@ -171,44 +175,27 @@ function purchaseItemHtml(item) {
         </div>
     `;
 }
-function purchaseItemHtml(item) {
-	return `
-                        <div class="d-flex flex-column w-100 overflow-hidden mb-3">
-                            <div class="d-flex flex-row align-items-center justify-content-end">
-                                <img class="chatter-image object-fit-cover rounded-3 w-50" src="images/${item.name.replace(/\s+/g, '')}Rectangle.png" style="height: 20vh;">
-                                <div class="flex-column w-30 p-2">
-                                    <h3 class="chatter-name m-0 p-0">${item.name}</h3>
-                                    <h5 class="chatter-username mt-0 mb-5">${item.username}</h5>
-                                    <h5 class="chatter-price mb-0">$${item.price}</h5>
-                                </div>
-                                <div class="d-flex flex-column h-100 align-items-end justify-content-end flex-grow-1">
-                                    <a href="#"><img class="m-0 p-0" style="width: 25px;" src="images/AIchatlogopink.png" alt="Logo"></a>
-                                    <i id="${item.name}" class="d-flex justify-content-center pt-2 w-25 fs-3 cursor-pointer fa-solid fa-trash"></i>
-                                    <i id="check-icon" class="d-flex justify-content-center pt-2 w-25 fs-3 cursor-pointer fa-regular fa-square-check"></i>
-                                </div>
-                            </div>
-                        </div>
-                    `;
-}
+// Frontend for cart popup
 function cartItemHtml(item) {
 	return `
-                        <div class="d-flex flex-column w-100 overflow-hidden mb-3">
-                            <div class="d-flex flex-row align-items-center justify-content-end">
-                                <img class="chatter-image object-fit-cover rounded-3 w-50" src="images/${item.name.replace(/\s+/g, '')}Rectangle.png" style="height: 20vh;">
-                                <div class="flex-column w-30 p-2">
-                                    <h3 class="chatter-name m-0 p-0">${item.name}</h3>
-                                    <h5 class="chatter-username mt-0 mb-5">${item.username}</h5>
-                                    <h5 class="chatter-price mb-0">$${item.price}</h5>
-                                </div>
-                                <div class="d-flex flex-column h-100 align-items-end justify-content-end flex-grow-1">
-                                    <a href="#"><img class="m-0 p-0" style="width: 25px;" src="images/AIchatlogopink.png" alt="Logo"></a>
-                                    <i id="${item.name}" class="d-flex justify-content-center pt-2 w-25 fs-3 cursor-pointer fa-solid fa-trash"></i>
-                                    <i id="check-icon" class="d-flex justify-content-center pt-2 w-25 fs-3 cursor-pointer fa-regular fa-square-check"></i>
-                                </div>
-                            </div>
-                        </div>
-                    `;
+         <div class="d-flex flex-column w-100 overflow-hidden mb-3">
+              <div class="d-flex flex-row align-items-center justify-content-end">
+                   <img class="chatter-image object-fit-cover rounded-3 w-50" src="images/${item.name.replace(/\s+/g, '')}Rectangle.png" style="height: 20vh;">
+                   <div class="flex-column w-30 p-2">
+                       <h3 class="chatter-name m-0 p-0">${item.name}</h3>
+                       <h5 class="chatter-username mt-0 mb-5">${item.username}</h5>
+                       <h5 class="chatter-price mb-0">$${item.price}</h5>
+                   </div>
+                   <div class="d-flex flex-column h-100 align-items-end justify-content-end flex-grow-1">
+                        <a href="#"><img class="m-0 p-0" style="width: 25px;" src="images/AIchatlogopink.png" alt="Logo"></a>
+                        <i id="${item.name}" class="d-flex justify-content-center pt-2 w-25 fs-3 cursor-pointer fa-solid fa-trash"></i>
+                        <i id="check-icon" class="d-flex justify-content-center pt-2 w-25 fs-3 cursor-pointer fa-regular fa-square-check"></i>
+                   </div>
+              </div>
+         </div>
+   `;
 }
+// Fetch data for cart items
 function fetchCartItems() {
 	$.getJSON('/contents', function(cartItems) {
 		$('#cartItemsContainer').empty(); // Clear existing items
@@ -232,4 +219,29 @@ function fetchCartItems() {
 		}
 	})
 }
+function removeFromCart(name) {
+	$.ajax({
+		url: '/removeFromCart',
+		type: 'POST',
+		contentType: 'text/plain', // Specify the content type
+		data: name, // Convert the Chatter object to JSON
+		success: function(response) {
+			console.log(response); // Handle success response as needed
+			fetchCartItems(); // Refresh cart items after removal
+		},
+		error: function(xhr, status, error) {
+			console.error('Failed to remove item from cart', error);
+		}
+	});
+}
+// Event listener for checkbox delegation
+$(document).on('click', '#check-icon', function() {
+	$(this).toggleClass("fa-square fa-square-check");
+});
+// Event listener for trash
+$(document).on('click', '.fa-trash', function() {
+	var chatterName = $(this).attr('id');
+	console.log(chatterName);
+	removeFromCart(chatterName);
+});
 
