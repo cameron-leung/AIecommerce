@@ -27,7 +27,9 @@
 <script src="AIecommerce.js"></script>
 <script>
     $(document).ready(function() {
-
+    	$(document).on('click', '#check-icon', function() {
+    		$(this).toggleClass("fa-square fa-square-check");
+    	});
         
     });
     var cartPopupOpen = false;
@@ -56,7 +58,4 @@
             closeCartPopup();
         }
     });
-    
-
-    
 </script>

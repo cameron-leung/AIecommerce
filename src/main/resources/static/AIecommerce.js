@@ -234,10 +234,7 @@ function removeFromCart(name) {
 		}
 	});
 }
-// Event listener for checkbox delegation
-$(document).on('click', '#check-icon', function() {
-	$(this).toggleClass("fa-square fa-square-check");
-});
+
 // Event listener for trash
 $(document).on('click', '.fa-trash', function() {
 	var chatterName = $(this).attr('id');
