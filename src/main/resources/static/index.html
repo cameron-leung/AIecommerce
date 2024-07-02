@@ -137,39 +137,7 @@
 				}
 			});
 
-			const Friendscards = $('.Friends-character-card-container');
-			const Bcards = $('.B-character-card-container');
-			const Metacards = $('.Meta-character-card-container');
-
-
-			// Fetch character data from the backend
-			$.getJSON('/chatters', function (characterData) {
-				// Filter by username for Browse by Creator section
-				const userBFilteredData = characterData.filter(character => character.username === '@B');
-				const userMetaFilteredData = characterData.filter(character => character.username === '@Meta');
-
-				// Fetch chattercard template
-				$.get('chattercard.html', function (template) {
-					userBFilteredData.forEach(character => {
-						const populatedCard = populateCard(template, character);
-						Bcards.append(populatedCard);
-					});
-
-					userMetaFilteredData.forEach(character => {
-						const populatedCard = populateCard(template, character);
-						Metacards.append(populatedCard);
-					});
-
-					characterData.forEach(character => {
-						const populatedCard = populateCard(template, character);
-						Friendscards.append(populatedCard);
-					});
-				}).fail(function () {
-					console.error('Failed to load chattercard.html');
-				});
-			}).fail(function () {
-				console.error('Failed to fetch chatters from API');
-			});
+			populateIndexChatters();
 		});
 
 	</script>

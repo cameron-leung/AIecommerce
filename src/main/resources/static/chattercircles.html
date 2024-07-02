@@ -1,38 +1,13 @@
 <!-- horizontal chatter card circles -->
 <div class="row">
-     <div class="col">
-         <div style = "overflow-x: auto; white-space: nowrap; width: 100%;">
-            <div class="character-circ-container"></div>
-         </div>
-     </div>
+	<div class="col">
+		<div style="overflow-x: auto; white-space: nowrap; width: 100%;">
+			<div class="character-circ-container"></div>
+		</div>
+	</div>
 </div>
 
 <script src="AIecommerce.js"></script>
 <script>
-    // Populate character circle with data
-    function populateCircle(template, character) {
-    	const imageName = character.name.replace(/\s+/g, '');
-        return template
-            .replace('CIRC_IMAGE_URL', 'images/' + imageName + 'Circle.png')
-            .replace('NAME', character.name)
-    }
-
-    // jQuery to dynamically load and add character circles to the container
-    $(document).ready(function () {
-		const container = $('.character-circ-container');
-        
-		$.getJSON('/chatters', function(characterData) {
-	        // Fetch chattercard template
-	        $.get('chattercircle.html', function(template) {
-	            characterData.forEach(character => {
-	                const populatedCircle = populateCircle(template, character);
-	                container.append(populatedCircle);
-	            });
-	        }).fail(function() {
-	            console.error('Failed to load chattercircle.html');
-	        });
-	    }).fail(function() {
-	        console.error('Failed to fetch chatters from API');
-	    });
-    });
+	populateChatterCircles();
 </script>
