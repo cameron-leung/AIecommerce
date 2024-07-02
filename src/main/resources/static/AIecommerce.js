@@ -300,6 +300,7 @@ function removeFromCart(name) {
 		success: function(response) {
 			console.log(response); // Handle success response as needed
 			fetchCartItems(); // Refresh cart items after removal
+			fetchCartCards();
 		},
 		error: function(xhr, status, error) {
 			console.error('Failed to remove item from cart', error);
