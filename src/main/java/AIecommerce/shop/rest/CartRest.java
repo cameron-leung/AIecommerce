@@ -49,8 +49,8 @@ public class CartRest {
 	}
 
     
-    @GetMapping
-    public Chatter findByName(@RequestParam(name = "name") String name) {
+    @GetMapping("/findByName")
+    public Chatter findByName(@RequestParam(value = "name", defaultValue = "") String name) {
     	return chatterRest.getChatters().stream()
         .filter(chatter -> chatter.getName().equalsIgnoreCase(name))
         .findFirst()

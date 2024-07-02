@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 // Check if the backButton element exists before adding event listener
-const backButton = document.getElementById('backButton');
+const backButton = document.getElementByClassName('backButton');
 if (backButton) {
 	backButton.addEventListener('click', function() {
 		window.history.back();
