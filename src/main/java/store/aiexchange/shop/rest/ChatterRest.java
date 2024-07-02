@@ -1,10 +1,10 @@
-package AIecommerce.shop.rest;
+package store.aiexchange.shop.rest;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import AIecommerce.shop.entities.Chatter;
 import jakarta.annotation.PostConstruct;
+import store.aiexchange.shop.entities.Chatter;
 
 import java.util.ArrayList;
 import java.util.Arrays;

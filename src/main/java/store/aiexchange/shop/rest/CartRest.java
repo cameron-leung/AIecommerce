@@ -1,4 +1,4 @@
-package AIecommerce.shop.rest;
+package store.aiexchange.shop.rest;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import AIecommerce.shop.entities.Chatter;
+import store.aiexchange.shop.entities.Chatter;
 
 @RestController
 public class CartRest {

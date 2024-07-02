@@ -46,7 +46,7 @@
 		<!-- header & back button -->
 		<div class="d-flex col">
 			<div class="icons">
-				<div class="backButton d-inline-block py-1 px-3 text-center align-items-center">
+				<div id="backButton" class="d-inline-block py-1 px-3 text-center align-items-center">
 					<i class="fs-2 fa-solid fa-chevron-left"></i>
 				</div>
 			</div>
@@ -153,6 +153,7 @@
 				$('.discover-icon').addClass('active');
 			});
 			// Load details
+			const urlParams = new URLSearchParams(window.location.search);
 			const characterName = urlParams.get('name');
 			loadCharacterDetails(characterName);
 			populateVerticalScroll();

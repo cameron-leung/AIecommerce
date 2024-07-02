@@ -1,4 +1,4 @@
-package AIecommerce.shop.entities;
+package store.aiexchange.shop.entities;
 import java.util.List;
 import java.util.ArrayList;
 

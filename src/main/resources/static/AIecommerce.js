@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 // Check if the backButton element exists before adding event listener
-const backButton = document.getElementByClassName('backButton');
+var backButton = document.getElementById('backButton');
 if (backButton) {
 	backButton.addEventListener('click', function() {
 		window.history.back();
@@ -105,7 +105,7 @@ function populateIndexChatters() {
 	});
 }
 // Shop page cards filtering
-const shopContainer = $('.shop-character-card-container');
+var shopContainer = $('.shop-character-card-container');
 // Function to filter character data based on categories and price
 function filterShopCharacterData(selectedCategories = [], selectedPrice = 100) {
 	$.getJSON('/chatters', function(characterData) {
@@ -355,8 +355,8 @@ function populateVerticalScroll() {
 }
 
 // Search query logic
-const urlParams = new URLSearchParams(window.location.search);
-const query = urlParams.get('query');
+var urlParams = new URLSearchParams(window.location.search);
+var query = urlParams.get('query');
 if (query) {
 	queryCharacterData(query);
 }
