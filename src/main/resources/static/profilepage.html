@@ -64,7 +64,7 @@
 		</div>
 		<!--  Chatters in your cart scroll -->
 		<h1 class="mt-3">Cart</h1>
-		<div class="chattercardscroll-placeholder"></div>
+		<div class="cart-cards-container  d-flex flex-row justify-content-start"></div>
 
 	</div>
 
@@ -89,8 +89,8 @@
 
 			// Load chatter circles & cards
 			$('.chattercircles-placeholder').load('chattercircles.html');
-			$('.chattercardscroll-placeholder').load('chattercardscroll.html');
 			loadBChatters();
+			fetchCartCards();
 		});
 
 	</script>

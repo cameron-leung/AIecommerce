@@ -256,6 +256,24 @@ function fetchCartItems() {
 		}
 	})
 }
+// Fetch data for cart items
+function fetchCartCards() {
+	const cartCardsContainer = $('.cart-cards-container');
+	$.getJSON('/contents', function(cartItems) {
+		cartCardsContainer.empty(); // Clear existing items
+		 $.get('chattercard.html', function(template) {
+		if (cartItems.length > 0) {
+			cartItems.forEach(function(chatter) {
+				console.log(chatter);
+				const populatedCard = populateCard(template, chatter);
+				cartCardsContainer.append(populatedCard);
+			});
+		}
+	 }).fail(function() {
+			console.error('Failed to load cart cards.html');
+			})
+			})
+}
 // Cart functionalities
 function addToCart(character) {
 	$.ajax({
