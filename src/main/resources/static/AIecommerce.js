@@ -1,17 +1,15 @@
 // Wrap your code in DOMContentLoaded event listener
 document.addEventListener('DOMContentLoaded', function() {
 	// Check if the backButton element exists before adding event listener
-const backButton = document.getElementById('backButton');
-if (backButton) {
-	console.log("back button found");
-	backButton.addEventListener('click', function() {
-		console.log("back pressed");
-		window.history.back();
-	});
-}
+	const backButton = document.getElementById('backButton');
+	if (backButton) {
+		console.log("back button found");
+		backButton.addEventListener('click', function() {
+			console.log("back pressed");
+			window.history.back();
+		});
+	}
 });
-
-
 
 // Function to fill in card data
 function populateCard(template, character) {
