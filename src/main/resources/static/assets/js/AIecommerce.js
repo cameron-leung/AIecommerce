@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 function loadIndex() {
 	$.getJSON('/chatters', function(characters) {
-		characterData = characters;
+		characterData.push(...characters);
 		populateChatterCircles();
 		populateIndexChatters();
 	}).fail(function() {
@@ -34,7 +34,7 @@ function loadProfile() {
 function populateCard(template, character) {
 	const imageName = character.name.replace(/\s+/g, '');
 	return template
-		.replace(/RECT_IMAGE_URL/g, 'images/' + imageName + 'Rectangle.png')
+		.replace(/RECT_IMAGE_URL/g, 'assets/img/' + imageName + 'Rectangle.png')
 		.replace(/NAME/g, character.name)
 		.replace(/USER/g, character.username)
 		.replace(/PRICE/g, character.price.toFixed(2))
@@ -44,13 +44,12 @@ function populateCard(template, character) {
 function populateCircle(template, character) {
 	const imageName = character.name.replace(/\s+/g, '');
 	return template
-		.replace('CIRC_IMAGE_URL', 'images/' + imageName + 'Circle.png')
+		.replace('CIRC_IMAGE_URL', 'assets/img/' + imageName + 'Circle.png')
 		.replace('NAME', character.name)
 }
 // Use circles in scrollable widget
 function populateChatterCircles() {
 	const container = $('.character-circ-container');
-	console.log("chatter circles: ",characterData);
 	// Fetch chattercard template
 	$.get('chattercircle.html', function(template) {
 		characterData.forEach(character => {
@@ -197,7 +196,7 @@ function purchaseItemHtml(item) {
         <!--  Cart item -->
         <div class="d-flex flex-column w-100 overflow-hidden mb-3">
             <div class="d-flex flex-row align-items-flex-start justify-content-start">
-                <img class="chatter-image object-fit-cover rounded-3 w-50" src="images/${item.name.replace(/\s+/g, '')}Rectangle.png" style="height: 20vh;">
+                <img class="chatter-image object-fit-cover rounded-3 w-50" src="assets/img/${item.name.replace(/\s+/g, '')}Rectangle.png" style="height: 20vh;">
                 <div class="flex-column w-50 pl-1">
                     <h3 class="chatter-name m-0 p-0">${item.name}</h3>
                     <h5 class="chatter-username mt-0 mb-5">${item.username}</h5>
@@ -215,14 +214,14 @@ function cartItemHtml(item) {
 	return `
          <div class="d-flex flex-column w-100 overflow-hidden mb-3">
               <div class="d-flex flex-row align-items-center justify-content-end">
-                   <img class="chatter-image object-fit-cover rounded-3 w-50" src="images/${item.name.replace(/\s+/g, '')}Rectangle.png" style="height: 20vh;">
+                   <img class="chatter-image object-fit-cover rounded-3 w-50" src="assets/img/${item.name.replace(/\s+/g, '')}Rectangle.png" style="height: 20vh;">
                    <div class="flex-column w-30 p-2">
                        <h3 class="chatter-name m-0 p-0">${item.name}</h3>
                        <h5 class="chatter-username mt-0 mb-5">${item.username}</h5>
                        <h5 class="chatter-price mb-0">$${item.price}</h5>
                    </div>
                    <div class="d-flex flex-column h-100 align-items-end justify-content-end flex-grow-1">
-                        <a href="#"><img class="m-0 p-0" style="width: 25px;" src="images/AIchatlogopink.png" alt="Logo"></a>
+                        <a href="#"><img class="m-0 p-0" style="width: 25px;" src="assets/img/AIchatlogopink.png" alt="Logo"></a>
                         <i id="${item.name}" class="d-flex justify-content-center pt-2 w-25 fs-3 cursor-pointer fa-solid fa-trash"></i>
                         <i id="check-icon" class="d-flex justify-content-center pt-2 w-25 fs-3 cursor-pointer fa-regular fa-square-check"></i>
                    </div>
@@ -307,7 +306,7 @@ function removeFromCart(name) {
 // Populate details on chatter preview
 function populateDetails(character) {
 	const imageName = character.name.replace(/\s+/g, '');
-	$('.chatter-image').attr('src', 'images/' + imageName + 'Rectangle.png');
+	$('.chatter-image').attr('src', 'assets/img/' + imageName + 'Rectangle.png');
 	$('.chatter-name').text(character.name);
 	$('.chatter-username').text(character.username);
 	$('.chatter-price').text('$' + character.price.toFixed(2));
