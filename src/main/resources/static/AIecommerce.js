@@ -1,3 +1,6 @@
+let characterData = [];
+let cartData = [];
+
 // Wrap your code in DOMContentLoaded event listener
 document.addEventListener('DOMContentLoaded', function() {
 	// Check if the backButton element exists before adding event listener
@@ -8,6 +11,15 @@ document.addEventListener('DOMContentLoaded', function() {
 		});
 	}
 });
+
+function loadIndex() {
+	$.getJSON('/chatters', function(characters) {
+		characterData = characters;
+		populateIndexChatters();
+		}).fail(function() {
+		console.error('Failed to fetch chatters from API');
+	});
+}
 
 // Function to fill in card data
 function populateCard(template, character) {
@@ -47,7 +59,7 @@ function populateChatterCircles() {
 function loadBChatters() {
 	const Bcards = $('.B-character-card-container');
 	// Fetch character data from the backend
-	$.getJSON('/chatters', function(characterData) {
+
 		// Filter by username for Browse by Creator section
 		const userBFilteredData = characterData.filter(character => character.username === '@B');
 		// Fetch chattercard template
@@ -59,19 +71,14 @@ function loadBChatters() {
 		}).fail(function() {
 			console.error('Failed to load chattercard.html');
 		});
-	}).fail(function() {
-		console.error('Failed to fetch chatters from API');
-	});
-}
+	}
 // Index page cards filtering
 function populateIndexChatters() {
 	const Friendscards = $('.Friends-character-card-container');
 	const Metacards = $('.Meta-character-card-container');
 	loadBChatters();
 	// Fetch character data from the backend
-	$.getJSON('/chatters', function(characterData) {
-		// Filter by username for Browse by Creator section
-		const userBFilteredData = characterData.filter(character => character.username === '@B');
+
 		const userMetaFilteredData = characterData.filter(character => character.username === '@Meta');
 		// Fetch chattercard template
 		$.get('chattercard.html', function(template) {
@@ -86,10 +93,7 @@ function populateIndexChatters() {
 		}).fail(function() {
 			console.error('Failed to load chattercard.html');
 		});
-	}).fail(function() {
-		console.error('Failed to fetch chatters from API');
-	});
-}
+	}
 // Shop page cards filtering
 var shopContainer = $('.shop-character-card-container');
 // Function to filter character data based on categories and price
