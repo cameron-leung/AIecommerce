@@ -1,5 +1,4 @@
-let characterData = [];
-let cartData = [];
+const characterData = [];
 
 // Wrap your code in DOMContentLoaded event listener
 document.addEventListener('DOMContentLoaded', function() {
@@ -23,7 +22,7 @@ function loadIndex() {
 }
 function loadProfile() {
 	$.getJSON('/chatters', function(characters) {
-		characterData = characters;
+		characterData.push(...characters);
 		populateChatterCircles();
 		loadBChatters();
 	}).fail(function() {
@@ -51,7 +50,7 @@ function populateCircle(template, character) {
 // Use circles in scrollable widget
 function populateChatterCircles() {
 	const container = $('.character-circ-container');
-
+	console.log("chatter circles: ",characterData);
 	// Fetch chattercard template
 	$.get('chattercircle.html', function(template) {
 		characterData.forEach(character => {
