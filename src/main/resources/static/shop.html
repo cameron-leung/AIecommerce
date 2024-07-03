@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -205,12 +206,8 @@
 			$('#navbar-placeholder').load('navbar.html', function () {
 				$('.discover-icon').addClass('active');
 			});
-			getChatterData().then(function() {
-				return loadFilterLogic(); // Ensure loadFilterLogic() returns a promise
-			}).then(function() {
-			    filterShopCharacterData(); // Call this after loadFilterLogic() resolves
-			})
-			
+			filterShopCharacterData();
+			loadFilterLogic();
 		});
 	</script>
 

@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -153,13 +154,10 @@
 				$('.discover-icon').addClass('active');
 			});
 			// Load details
-			getChatterData().then(function() {
-				const urlParams = new URLSearchParams(window.location.search);
-				const characterName = urlParams.get('name');
-				loadCharacterDetails(characterName);
-
-			});
-			
+			const urlParams = new URLSearchParams(window.location.search);
+			const characterName = urlParams.get('name');
+			loadCharacterDetails(characterName);
+			populateVerticalScroll();
 		});
 	</script>
 

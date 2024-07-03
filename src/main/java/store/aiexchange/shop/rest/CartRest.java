@@ -75,7 +75,7 @@ public class CartRest {
     }
 
     
-    @GetMapping("/contents")
+    @GetMapping("/cart")
     public List<Chatter> getCartContents() {
         return cart;
     }
