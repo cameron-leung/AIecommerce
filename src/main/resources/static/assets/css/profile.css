@@ -1,0 +1,58 @@
+/* Smaller screens (phones) */
+@media (max-width: 767px) {
+	.responsive-icon {
+		font-size: 80px;
+		/* profile icon */
+	}
+
+	h4 {
+		font-size: 14px;
+		/* text */
+	}
+
+	.pb-username {
+		padding-bottom: 0 !important;
+		/* padding between username & followers, following & chatters */
+	}
+
+	.fa-pen {
+		font-size: 1.2rem;
+		/* edit button */
+	}
+
+	.logout-button {
+		font-size: .8rem;
+		/* log out button */
+	}
+}
+
+/* Medium screens (tablets) */
+@media (min-width: 768px) and (max-width: 991px) {
+	.responsive-icon {
+		font-size: 120px;
+		/* profile icon */
+	}
+}
+
+/* Large screens (desktops) */
+@media (min-width: 992px) {
+	.responsive-icon {
+		font-size: 180px;
+		/* profile icon */
+	}
+
+	.pb-username {
+		padding-bottom: 4rem;
+		/* padding between username & followers, following & chatters */
+	}
+
+	.fa-pen {
+		font-size: 2.2rem;
+		/* edit button */
+	}
+
+	.logout-button {
+		font-size: 24px;
+		/* log out button */
+	}
+}

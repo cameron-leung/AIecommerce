@@ -1,0 +1,44 @@
+	* {
+		font-family: 'DM Sans';
+	}
+
+	.active i {
+		color: #FF206E;
+	}
+
+	h1 {
+		width: auto;
+		margin: 0px;
+		padding: 0px;
+	}
+
+	h2 {
+		margin: 0px;
+		padding: 0px;
+		font-size: 30px;
+	}
+
+	p {
+		margin: 0px;
+		padding: 0px;
+	}
+
+	a {
+		color: black !important;
+		text-decoration: none !important;
+	}
+
+	/* form labels */
+	label {
+		margin-bottom: 8px;
+		font-size: 16px;
+	}
+
+	/* purchase form input fields */
+	.purchase-form input[type="text"] {
+		width: 50vh;
+		padding: 10px;
+		font-size: 14px;
+		border: 1px solid #ccc;
+		border-radius: 4px;
+	}
