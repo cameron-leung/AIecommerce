@@ -141,8 +141,8 @@ function updateSliderBackground(slider) {
 }
 // Filter logic
 function loadFilterLogic() {
-	var filterPopupOpen = false;
-	// Initial data load based on URL category
+	return new Promise(function(resolve, reject) {
+        var filterPopupOpen = false;	// Initial data load based on URL category
 	const category = urlParams.get('category') || 'All';
 	const initialCategories = category === 'All' ? [] : [category];
 	// Open and close filter
@@ -185,6 +185,8 @@ function loadFilterLogic() {
 		filterShopCharacterData(selectedCategories, selectedPrice);
 		closeFilterPopup();
 	})
+	resolve(); // Resolve the promise once logic is complete
+    });
 }
 
 // Frontend for purchase page cart
@@ -348,10 +350,12 @@ function populateVerticalScroll() {
 	}
 }
 
-
+var urlParams = new URLSearchParams(window.location.search);
+	var query = urlParams.get('query');
 function loadQuery() {
-	const urlParams = new URLSearchParams(window.location.search);
-	const query = urlParams.get('query');
+	urlParams = new URLSearchParams(window.location.search);
+	query = urlParams.get('query');
+	var query = urlParams.get('query');
 	if (query) {
 		queryCharacterData(query);
 	}

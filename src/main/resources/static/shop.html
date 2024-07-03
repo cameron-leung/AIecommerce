@@ -206,10 +206,10 @@
 				$('.discover-icon').addClass('active');
 			});
 			getChatterData().then(function() {
-				loadFilterLogic().then(function() {
-				filterShopCharacterData();
-				});
-			});
+				return loadFilterLogic(); // Ensure loadFilterLogic() returns a promise
+			}).then(function() {
+			    filterShopCharacterData(); // Call this after loadFilterLogic() resolves
+			})
 			
 		});
 	</script>
