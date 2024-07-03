@@ -153,10 +153,13 @@
 				$('.discover-icon').addClass('active');
 			});
 			// Load details
-			const urlParams = new URLSearchParams(window.location.search);
-			const characterName = urlParams.get('name');
-			loadCharacterDetails(characterName);
-			populateVerticalScroll();
+			getChatterData().then(function() {
+				const urlParams = new URLSearchParams(window.location.search);
+				const characterName = urlParams.get('name');
+				loadCharacterDetails(characterName);
+
+			});
+			
 		});
 	</script>
 

@@ -205,8 +205,12 @@
 			$('#navbar-placeholder').load('navbar.html', function () {
 				$('.discover-icon').addClass('active');
 			});
-			filterShopCharacterData();
-			loadFilterLogic();
+			getChatterData().then(function() {
+				loadFilterLogic().then(function() {
+				filterShopCharacterData();
+				});
+			});
+			
 		});
 	</script>
 

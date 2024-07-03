@@ -136,8 +136,12 @@
 					}, 1000);
 				}
 			});
+			
+			getChatterData().then(function() {
+				populateIndexChatters();
+				loadQuery();
+			});
 
-			populateIndexChatters();
 		});
 
 	</script>

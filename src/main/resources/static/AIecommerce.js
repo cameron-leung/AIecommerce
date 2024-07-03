@@ -1,15 +1,27 @@
+let characterData = [];
+
 // Wrap your code in DOMContentLoaded event listener
 document.addEventListener('DOMContentLoaded', function() {
 	// Check if the backButton element exists before adding event listener
 	const backButton = document.getElementById('backButton');
 	if (backButton) {
-		console.log("back button found");
 		backButton.addEventListener('click', function() {
-			console.log("back pressed");
 			window.history.back();
 		});
 	}
 });
+
+function getChatterData() {
+	return $.getJSON('/chatters')
+		.then(function(data) {
+			characterData = data;
+			console.log(data);
+			return data;
+		})
+		.fail(function() {
+			console.error('Failed to fetch chatters from API');
+		});
+}
 
 // Function to fill in card data
 function populateCard(template, character) {
@@ -33,18 +45,13 @@ function populateCircle(template, character) {
 function populateChatterCircles() {
 	const container = $('.character-circ-container');
 
-	$.getJSON('/chatters', function(characterData) {
-		// Fetch chattercard template
-		$.get('chattercircle.html', function(template) {
-			characterData.forEach(character => {
-				const populatedCircle = populateCircle(template, character);
-				container.append(populatedCircle);
-			});
-		}).fail(function() {
-			console.error('Failed to load chattercircle.html');
+	$.get('chattercircle.html', function(template) {
+		characterData.forEach(character => {
+			const populatedCircle = populateCircle(template, character);
+			container.append(populatedCircle);
 		});
 	}).fail(function() {
-		console.error('Failed to fetch chatters from API');
+		console.error('Failed to load chattercircle.html');
 	});
 }
 
@@ -52,84 +59,86 @@ function populateChatterCircles() {
 function loadBChatters() {
 	const Bcards = $('.B-character-card-container');
 	// Fetch character data from the backend
-	$.getJSON('/chatters', function(characterData) {
-		// Filter by username for Browse by Creator section
-		const userBFilteredData = characterData.filter(character => character.username === '@B');
 
-		// Fetch chattercard template
-		$.get('chattercard.html', function(template) {
-			userBFilteredData.forEach(character => {
-				const populatedCard = populateCard(template, character);
-				Bcards.append(populatedCard);
-			});
+	// Filter by username for Browse by Creator section
+	const userBFilteredData = characterData.filter(character => character.username === '@B');
 
-		}).fail(function() {
-			console.error('Failed to load chattercard.html');
+	// Fetch chattercard template
+	$.get('chattercard.html', function(template) {
+		userBFilteredData.forEach(character => {
+			const populatedCard = populateCard(template, character);
+			Bcards.append(populatedCard);
 		});
+
 	}).fail(function() {
-		console.error('Failed to fetch chatters from API');
+		console.error('Failed to load chattercard.html');
 	});
 }
+
 // Index page cards filtering
 function populateIndexChatters() {
+	populateChatterCircles();
+	loadBChatters();
 	const Friendscards = $('.Friends-character-card-container');
 	const Metacards = $('.Meta-character-card-container');
 
-	loadBChatters();
-	// Fetch character data from the backend
-	$.getJSON('/chatters', function(characterData) {
-		// Filter by username for Browse by Creator section
-		const userBFilteredData = characterData.filter(character => character.username === '@B');
-		const userMetaFilteredData = characterData.filter(character => character.username === '@Meta');
+	// Filter by username for Browse by Creator section
+	const userMetaFilteredData = characterData.filter(character => character.username === '@Meta');
 
+	// Fetch chattercard template
+	$.get('chattercard.html', function(template) {
+		userMetaFilteredData.forEach(character => {
+			const populatedCard = populateCard(template, character);
+			Metacards.append(populatedCard);
+		});
 
-		// Fetch chattercard template
-		$.get('chattercard.html', function(template) {
-			userMetaFilteredData.forEach(character => {
-				const populatedCard = populateCard(template, character);
-				Metacards.append(populatedCard);
-			});
-
-			characterData.forEach(character => {
-				const populatedCard = populateCard(template, character);
-				Friendscards.append(populatedCard);
-			});
-		}).fail(function() {
-			console.error('Failed to load chattercard.html');
+		characterData.forEach(character => {
+			const populatedCard = populateCard(template, character);
+			Friendscards.append(populatedCard);
 		});
 	}).fail(function() {
-		console.error('Failed to fetch chatters from API');
+		console.error('Failed to load chattercard.html');
 	});
 }
 // Shop page cards filtering
 var shopContainer = $('.shop-character-card-container');
 // Function to filter character data based on categories and price
 function filterShopCharacterData(selectedCategories = [], selectedPrice = 100) {
-	$.getJSON('/chatters', function(characterData) {
-		const filteredData = characterData.filter(character => {
-			const matchesCategory = selectedCategories.length === 0 || character.category.some(cat => selectedCategories.includes(cat));
-			const matchesPrice = character.price <= selectedPrice;
-			return matchesCategory && matchesPrice;
-		});
 
-		// Display filtered data
-		shopContainer.empty();
-		$.get('chattercard.html', function(template) {
-			if (filteredData.length === 0) {
-				console.error('No data found for selected filters');
-			}
-			filteredData.forEach(character => {
-				const populatedCard = populateCard(template, character);
-				shopContainer.append(populatedCard);
-			});
-		}).fail(function() {
-			console.error('Failed to load chattercard.html');
+	const filteredData = characterData.filter(character => {
+		const matchesCategory = selectedCategories.length === 0 || character.category.some(cat => selectedCategories.includes(cat));
+		const matchesPrice = character.price <= selectedPrice;
+		return matchesCategory && matchesPrice;
+	});
+
+	// Display filtered data
+	shopContainer.empty();
+	$.get('chattercard.html', function(template) {
+		if (filteredData.length === 0) {
+			console.error('No data found for selected filters');
+		}
+		filteredData.forEach(character => {
+			const populatedCard = populateCard(template, character);
+			shopContainer.append(populatedCard);
 		});
 	}).fail(function() {
-		console.error('Failed to fetch chatters from API');
+		console.error('Failed to load chattercard.html');
 	});
-}
 
+}
+function openFilterPopup() {
+	$('#filterPopupOverlay').fadeIn();
+	filterPopupOpen = true;
+}
+function closeFilterPopup() {
+	$('#filterPopupOverlay').fadeOut();
+	filterPopupOpen = false;
+}
+// Update the displayed price value dynamically and adjust the slider's appearance
+function updateSliderBackground(slider) {
+	const value = slider.value;
+	slider.style.setProperty('--thumb-position', `${value}%`);
+}
 // Filter logic
 function loadFilterLogic() {
 	var filterPopupOpen = false;
@@ -137,14 +146,7 @@ function loadFilterLogic() {
 	const category = urlParams.get('category') || 'All';
 	const initialCategories = category === 'All' ? [] : [category];
 	// Open and close filter
-	function openFilterPopup() {
-		$('#filterPopupOverlay').fadeIn();
-		filterPopupOpen = true;
-	}
-	function closeFilterPopup() {
-		$('#filterPopupOverlay').fadeOut();
-		filterPopupOpen = false;
-	}
+
 	// Check conditions to open/close filter
 	$(document).on('click', function(event) {
 		var $target = $(event.target);
@@ -159,11 +161,7 @@ function loadFilterLogic() {
 		event.stopPropagation();
 		openFilterPopup();
 	});
-	// Update the displayed price value dynamically and adjust the slider's appearance
-	function updateSliderBackground(slider) {
-		const value = slider.value;
-		slider.style.setProperty('--thumb-position', `${value}%`);
-	}
+
 	$('#priceRange').on('input', function() {
 		const selectedPrice = $(this).val();
 		$('#priceValue').text(`$${selectedPrice}`);
@@ -319,23 +317,22 @@ function populateDetails(character) {
 function loadCharacterDetails(characterName) {
 	if (characterName) {
 		// Fetch character details from the backend
-		$.getJSON('/chatters', function(characterData) {
-			const character = characterData.find(c => c.name === characterName);
-			if (!character) {
-				console.error(`Character with name ${characterName} not found.`);
-				return;
-			}
 
-			// Update with character details
-			populateDetails(character);
+		const character = characterData.find(c => c.name === characterName);
+		if (!character) {
+			console.error(`Character with name ${characterName} not found.`);
+			return;
+		}
 
-			// Attach event handler to the cart icon
-			$('.fa-cart-plus').off('click').on('click', function() {
-				addToCart(character);
-			});
-		}).fail(function() {
-			console.error('Failed to fetch chatters from API');
+		// Update with character details
+		populateVerticalScroll();
+		populateDetails(character);
+
+		// Attach event handler to the cart icon
+		$('.fa-cart-plus').off('click').on('click', function() {
+			addToCart(character);
 		});
+
 	}
 }
 function populateVerticalScroll() {
@@ -351,50 +348,53 @@ function populateVerticalScroll() {
 	}
 }
 
-// Search query logic
-var urlParams = new URLSearchParams(window.location.search);
-var query = urlParams.get('query');
-if (query) {
-	queryCharacterData(query);
-}
-document.getElementById('searchInput').addEventListener('keypress', function(event) {
-	if (event.key === 'Enter') {
-		const query = event.target.value.trim();
-		console.log(query);
-		if (query) {
-			window.location.href = `searchResults.html?query=${encodeURIComponent(query)}`;
-		}
+
+function loadQuery() {
+	const urlParams = new URLSearchParams(window.location.search);
+	const query = urlParams.get('query');
+	if (query) {
+		queryCharacterData(query);
 	}
-});
-function queryCharacterData(query) {
-	$.getJSON('/chatters', function(characterData) {
-		const filteredData = characterData.filter(character =>
-			character.name.toLowerCase().includes(query.toLowerCase()) ||
-			character.username.toLowerCase().includes(query.toLowerCase()) ||
-			character.blurb.toLowerCase().includes(query.toLowerCase()) ||
-			character.description.toLowerCase().includes(query.toLowerCase()) ||
-			character.category.some(c => c.toLowerCase().includes(query))
-		);
 
-		const container = $('.character-card-container');
-		container.empty();
-
-		// Display filtered data
-		container.empty();
-		$.get('chattercard.html', function(template) {
-			if (filteredData.length === 0) {
-				console.error('No data found for query');
+	document.getElementById('searchInput').addEventListener('keypress', function(event) {
+		if (event.key === 'Enter') {
+			const query = event.target.value.trim();
+			console.log(query);
+			if (query) {
+				window.location.href = `searchResults.html?query=${encodeURIComponent(query)}`;
 			}
-			filteredData.forEach(character => {
-				const populatedCard = populateCard(template, character);
-				container.append(populatedCard);
-			});
-		}).fail(function() {
-			console.error('Failed to load chattercard.html');
+		}
+	});
+}
+
+
+function queryCharacterData(query) {
+
+	const filteredData = characterData.filter(character =>
+		character.name.toLowerCase().includes(query.toLowerCase()) ||
+		character.username.toLowerCase().includes(query.toLowerCase()) ||
+		character.blurb.toLowerCase().includes(query.toLowerCase()) ||
+		character.description.toLowerCase().includes(query.toLowerCase()) ||
+		character.category.some(c => c.toLowerCase().includes(query))
+	);
+
+	const container = $('.character-card-container');
+	container.empty();
+
+	// Display filtered data
+	container.empty();
+	$.get('chattercard.html', function(template) {
+		if (filteredData.length === 0) {
+			console.error('No data found for query');
+		}
+		filteredData.forEach(character => {
+			const populatedCard = populateCard(template, character);
+			container.append(populatedCard);
 		});
 	}).fail(function() {
-		console.error('Failed to fetch chatters from API');
+		console.error('Failed to load chattercard.html');
 	});
+
 }
 
 

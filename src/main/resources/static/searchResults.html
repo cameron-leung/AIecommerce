@@ -32,6 +32,10 @@
                 $('.discover-icon').addClass('active');
             });
         });
+        getChatterData().then(function() {
+			loadQuery();
+		});
+
     </script>
 </body>
 </html>
