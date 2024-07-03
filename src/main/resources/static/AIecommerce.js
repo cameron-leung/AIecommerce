@@ -3,9 +3,7 @@ document.addEventListener('DOMContentLoaded', function() {
 	// Check if the backButton element exists before adding event listener
 	const backButton = document.getElementById('backButton');
 	if (backButton) {
-		console.log("back button found");
 		backButton.addEventListener('click', function() {
-			console.log("back pressed");
 			window.history.back();
 		});
 	}
@@ -97,36 +95,33 @@ var shopContainer = $('.shop-character-card-container');
 // Function to filter character data based on categories and price
 function filterShopCharacterData(selectedCategories = [], selectedPrice = 100) {
 	$.getJSON('/chatters', function(characterData) {
-		const filteredData = characterData.filter(character => {
-			const matchesCategory = selectedCategories.length === 0 || character.category.some(cat => selectedCategories.includes(cat));
-			const matchesPrice = character.price <= selectedPrice;
-			return matchesCategory && matchesPrice;
-		});
-		// Display filtered data
-		shopContainer.empty();
-		$.get('chattercard.html', function(template) {
-			if (filteredData.length === 0) {
-				console.error('No data found for selected filters');
-			}
-			filteredData.forEach(character => {
-				const populatedCard = populateCard(template, character);
-				shopContainer.append(populatedCard);
-			});
-		}).fail(function() {
-			console.error('Failed to load chattercard.html');
-		});
-	}).fail(function() {
-		console.error('Failed to fetch chatters from API');
-	});
+        const filteredData = characterData.filter(character => {
+            const matchesCategory = selectedCategories.length === 0 || character.category.some(cat => selectedCategories.includes(cat));
+            const matchesPrice = character.price <= selectedPrice;
+            return matchesCategory && matchesPrice;
+        });
+
+        // Clear previous content before appending new data
+        shopContainer.empty();
+
+        // Display filtered data
+        if (filteredData.length === 0) {
+            console.log("none")
+        } else {
+            $.get('chattercard.html', function(template) {
+                filteredData.forEach(character => {
+                    const populatedCard = populateCard(template, character);
+                    shopContainer.append(populatedCard);
+                });
+            }).fail(function() {
+                console.error('Failed to load chattercard.html');
+            });
+        }
+    }).fail(function() {
+        console.error('Failed to fetch chatters from API');
+    });
 }
-// Filter logic
-function loadFilterLogic() {
-	var filterPopupOpen = false;
-	// Initial data load based on URL category
-	const category = urlParams.get('category') || 'All';
-	const initialCategories = category === 'All' ? [] : [category];
-	// Open and close filter
-	function openFilterPopup() {
+function openFilterPopup() {
 		$('#filterPopupOverlay').fadeIn();
 		filterPopupOpen = true;
 	}
@@ -134,6 +129,19 @@ function loadFilterLogic() {
 		$('#filterPopupOverlay').fadeOut();
 		filterPopupOpen = false;
 	}
+		// Update the displayed price value dynamically and adjust the slider's appearance
+	function updateSliderBackground(slider) {
+		const value = slider.value;
+		slider.style.setProperty('--thumb-position', `${value}%`);
+	}
+// Filter logic
+function loadFilterLogic() {
+	var filterPopupOpen = false;
+	// Initial data load based on URL category
+	const category = urlParams.get('category') || 'All';
+	const initialCategories = category === 'All' ? [] : [category];
+	// Open and close filter
+
 	// Check conditions to open/close filter
 	$(document).on('click', function(event) {
 		var $target = $(event.target);
@@ -148,11 +156,7 @@ function loadFilterLogic() {
 		event.stopPropagation();
 		openFilterPopup();
 	});
-	// Update the displayed price value dynamically and adjust the slider's appearance
-	function updateSliderBackground(slider) {
-		const value = slider.value;
-		slider.style.setProperty('--thumb-position', `${value}%`);
-	}
+
 	$('#priceRange').on('input', function() {
 		const selectedPrice = $(this).val();
 		$('#priceValue').text(`$${selectedPrice}`);
@@ -334,7 +338,8 @@ function populateVerticalScroll() {
 // Search query logic
 var urlParams = new URLSearchParams(window.location.search);
 var query = urlParams.get('query');
-if (query) {
+function loadQuery() {
+	if (query) {
 	queryCharacterData(query);
 }
 document.getElementById('searchInput').addEventListener('keypress', function(event) {
@@ -346,6 +351,8 @@ document.getElementById('searchInput').addEventListener('keypress', function(eve
 		}
 	}
 });
+}
+
 function queryCharacterData(query) {
 	$.getJSON('/chatters', function(characterData) {
 		const filteredData = characterData.filter(character =>
