@@ -1,19 +1,19 @@
-package AIecommerce.shop;
+package store.aiexchange.shop;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import store.aiexchange.shop.rest.ChatterRest;
+import store.aiexchange.shop.entities.ChatterRepository;
 
 @SpringBootTest
 class ShopApplicationTests {
 	
 	@Autowired
-	private ChatterRest chatterRest;
+	private ChatterRepository chatterRepository;
 
 	@Test
 	void contextLoads() {
-		System.out.println(chatterRest.getChatter().getName());
+		System.out.println(chatterRepository.count());
 	}
 }

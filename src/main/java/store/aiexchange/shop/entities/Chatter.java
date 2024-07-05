@@ -1,8 +1,12 @@
 package store.aiexchange.shop.entities;
 import java.util.List;
 import java.util.ArrayList;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
+@Document(collection = "chatter")
 public class Chatter {
+    @Id
 	private String name;
 	private List<String> category;
 	private String username;
@@ -74,3 +78,5 @@ public class Chatter {
         this.description = description;
     }
 }
+
+
