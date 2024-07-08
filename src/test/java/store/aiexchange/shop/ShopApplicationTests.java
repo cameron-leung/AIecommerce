@@ -14,6 +14,6 @@ class ShopApplicationTests {
 
 	@Test
 	void contextLoads() {
-		System.out.println(chatterRepository.count());
+		System.out.println(chatterRepository.findAll());
 	}
 }

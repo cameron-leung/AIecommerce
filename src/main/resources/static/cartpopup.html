@@ -30,14 +30,27 @@
 
 <script>
 	$(document).ready(function () {
-		$(document).on('click', '#check-icon', function () {
-			$(this).toggleClass("fa-square fa-square-check");
+		// Event listener for checkbox
+		$(document).on('click', '.check-icon', function () {
+			var $this = $(this);
+			$this.toggleClass("fa-square fa-square-check");
+			var chatterName = $this.attr('id');
+			var isChecked = $this.hasClass('fa-square-check');
+			console.log(chatterName);
+			console.log(isChecked);
+
+			if (isChecked) {
+				attemptAddToPurchase(chatterName);
+			} else {
+				removeFromPurchase(chatterName);
+			}
 		});
 		// Event listener for trash
 		$(document).on('click', '.fa-trash', function () {
 			var chatterName = $(this).attr('id');
 			console.log(chatterName);
 			removeFromCart(chatterName);
+			removeFromPurchase(chatterName);
 		});
 
 	});
@@ -47,6 +60,7 @@
 		if (!cartPopupOpen) {
 			$('#cartPopupOverlay').removeClass('d-none').fadeIn();
 			fetchCartItems();
+			fetchPurchaseList();
 			cartPopupOpen = true;
 		}
 	}

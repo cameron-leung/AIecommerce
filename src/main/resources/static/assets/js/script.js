@@ -1,4 +1,5 @@
 const characterData = [];
+const purchaseItems = [];
 
 // Wrap your code in DOMContentLoaded event listener
 document.addEventListener('DOMContentLoaded', function() {
@@ -223,7 +224,7 @@ function cartItemHtml(item) {
                    <div class="d-flex flex-column h-100 align-items-end justify-content-end flex-grow-1">
                         <a href="#"><img class="m-0 p-0" style="width: 25px;" src="assets/img/AIchatlogopink.png" alt="Logo"></a>
                         <i id="${item.name}" class="d-flex justify-content-center pt-2 w-25 fs-3 cursor-pointer fa-solid fa-trash"></i>
-                        <i id="check-icon" class="d-flex justify-content-center pt-2 w-25 fs-3 cursor-pointer fa-regular fa-square-check"></i>
+                        <i id="${item.name}" class="d-flex justify-content-center pt-2 w-25 fs-3 cursor-pointer check-icon fa-regular fa-square-check"></i>
                    </div>
               </div>
          </div>
@@ -233,23 +234,24 @@ function cartItemHtml(item) {
 function fetchCartItems() {
 	$.getJSON('/cart', function(cartItems) {
 		$('#cartItemsContainer').empty(); // Clear existing items
-		console.log(cartItems);
+		console.log("cart: ", cartItems);
 		if (cartItems.length > 0) {
 			cartItems.forEach(function(item) {
-				var itemHtml = purchaseItemHtml(item);
-				$('#purchaseItemsContainer').append(itemHtml);
 				itemHtml = cartItemHtml(item);
 				$('#cartItemsContainer').append(itemHtml);
 			});
-			// Calculate subtotal and tax
-			var subtotal = cartItems.reduce((total, item) => total + item.price, 0);
-			var tax = subtotal * 0.1;
-			var total = subtotal + tax;
-			$('#cart-subtotal').text('$' + subtotal.toFixed(2));
-			$('#cart-tax').text('$' + tax.toFixed(2));
-			$('#cart-total').text('$' + total.toFixed(2));
 		}
 	})
+}
+function fetchPurchaseList() {
+	$.getJSON('/purchaseList', function(items) {
+		purchaseItems.length = 0;
+
+        // Populate the global purchaseItems array with the fetched data
+        items.forEach(item => purchaseItems.push(item));
+	})
+	updateCheckboxes();
+	updatePrice();
 }
 // Fetch data for cart items
 function fetchCartCards() {
@@ -269,6 +271,54 @@ function fetchCartCards() {
 		})
 	})
 }
+// Fetch data for cart items
+function fetchPurchaseItems() {
+
+	$('#purchaseItemsContainer').empty(); // Clear existing items
+	console.log(purchaseItems);
+	if (purchaseItems.length > 0) {
+		purchaseItems.forEach(function(item) {
+			var itemHtml = purchaseItemHtml(item);
+			$('#purchaseItemsContainer').append(itemHtml);
+		});
+	}
+	// Calculate subtotal and tax
+	var subtotal = purchaseItems.reduce((total, item) => total + item.price, 0);
+	var tax = subtotal * 0.1;
+	var total = subtotal + tax;
+	$('#cart-subtotal').text('$' + subtotal.toFixed(2));
+	$('#cart-tax').text('$' + tax.toFixed(2));
+	$('#cart-total').text('$' + total.toFixed(2));
+}
+function updatePrice() {
+
+	console.log("purchase totaling: ", purchaseItems);
+	// Calculate subtotal and tax
+	var subtotal = purchaseItems.reduce((total, item) => total + item.price, 0);
+	var tax = subtotal * 0.1;
+	var total = subtotal + tax;
+	$('#cart-subtotal').text('$' + subtotal.toFixed(2));
+	$('#cart-tax').text('$' + tax.toFixed(2));
+	$('#cart-total').text('$' + total.toFixed(2));
+
+}
+function updateCheckboxes(purchaseItems) {
+	// Get all checkboxes
+	$('.check-icon').each(function() {
+		var $this = $(this);
+		var chatterName = $this.attr('id');
+
+		// Check if the chatter is in the purchase list
+		var isInPurchaseList = purchaseItems.some(item => item.name === chatterName);
+
+		// Update the checkbox state
+		if (isInPurchaseList) {
+			$this.removeClass('fa-square').addClass('fa-square-check');
+		} else {
+			$this.removeClass('fa-square-check').addClass('fa-square');
+		}
+	});
+}
 // Cart functionalities
 function addToCart(character) {
 	$.ajax({
@@ -277,7 +327,7 @@ function addToCart(character) {
 		contentType: 'application/json',
 		data: JSON.stringify(character),
 		success: function(response) {
-			console.log(response); // Log success message
+			console.log('added to cart: ', response); // Log success message
 			fetchCartItems();
 			populateDetails(character); // Update character details on the page
 		},
@@ -293,12 +343,51 @@ function removeFromCart(name) {
 		contentType: 'text/plain', // Specify the content type
 		data: name, // Convert the Chatter object to JSON
 		success: function(response) {
-			console.log(response); // Handle success response as needed
+			console.log('removed from cart', response); // Handle success response as needed
 			fetchCartItems(); // Refresh cart items after removal
 			fetchCartCards();
 		},
 		error: function(xhr, status, error) {
 			console.error('Failed to remove item from cart', error);
+		}
+	});
+}
+function attemptAddToPurchase(chatterName) {
+	// Find chatter details by name and add to purchase list
+	$.getJSON('/findByName', { name: chatterName }, function(chatter) {
+		addToPurchase(chatter);
+	}).fail(function() {
+		console.error('Failed to find chatter by name');
+	});
+}
+// Purchase List functionalities
+function addToPurchase(character) {
+	$.ajax({
+		type: 'POST',
+		url: '/addToPurchase',
+		contentType: 'application/json',
+		data: JSON.stringify(character),
+		success: function(response) {
+			updatePrice();
+			console.log('added to purchase: ', response); // Log success message
+		},
+		error: function() {
+			console.error('Failed to add chatter to purchase');
+		}
+	});
+}
+function removeFromPurchase(name) {
+	$.ajax({
+		url: '/removeFromPurchase',
+		type: 'POST',
+		contentType: 'text/plain', // Specify the content type
+		data: name, // Convert the Chatter object to JSON
+		success: function(response) {
+			updatePrice();
+			console.log('removed from purchase', response); // Handle success response as needed
+		},
+		error: function(xhr, status, error) {
+			console.error('Failed to remove item from purchase', error);
 		}
 	});
 }
@@ -327,6 +416,7 @@ function loadCharacterDetails(characterName) {
 			// Attach event handler to the cart icon
 			$('.fa-cart-plus').off('click').on('click', function() {
 				addToCart(character);
+				addToPurchase(character);
 			});
 		}).fail(function() {
 			console.error('Failed to fetch chatters from API');
