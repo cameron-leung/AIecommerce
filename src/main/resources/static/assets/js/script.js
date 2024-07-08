@@ -220,11 +220,13 @@ function cartItemHtml(item) {
                        <h5 class="chatter-username mt-0 mb-5">${item.username}</h5>
                        <h5 class="chatter-price mb-0">$${item.price}</h5>
                    </div>
-                   <div class="d-flex flex-column h-100 align-items-end justify-content-end flex-grow-1">
-                        <a href="#"><img class="m-0 p-0" style="width: 25px;" src="assets/img/AIchatlogopink.png" alt="Logo"></a>
-                        <i id="${item.name}" class="d-flex justify-content-center pt-2 w-25 fs-3 cursor-pointer fa-solid fa-trash"></i>
-                        <i id="check-icon" class="d-flex justify-content-center pt-2 w-25 fs-3 cursor-pointer fa-regular fa-square-check"></i>
-                   </div>
+                   <div class="d-flex flex-column align-items-end justify-content-end flex-grow-1" style="margin-top: 70px;">
+                   		<a href="#"><img class="m-0 p-0" style="width: 25px;" src="assets/img/AIchatlogopink.png" alt="Logo"></a>
+					    <i id="${item.name}" class="d-flex justify-content-center pt-2 w-25 fs-3 cursor-pointer fa-solid fa-trash m-1"></i>
+					    <!-- <i id="check-icon" class="d-flex justify-content-center pt-2 w-25 fs-3 cursor-pointer fa-regular fa-square-check"></i> -->
+					    
+					</div>
+
               </div>
          </div>
    `;
