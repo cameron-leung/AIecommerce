@@ -1,5 +1,6 @@
 package store.aiexchange.shop.entities;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Profile {
@@ -17,6 +18,7 @@ public class Profile {
         this.username = username;
         this.password = password;
         this.email = email;
+        this.myChatters= new ArrayList<Chatter>();
     }
 
     // Getters and Setters
