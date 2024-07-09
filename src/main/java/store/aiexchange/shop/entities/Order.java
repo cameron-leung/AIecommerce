@@ -30,11 +30,11 @@ public class Order {
         this.username = username;
     }
     public String getCardholderName() {
-        return username;
+        return cardholderName;
     }
 
-    public void setCardholderName(String username) {
-        this.username = username;
+    public void setCardholderName(String cardholderName) {
+        this.cardholderName = cardholderName;
     }
     public List<Chatter> getOrderItems() {
         return orderItems;
@@ -43,5 +43,8 @@ public class Order {
     public void setOrderItems(List<Chatter> orderItems) {
         this.orderItems = orderItems;
     }
-
+    @Override
+    public String toString() {
+    	return cardholderName + " " + orderItems;
+    }
 }
