@@ -251,13 +251,10 @@ function fetchCartPopup() {
 			itemHtml = cartItemHtml(item);
 			$('#cartItemsContainer').append(itemHtml);
 		});
-
 	}
 	getPrice(cartItems);
 	// Calculate subtotal and tax
 	})
-
-
 }
 // Fetch data for cart items
 function fetchCartCards() {
@@ -277,7 +274,6 @@ function fetchCartCards() {
 		console.error('Failed to load cart cards.html');
 	})
 	})
-
 }
 function fetchCartPurchase() {
 	$.getJSON('/cart', function(cartItems) {
@@ -288,13 +284,9 @@ function fetchCartPurchase() {
 				var itemHtml = purchaseItemHtml(item);
 				$('#purchaseItemsContainer').append(itemHtml);
 			});
-			
 		}
 		getPrice(cartItems);
-		
 	});
-
-
 }
 function getPrice(cartItems) {
 	var subtotal = cartItems.reduce((total, item) => total + item.price, 0);

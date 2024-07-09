@@ -110,12 +110,12 @@
 					<!-- CVV field -->
 					<div class="d-flex flex-column purchase-form" style="margin-right: 10%;">
 						<label for="cardholder-name">CVV</label>
-						<input type="text" id="cardholder-name" name="cardholder-name" placeholder="CVV">
+						<input type="text" id="cvv" name="cardholder-name" placeholder="CVV">
 					</div>
 					<!-- Expiration Date -->
 					<div class="d-flex flex-column purchase-form">
 						<label for="card-number">Expiration Date</label>
-						<input type="text" id="card-number" name="card-number" placeholder="Enter your card number">
+						<input type="text" id="expiration-date" name="card-number" placeholder="Enter your card number">
 					</div>
 				</div>
 			</div>
@@ -123,7 +123,7 @@
 			<!--  Purchase button -->
 			<div style="position: absolute; right: 5%; bottom: 20px;">
 				<button class="border-none bg-white rounded-2 px-3"
-					style="color:#FF206E; border-color:#FF206E;">Complete Purchase</button>
+					style="color:#FF206E; border-color:#FF206E;" id="complete-purchase-btn">Complete Purchase</button>
 			</div>
 
 		</div>
@@ -141,6 +141,36 @@
 			});
 
 			fetchCartPurchase();
+			
+			$('#complete-purchase-btn').click(function (e) {
+		        e.preventDefault();
+
+		        // Collect form data
+		        const orderData = {
+		            name: $('#name').val(),
+		            username: $('#username').val(),
+		            cardholderName: $('#cardholder-name').val(),
+		            cartItems: cartItems
+		        };
+
+		        // Send data to server
+		        $.ajax({
+		            type: 'POST',
+		            url: '/addOrder',
+		            contentType: 'application/json',
+		            data: JSON.stringify(orderData),
+		            success: function (response) {
+		                console.log('Order saved:', response);
+		                // Clear cart items and update the UI
+		                clearCart().then(fetchCartPurchase);
+		                alert('Purchase complete!');
+		            },
+		            error: function (error) {
+		                console.error('Error saving order:', error);
+		                alert('Failed to complete purchase. Please try again.');
+		            }
+		        });
+		    });
 		});
 
 	</script>
