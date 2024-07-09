@@ -143,34 +143,48 @@
 			fetchCartPurchase();
 			
 			$('#complete-purchase-btn').click(function (e) {
-		        e.preventDefault();
+			    e.preventDefault();
 
-		        // Collect form data
-		        const orderData = {
-		            name: $('#name').val(),
-		            username: $('#username').val(),
-		            cardholderName: $('#cardholder-name').val(),
-		            cartItems: cartItems
-		        };
+			    // Collect form data and fetch cart items asynchronously
+			    const orderData = {
+			        name: $('#name').val(),
+			        username: $('#username').val(),
+			        cardholderName: $('#cardholder-name').val()
+			    };
 
-		        // Send data to server
-		        $.ajax({
-		            type: 'POST',
-		            url: '/addOrder',
-		            contentType: 'application/json',
-		            data: JSON.stringify(orderData),
-		            success: function (response) {
-		                console.log('Order saved:', response);
-		                // Clear cart items and update the UI
-		                clearCart().then(fetchCartPurchase);
-		                alert('Purchase complete!');
-		            },
-		            error: function (error) {
-		                console.error('Error saving order:', error);
-		                alert('Failed to complete purchase. Please try again.');
-		            }
-		        });
-		    });
+			    fetchCart(function(cartItems) {
+			        orderData.orderItems = cartItems;
+
+			        // Send data to server
+			        $.ajax({
+			            type: 'POST',
+			            url: '/addOrder',
+			            contentType: 'application/json',
+			            data: JSON.stringify(orderData),
+			            success: function(response) {
+			                console.log('Order placed successfully:', response);
+			                // Optionally, clear cart or handle UI updates
+			            },
+			            error: function(xhr, status, error) {
+			                console.error('Failed to place order:', error);
+			            }
+			        });
+			        $.ajax({
+			            type: 'POST',
+			            url: '/clearCart',
+			            success: function (response) {
+			                console.log('Cart cleared successfully:', response);
+			                window.location.href = '/profilepage.html';
+			            },
+			            error: function (xhr, status, error) {
+			                console.error('Failed to clear cart:', error);
+			            }
+			        });
+			    });
+			});
+
+			
+
 		});
 
 	</script>

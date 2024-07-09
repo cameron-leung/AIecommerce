@@ -68,6 +68,12 @@ public class CartRest {
         return removeFromList(name, cart);
     }
     
+    @PostMapping("/clearCart")
+    public String clearCart() {
+    	cart = new ArrayList<>();
+    	return "cart cleared successfully";
+    }
+    
     @PostMapping("/removeFromPurchase")
     public String removeFromPurchase(@RequestBody String name) {
     	System.out.println("remove from purchase ");

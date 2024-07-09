@@ -232,14 +232,21 @@ function cartItemHtml(item) {
          </div>
    `;
 }
+function fetchCart(callback) {
+			    $.getJSON('/cart', function(data) {
+			        var cartItems = data;
+			        callback(cartItems);  // Pass cartItems to callback function
+			    });
+			}
 // Fetch data for cart items
 function fetchCartItems() {
 	$.getJSON('/cart', function(data) {
-		cartItems.length = 0;
+		var cartItems = [];
 		// Repopulate the array with fetched data
 		data.forEach(item => {
 			cartItems.push(item);
 		});
+		return cartItems;
 	})
 }
 
@@ -258,7 +265,7 @@ function fetchCartPopup() {
 }
 // Fetch data for cart items
 function fetchCartCards() {
-	$.getJSON('/cart', function(data) {
+	$.getJSON('/cart', function(cartItems) {
 	const cartCardsContainer = $('.cart-cards-container');
 
 	cartCardsContainer.empty(); // Clear existing items
@@ -288,6 +295,37 @@ function fetchCartPurchase() {
 		getPrice(cartItems);
 	});
 }
+function updateCheckoutButton() {
+	fetchCart(function(cartItems) {
+        // Check if there are items in the cart
+        console.log("things in the cart checkout button: ", cartItems);
+         if (cartItems.length > 0) {
+            // Cart has items: Make button pink and enable click to go to purchase page
+            $('#checkoutButton')
+                .css({
+                    'color': '#FF206E',
+                    'border-color': '#FF206E',
+                    'cursor': 'pointer'
+                })
+                .removeAttr('disabled')
+                .click(function() {
+                    window.location.href = 'purchasepage.html'; // Replace with your purchase page URL
+                });
+        } else {
+            // Cart is empty: Make button grey and disable click
+            $('#checkoutButton')
+                .css({
+                    'color': 'grey',
+                    'border-color': 'grey',
+                    'cursor': 'not-allowed'
+                })
+                .attr('disabled', 'disabled')
+                .click(function(event) {
+                    event.preventDefault(); // Prevent default action if clicked (though button is disabled)
+                });
+        }
+    });
+}
 function getPrice(cartItems) {
 	var subtotal = cartItems.reduce((total, item) => total + item.price, 0);
 	var tax = subtotal * 0.1;
@@ -306,7 +344,8 @@ function addToCart(character) {
 		data: JSON.stringify(character),
 		success: function(response) {
 			console.log(response); // Log success message
-			fetchCartItems();
+			updateCheckoutButton();
+			fetchCartPopup();
 			populateDetails(character); // Update character details on the page
 		},
 		error: function() {
@@ -322,7 +361,9 @@ function removeFromCart(name) {
 		data: name, // Convert the Chatter object to JSON
 		success: function(response) {
 			console.log(response); // Handle success response as needed
-			fetchCartItems(); // Refresh cart items after removal
+			
+			fetchCartPopup(); // Refresh cart items after removal
+			updateCheckoutButton();
 			fetchCartCards();
 		},
 		error: function(xhr, status, error) {
@@ -355,6 +396,7 @@ function loadCharacterDetails(characterName) {
 			// Attach event handler to the cart icon
 			$('.fa-cart-plus').off('click').on('click', function() {
 				addToCart(character);
+				fetchCartItems();
 			});
 		}).fail(function() {
 			console.error('Failed to fetch chatters from API');

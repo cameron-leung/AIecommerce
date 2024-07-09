@@ -20,9 +20,9 @@
 
 		<!-- checkout button -->
 		<div>
-			<a href="purchasepage.html"><button id="checkoutButton"
+			<button id="checkoutButton"
 					class="d-block position-absolute px-1 py-2 bottom-0 mb-3 w-75 bg-light rounded-2 translate-middle-x"
-					style="left: 50%; color: #FF206E; border-color: #FF206E;">Checkout</button></a>
+					style="left: 50%; color: #FF206E; border-color: #FF206E;">Checkout</button>
 		</div>
 	</div>
 </div>
@@ -36,17 +36,16 @@
 		// Event listener for trash
 		$(document).on('click', '.fa-trash', function () {
 			var chatterName = $(this).attr('id');
-			console.log(chatterName);
 			removeFromCart(chatterName);
 		});
 
 	});
+	
 	var cartPopupOpen = false;
 	// Open the cart popup
 	function openCartPopup() {
 		if (!cartPopupOpen) {
 			$('#cartPopupOverlay').removeClass('d-none').fadeIn();
-
 			fetchCartPopup();
 			cartPopupOpen = true;
 		}
@@ -60,6 +59,7 @@
 	$('.openCartPopupIcon').on('click', function (event) {
  // Fetch and display cart items
 		fetchCartPopup();
+ 		updateCheckoutButton();
 		openCartPopup();
 		event.stopPropagation(); // Prevent event propagation
 	});
@@ -69,4 +69,5 @@
 			closeCartPopup();
 		}
 	});
+	
 </script>
