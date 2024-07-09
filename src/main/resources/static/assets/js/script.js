@@ -1,5 +1,6 @@
 const characterData = [];
 
+
 // Wrap your code in DOMContentLoaded event listener
 document.addEventListener('DOMContentLoaded', function() {
 	// Check if the backButton element exists before adding event listener
@@ -233,44 +234,76 @@ function cartItemHtml(item) {
 }
 // Fetch data for cart items
 function fetchCartItems() {
-	$.getJSON('/cart', function(cartItems) {
-		$('#cartItemsContainer').empty(); // Clear existing items
-		console.log(cartItems);
-		if (cartItems.length > 0) {
-			cartItems.forEach(function(item) {
-				var itemHtml = purchaseItemHtml(item);
-				$('#purchaseItemsContainer').append(itemHtml);
-				itemHtml = cartItemHtml(item);
-				$('#cartItemsContainer').append(itemHtml);
-			});
-			
-		}
-		// Calculate subtotal and tax
-			var subtotal = cartItems.reduce((total, item) => total + item.price, 0);
-			var tax = subtotal * 0.1;
-			var total = subtotal + tax;
-			$('#cart-subtotal').text('$' + subtotal.toFixed(2));
-			$('#cart-tax').text('$' + tax.toFixed(2));
-			$('#cart-total').text('$' + total.toFixed(2));
+	$.getJSON('/cart', function(data) {
+		cartItems.length = 0;
+		// Repopulate the array with fetched data
+		data.forEach(item => {
+			cartItems.push(item);
+		});
 	})
+}
+
+function fetchCartPopup() {
+	$.getJSON('/cart', function(cartItems) {
+	$('#cartItemsContainer').empty(); // Clear existing items
+	if (cartItems.length > 0) {
+		cartItems.forEach(function(item) {
+			itemHtml = cartItemHtml(item);
+			$('#cartItemsContainer').append(itemHtml);
+		});
+
+	}
+	getPrice(cartItems);
+	// Calculate subtotal and tax
+	})
+
+
 }
 // Fetch data for cart items
 function fetchCartCards() {
+	$.getJSON('/cart', function(data) {
 	const cartCardsContainer = $('.cart-cards-container');
-	$.getJSON('/cart', function(cartItems) {
-		cartCardsContainer.empty(); // Clear existing items
-		$.get('chattercard.html', function(template) {
-			if (cartItems.length > 0) {
-				cartItems.forEach(function(chatter) {
-					console.log(chatter);
-					const populatedCard = populateCard(template, chatter);
-					cartCardsContainer.append(populatedCard);
-				});
-			}
-		}).fail(function() {
-			console.error('Failed to load cart cards.html');
-		})
+
+	cartCardsContainer.empty(); // Clear existing items
+	$.get('chattercard.html', function(template) {
+		if (cartItems.length > 0) {
+			cartItems.forEach(function(chatter) {
+				console.log(chatter);
+				const populatedCard = populateCard(template, chatter);
+				cartCardsContainer.append(populatedCard);
+			});
+		}
+	}).fail(function() {
+		console.error('Failed to load cart cards.html');
 	})
+	})
+
+}
+function fetchCartPurchase() {
+	$.getJSON('/cart', function(cartItems) {
+		$('#purchaseItemsContainer').empty(); // Clear existing items
+		if (cartItems.length > 0) {
+			cartItems.forEach(function(item) {
+				console.log(item);
+				var itemHtml = purchaseItemHtml(item);
+				$('#purchaseItemsContainer').append(itemHtml);
+			});
+			
+		}
+		getPrice(cartItems);
+		
+	});
+
+
+}
+function getPrice(cartItems) {
+	var subtotal = cartItems.reduce((total, item) => total + item.price, 0);
+	var tax = subtotal * 0.1;
+	var total = subtotal + tax;
+	console.log()
+	$('.cart-subtotal').text('$' + subtotal.toFixed(2));
+	$('.cart-tax').text('$' + tax.toFixed(2));
+	$('.cart-total').text('$' + total.toFixed(2));
 }
 // Cart functionalities
 function addToCart(character) {

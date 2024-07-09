@@ -43,18 +43,18 @@
 						<!-- Subtotal -->
 						<div class="row justify-content-between">
 							<h4 class="col-auto m-0">Subtotal</h4>
-							<h4 id="cart-subtotal" class="col-auto m-0 pb-0" style="padding-right: 30px;"></h4>
+							<h4 id="cart-subtotal" class="cart-subtotal col-auto m-0 pb-0" style="padding-right: 30px;"></h4>
 						</div>
 
 						<!-- Tax + Fees -->
 						<div class="row" style="justify-content: space-between;">
 							<h4 class="col-auto m-0">Tax + Fees</h4>
-							<h4 id="cart-tax" class="col-auto m-0  pb-3" style="padding-right: 30px;"></h4>
+							<h4 id="cart-tax" class="cart-tax col-auto m-0  pb-3" style="padding-right: 30px;"></h4>
 						</div>
 						<!-- Total -->
 						<div class="row" style="justify-content: space-between; color: black;">
 							<h4 class="col-auto m-0">Total</h4>
-							<h4 id="cart-total" class="col-auto " style="padding-right: 30px;"></h4>
+							<h4 id="cart-total" class="cart-total col-auto " style="padding-right: 30px;"></h4>
 						</div>
 					</div>
 				</div>
@@ -140,7 +140,7 @@
 				$('.cart-icon').addClass('active');
 			});
 
-			fetchPurchaseItems();
+			fetchCartPurchase();
 		});
 
 	</script>

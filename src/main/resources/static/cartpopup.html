@@ -10,11 +10,11 @@
 		<div class="position-absolute w-90" style="bottom: 60px; right: 10px; left: 10px;">
 			<div class="d-flex justify-content-between">
 				<h5>Subtotal</h5>
-				<h5 id="cart-subtotal"></h5>
+				<h5 class="cart-subtotal"></h5>
 			</div>
 			<div class="d-flex justify-content-between">
 				<h5>Tax + Fees</h5>
-				<h5 id="cart-tax"></h5>
+				<h5 class="cart-tax"></h5>
 			</div>
 		</div>
 
@@ -46,7 +46,8 @@
 	function openCartPopup() {
 		if (!cartPopupOpen) {
 			$('#cartPopupOverlay').removeClass('d-none').fadeIn();
-			fetchCartItems();
+
+			fetchCartPopup();
 			cartPopupOpen = true;
 		}
 	}
@@ -57,7 +58,8 @@
 	}
 	// Event listener for the icon click to open the popup and add to cart
 	$('.openCartPopupIcon').on('click', function (event) {
-		fetchCartItems(); // Fetch and display cart items
+ // Fetch and display cart items
+		fetchCartPopup();
 		openCartPopup();
 		event.stopPropagation(); // Prevent event propagation
 	});
