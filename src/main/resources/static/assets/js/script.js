@@ -22,6 +22,30 @@ function loadIndex() {
 	});
 }
 function loadProfile() {
+	$('#profile-link').on('click', function (e) {
+        e.preventDefault();
+
+        // Make AJAX request to fetch current profile
+        $.ajax({
+            type: 'GET',
+            url: '/getProfile',
+            success: function (profile) {
+                if (profile === null) {
+                    // If profile is null, redirect to login page
+                    window.location.href = 'login.html';
+                } else {
+                    // If profile is not null, redirect to profile page
+                    window.location.href = 'profilepage.html';
+                }
+            },
+            error: function () {
+                // Handle error if AJAX request fails
+                console.error('Failed to fetch profile.');
+                // Redirect to login page as a fallback
+                window.location.href = 'login.html';
+            }
+        });
+    });
 	$.getJSON('/chatters', function(characters) {
 		characterData.push(...characters);
 		populateChatterCircles();
@@ -30,7 +54,76 @@ function loadProfile() {
 		console.error('Failed to fetch chatters from API');
 	});
 }
+function login() {
+	$('#login-form').on('submit', function(e) {
+		e.preventDefault();
 
+		const formData = {
+			username: $('#username').val(),
+			password: $('#password').val()
+		};
+		console.log("login button clicked: ", formData);
+
+		$.ajax({
+			type: 'POST',
+			url: '/login',
+			contentType: 'application/json',
+			data: JSON.stringify(formData),
+			success: function(response) {
+				alert('Login successful!');
+				window.location.href = 'profilepage.html';
+			},
+			error: function(error) {
+				alert('Invalid username or password.');
+			}
+		});
+	});
+}
+function logout() {
+    $.ajax({
+        type: 'POST',
+        url: '/logout',
+        success: function () {
+            // Redirect to login page after successful logout
+            window.location.href = 'login.html';
+        },
+        error: function () {
+            alert('Failed to logout. Please try again.');
+        }
+    });
+}
+
+function loadCreateAccount() {
+	$('#create-account-form').on('submit', function (e) {
+				e.preventDefault();
+				
+				const formData = {
+					name: $('#name').val(),
+					username: $('#username').val(),
+					email: $('#email').val(),
+					password: $('#password').val()
+				};
+				console.log("create acc button clicked: ", formData);
+
+				$.ajax({
+					type: 'POST',
+					url: '/createAccount',
+					contentType: 'application/json',
+					data: JSON.stringify(formData),
+					success: function (response) {
+						alert('Account created successfully!');
+						window.location.href = 'profilepage.html';
+					},
+					error: function (error) {
+						if (error.status === 409) {
+							alert('Username already exists!');
+						} else {
+							alert('An error occurred. Please try again.');
+						}
+					}
+				});
+			});
+}
 // Function to fill in card data
 function populateCard(template, character) {
 	const imageName = character.name.replace(/\s+/g, '');
@@ -233,11 +326,11 @@ function cartItemHtml(item) {
    `;
 }
 function fetchCart(callback) {
-			    $.getJSON('/cart', function(data) {
-			        var cartItems = data;
-			        callback(cartItems);  // Pass cartItems to callback function
-			    });
-			}
+	$.getJSON('/cart', function(data) {
+		var cartItems = data;
+		callback(cartItems);  // Pass cartItems to callback function
+	});
+}
 // Fetch data for cart items
 function fetchCartItems() {
 	$.getJSON('/cart', function(data) {
@@ -252,34 +345,34 @@ function fetchCartItems() {
 
 function fetchCartPopup() {
 	$.getJSON('/cart', function(cartItems) {
-	$('#cartItemsContainer').empty(); // Clear existing items
-	if (cartItems.length > 0) {
-		cartItems.forEach(function(item) {
-			itemHtml = cartItemHtml(item);
-			$('#cartItemsContainer').append(itemHtml);
-		});
-	}
-	getPrice(cartItems);
-	// Calculate subtotal and tax
+		$('#cartItemsContainer').empty(); // Clear existing items
+		if (cartItems.length > 0) {
+			cartItems.forEach(function(item) {
+				itemHtml = cartItemHtml(item);
+				$('#cartItemsContainer').append(itemHtml);
+			});
+		}
+		getPrice(cartItems);
+		// Calculate subtotal and tax
 	})
 }
 // Fetch data for cart items
 function fetchCartCards() {
 	$.getJSON('/cart', function(cartItems) {
-	const cartCardsContainer = $('.cart-cards-container');
+		const cartCardsContainer = $('.cart-cards-container');
 
-	cartCardsContainer.empty(); // Clear existing items
-	$.get('chattercard.html', function(template) {
-		if (cartItems.length > 0) {
-			cartItems.forEach(function(chatter) {
-				console.log(chatter);
-				const populatedCard = populateCard(template, chatter);
-				cartCardsContainer.append(populatedCard);
-			});
-		}
-	}).fail(function() {
-		console.error('Failed to load cart cards.html');
-	})
+		cartCardsContainer.empty(); // Clear existing items
+		$.get('chattercard.html', function(template) {
+			if (cartItems.length > 0) {
+				cartItems.forEach(function(chatter) {
+					console.log(chatter);
+					const populatedCard = populateCard(template, chatter);
+					cartCardsContainer.append(populatedCard);
+				});
+			}
+		}).fail(function() {
+			console.error('Failed to load cart cards.html');
+		})
 	})
 }
 function fetchCartPurchase() {
@@ -297,33 +390,33 @@ function fetchCartPurchase() {
 }
 function updateCheckoutButton() {
 	fetchCart(function(cartItems) {
-        // Check if there are items in the cart
-         if (cartItems.length > 0) {
-            // Cart has items: Make button pink and enable click to go to purchase page
-            $('#checkoutButton')
-                .css({
-                    'color': '#FF206E',
-                    'border-color': '#FF206E',
-                    'cursor': 'pointer'
-                })
-                .removeAttr('disabled')
-                .click(function() {
-                    window.location.href = 'purchasepage.html'; // Replace with your purchase page URL
-                });
-        } else {
-            // Cart is empty: Make button grey and disable click
-            $('#checkoutButton')
-                .css({
-                    'color': 'grey',
-                    'border-color': 'grey',
-                    'cursor': 'not-allowed'
-                })
-                .attr('disabled', 'disabled')
-                .click(function(event) {
-                    event.preventDefault(); // Prevent default action if clicked (though button is disabled)
-                });
-        }
-    });
+		// Check if there are items in the cart
+		if (cartItems.length > 0) {
+			// Cart has items: Make button pink and enable click to go to purchase page
+			$('#checkoutButton')
+				.css({
+					'color': '#FF206E',
+					'border-color': '#FF206E',
+					'cursor': 'pointer'
+				})
+				.removeAttr('disabled')
+				.click(function() {
+					window.location.href = 'purchasepage.html'; // Replace with your purchase page URL
+				});
+		} else {
+			// Cart is empty: Make button grey and disable click
+			$('#checkoutButton')
+				.css({
+					'color': 'grey',
+					'border-color': 'grey',
+					'cursor': 'not-allowed'
+				})
+				.attr('disabled', 'disabled')
+				.click(function(event) {
+					event.preventDefault(); // Prevent default action if clicked (though button is disabled)
+				});
+		}
+	});
 }
 function getPrice(cartItems) {
 	var subtotal = cartItems.reduce((total, item) => total + item.price, 0);
@@ -360,7 +453,7 @@ function removeFromCart(name) {
 		data: name, // Convert the Chatter object to JSON
 		success: function(response) {
 			console.log(response); // Handle success response as needed
-			
+
 			fetchCartPopup(); // Refresh cart items after removal
 			updateCheckoutButton();
 			fetchCartCards();

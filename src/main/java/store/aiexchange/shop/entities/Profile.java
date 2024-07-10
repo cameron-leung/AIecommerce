@@ -15,7 +15,7 @@ public class Profile {
     // Constructors
     public Profile() {}
 
-    public Profile(String name, String username, String password, String email) {
+    public Profile(String name, String username, String email, String password) {
         this.name = name;
         this.username = username;
         this.password = password;
@@ -60,6 +60,10 @@ public class Profile {
 
     public List<Chatter> getMyChatters() {
         return myChatters;
+    }
+    
+    public int getNumMyChatters() {
+    	return myChatters.size();
     }
 
     public void setMyChatters(List<Chatter> myChatters) {

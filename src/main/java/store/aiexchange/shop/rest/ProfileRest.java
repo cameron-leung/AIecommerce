@@ -22,7 +22,6 @@ public class ProfileRest {
 
     @PostMapping("/createAccount")
     public ResponseEntity<?> createProfile(@RequestBody Profile accountData) {
-    	System.out.println("java creating profile...");
         Profile existingProfile = profileRepository.findByUsername(accountData.getUsername());
         if (existingProfile != null) {
             return new ResponseEntity<>("Username already exists", HttpStatus.CONFLICT);
@@ -40,5 +39,29 @@ public class ProfileRest {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(profile, HttpStatus.OK);
+    }
+    
+    @PostMapping("/login")
+    public ResponseEntity<?> login(@RequestBody Profile loginData) {
+        System.out.println("Java logging in...");
+        Profile existingProfile = profileRepository.findByUsername(loginData.getUsername());
+        if (existingProfile == null) {
+            return new ResponseEntity<>("Username not found", HttpStatus.NOT_FOUND);
+        }
+        if (!existingProfile.getPassword().equals(loginData.getPassword())) {
+            return new ResponseEntity<>("Incorrect password", HttpStatus.UNAUTHORIZED);
+        }
+        profile = existingProfile; // Set the profile if login is successful
+        return new ResponseEntity<>(profile, HttpStatus.OK);
+    }
+    
+    @GetMapping("/getProfile")
+    public Profile getProfile() {
+    	return profile;
+    }
+    
+    @PostMapping("/logout")
+    public void logout() {
+    	profile = null;
     }
 }

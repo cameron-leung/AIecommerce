@@ -45,29 +45,7 @@
 				$('.profile-icon').addClass('active');
 			});
 
-			$('#login-form').on('submit', function (e) {
-				e.preventDefault();
-				
-				const formData = {
-					username: $('#username').val(),
-					password: $('#password').val()
-				};
-				console.log("login button clicked: ", formData);
-
-				$.ajax({
-					type: 'POST',
-					url: '/login',
-					contentType: 'application/json',
-					data: JSON.stringify(formData),
-					success: function (response) {
-						alert('Login successful!');
-						window.location.href = 'profilepage.html';
-					},
-					error: function (error) {
-						alert('Invalid username or password.');
-					}
-				});
-			});
+			login();
 		});
 	</script>
 </body>
