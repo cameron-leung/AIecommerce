@@ -57,12 +57,18 @@ function loadProfile() {
 		type: 'GET',
 		url: '/getProfile',
 		success: function(profile) {
-			// Update profile information on the page
-			$('#profileName').text(profile.name);
-			$('#profileUsername').text('@' + profile.username);
-			$('#followersPlaceholder').text((profile.followers && profile.followers.length) || 0);
-			$('#followingPlaceholder').text((profile.followers && profile.followers.length) || 0);
-			$('#chattersPlaceholder').text((profile.followers && profile.followers.length) || 0);
+			if (profile) {
+                $('#profileName').text(profile.name || 'Unknown Name');
+                $('#profileUsername').text('@' + (profile.username || 'UnknownUsername'));
+                $('#followersPlaceholder').text((profile.followers && profile.followers.length) || 0);
+                $('#followingPlaceholder').text((profile.following && profile.following.length) || 0);
+                $('#chattersPlaceholder').text((profile.myChatters && profile.myChatters.length) || 0);
+
+                // Populate the chatters using myChatters from the profile
+                populateChatterCircles(profile.myChatters);
+            } else {
+                alert('No profile found.');
+            }
 		},
 		error: function() {
 			alert('Failed to load profile.');
@@ -168,6 +174,18 @@ function populateChatterCircles() {
 	}).fail(function() {
 		console.error('Failed to load chattercircle.html');
 	});
+}
+function populateChatterCircles(myChatters) {
+    const container = $('.character-circ-container');
+    // Fetch chattercard template
+    $.get('chattercircle.html', function(template) {
+        myChatters.forEach(character => {
+            const populatedCircle = populateCircle(template, character);
+            container.append(populatedCircle);
+        });
+    }).fail(function() {
+        console.error('Failed to load chattercircle.html');
+    });
 }
 // B cards filtering
 function loadBChatters() {
