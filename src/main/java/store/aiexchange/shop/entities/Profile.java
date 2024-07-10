@@ -66,7 +66,35 @@ public class Profile {
     	return myChatters.size();
     }
 
-    public void setMyChatters(List<Chatter> myChatters) {
-        this.myChatters = myChatters;
+    public void addToMyChatters(Chatter chatter) {
+        this.myChatters.add(chatter);
+    }
+    public void removeFromMyChatters(Chatter chatter) {
+        this.myChatters.remove(chatter);
+    }
+    public List<Profile> getFollowers() {
+        return followers;
+    }
+    
+    public int getNumFollowers() {
+    	return followers.size();
+    }
+
+    public void addToFollowers(Profile profile) {
+        this.followers.add(profile);
+    }
+    public List<Profile> getFollowing() {
+        return followers;
+    }
+    
+    public int getNumFollowing() {
+    	return following.size();
+    }
+
+    public void addToFollowing(Profile profile) {
+        this.following.add(profile);
+    }
+    public void removeFromFollowing(Profile profile) {
+        this.following.remove(profile);
     }
 }
