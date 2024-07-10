@@ -1,6 +1,5 @@
 const characterData = [];
 
-
 // Wrap your code in DOMContentLoaded event listener
 document.addEventListener('DOMContentLoaded', function() {
 	// Check if the backButton element exists before adding event listener
@@ -11,7 +10,32 @@ document.addEventListener('DOMContentLoaded', function() {
 		});
 	}
 });
+function profileButton() {
+	$('#profile-link').on('click', function(e) {
+		e.preventDefault();
 
+		// Make AJAX request to fetch current profile
+		$.ajax({
+			type: 'GET',
+			url: '/getProfile',
+			success: function(profile) {
+				if (profile === null) {
+					// If profile is null, redirect to login page
+					window.location.href = 'login.html';
+				} else {
+					// If profile is not null, redirect to profile page
+					window.location.href = 'profilepage.html';
+				}
+			},
+			error: function() {
+				// Handle error if AJAX request fails
+				console.error('Failed to fetch profile.');
+				// Redirect to login page as a fallback
+				window.location.href = 'login.html';
+			}
+		});
+	});
+}
 function loadIndex() {
 	$.getJSON('/chatters', function(characters) {
 		characterData.push(...characters);
@@ -22,37 +46,28 @@ function loadIndex() {
 	});
 }
 function loadProfile() {
-	$('#profile-link').on('click', function (e) {
-        e.preventDefault();
-
-        // Make AJAX request to fetch current profile
-        $.ajax({
-            type: 'GET',
-            url: '/getProfile',
-            success: function (profile) {
-                if (profile === null) {
-                    // If profile is null, redirect to login page
-                    window.location.href = 'login.html';
-                } else {
-                    // If profile is not null, redirect to profile page
-                    window.location.href = 'profilepage.html';
-                }
-            },
-            error: function () {
-                // Handle error if AJAX request fails
-                console.error('Failed to fetch profile.');
-                // Redirect to login page as a fallback
-                window.location.href = 'login.html';
-            }
-        });
-    });
 	$.getJSON('/chatters', function(characters) {
 		characterData.push(...characters);
 		populateChatterCircles();
-		loadBChatters();
+		//loadBChatters();
 	}).fail(function() {
 		console.error('Failed to fetch chatters from API');
 	});
+	$.ajax({
+		type: 'GET',
+		url: '/getProfile',
+		success: function(profile) {
+			// Update profile information on the page
+			$('#profileName').text(profile.name);
+			$('#profileUsername').text('@' + profile.username);
+			$('#followersPlaceholder').text((profile.followers && profile.followers.length) || 0);
+			$('#followingPlaceholder').text((profile.followers && profile.followers.length) || 0);
+			$('#chattersPlaceholder').text((profile.followers && profile.followers.length) || 0);
+		},
+		error: function() {
+			alert('Failed to load profile.');
+		}
+	})
 }
 function login() {
 	$('#login-form').on('submit', function(e) {
@@ -80,49 +95,49 @@ function login() {
 	});
 }
 function logout() {
-    $.ajax({
-        type: 'POST',
-        url: '/logout',
-        success: function () {
-            // Redirect to login page after successful logout
-            window.location.href = 'login.html';
-        },
-        error: function () {
-            alert('Failed to logout. Please try again.');
-        }
-    });
+	$.ajax({
+		type: 'POST',
+		url: '/logout',
+		success: function() {
+			// Redirect to login page after successful logout
+			window.location.href = 'login.html';
+		},
+		error: function() {
+			alert('Failed to logout. Please try again.');
+		}
+	});
 }
 
 function loadCreateAccount() {
-	$('#create-account-form').on('submit', function (e) {
-				e.preventDefault();
-				
-				const formData = {
-					name: $('#name').val(),
-					username: $('#username').val(),
-					email: $('#email').val(),
-					password: $('#password').val()
-				};
-				console.log("create acc button clicked: ", formData);
+	$('#create-account-form').on('submit', function(e) {
+		e.preventDefault();
 
-				$.ajax({
-					type: 'POST',
-					url: '/createAccount',
-					contentType: 'application/json',
-					data: JSON.stringify(formData),
-					success: function (response) {
-						alert('Account created successfully!');
-						window.location.href = 'profilepage.html';
-					},
-					error: function (error) {
-						if (error.status === 409) {
-							alert('Username already exists!');
-						} else {
-							alert('An error occurred. Please try again.');
-						}
-					}
-				});
-			});
+		const formData = {
+			name: $('#name').val(),
+			username: $('#username').val(),
+			email: $('#email').val(),
+			password: $('#password').val()
+		};
+		console.log("create acc button clicked: ", formData);
+
+		$.ajax({
+			type: 'POST',
+			url: '/createAccount',
+			contentType: 'application/json',
+			data: JSON.stringify(formData),
+			success: function(response) {
+				alert('Account created successfully!');
+				window.location.href = 'profilepage.html';
+			},
+			error: function(error) {
+				if (error.status === 409) {
+					alert('Username already exists!');
+				} else {
+					alert('An error occurred. Please try again.');
+				}
+			}
+		});
+	});
 }
 // Function to fill in card data
 function populateCard(template, character) {

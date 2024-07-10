@@ -21,49 +21,49 @@
 
 		<!-- Top of Profile -->
 		<div class="d-flex row mt-3">
-			<!-- Profile icon -->
-			<i class="fa-solid fa-circle-user responsive-icon w-auto pr-1 pt-1" style="color:  #535355;"></i>
-			<div class="col">
-				<!-- Profile user data -->
-				<div class="row">
-					<!-- Name & username -->
-					<div class="col">
-						<h1 class="h-auto w-auto pb-0 mb-0">Profile</h1>
-						<h4 class="w-auto pb-username">@B</h4>
-					</div>
-					<!-- Edit and Log out buttons -->
-					<div class="row w-auto h-auto pt-0">
-						<i class="w-auto h-auto fa-solid fa-pen" style="color: #535355;"></i>
-						<div class="w-auto h-auto">
-							<button class="w-auto h-auto text-white border-0 rounded logout-button"
-								style="background: #535355;" onclick="logout()">Log Out</button>
-						</div>
-					</div>
-				</div>
-				<!-- Followers, Following, Chatters made -->
-				<div class="row">
-					<h4 class="w-auto p-1" id="followersPlaceholder">NUM_FOLLOWERS</h4>
-					<h4 class="w-auto p-1">Followers</h4>
-					<h4 class="w-auto p-1" id="followingPlaceholder">NUM_FOLLOWING</h4>
-					<h4 class="w-auto p-1">Following</h4>
-					<h4 class="w-auto p-1" id="chattersPlaceholder">NUM_CHATTERS</h4>
-					<h4 class="w-auto p-1">Chatters</h4>
-				</div>
-			</div>
-		</div>
+            <!-- Profile icon -->
+            <i class="fa-solid fa-circle-user responsive-icon w-auto pr-1 pt-1" style="color: #535355;"></i>
+            <div class="col">
+                <!-- Profile user data -->
+                <div class="row">
+                    <!-- Name & username -->
+                    <div class="col">
+                        <h1 class="h-auto w-auto pb-0 mb-0" id="profileName"></h1>
+                        <h4 class="w-auto pb-username" id="profileUsername"></h4>
+                    </div>
+                    <!-- Edit and Log out buttons -->
+                    <div class="row w-auto h-auto pt-0">
+                        <i class="w-auto h-auto fa-solid fa-pen" style="color: #535355;"></i>
+                        <div class="w-auto h-auto">
+                            <button class="w-auto h-auto text-white border-0 rounded logout-button"
+                                style="background: #535355;" onclick="logout()">Log Out</button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Followers, Following, Chatters made -->
+                <div class="row">
+                    <h4 class="w-auto p-1" id="followersPlaceholder"></h4>
+                    <h4 class="w-auto p-1">Followers</h4>
+                    <h4 class="w-auto p-1" id="followingPlaceholder"></h4>
+                    <h4 class="w-auto p-1">Following</h4>
+                    <!-- <h4 class="w-auto p-1" id="chattersPlaceholder"></h4>
+                    <h4 class="w-auto p-1">Chatters</h4> -->
+                </div>
+            </div>
+        </div>
 
 		<!-- Recent chatter circles -->
 		<h1 class="mt-3">Recents</h1>
 		<div class="chattercircles-placeholder"></div>
 		<!-- Original chatters scroll -->
-		<h1 class="mt-3">Original Chatters</h1>
+		<!-- <h1 class="mt-3">Original Chatters</h1>
 		<div class="row" style="overflow-x: auto; white-space: nowrap;">
 			<div class="col">
 				<div class="d-flex" style="width: 100%; overflow-x: auto; white-space: nowrap;">
 					<div class="B-character-card-container d-flex flex-row justify-content-start"></div>
 				</div>
 			</div>
-		</div>
+		</div>  -->
 		<!--  Chatters in your cart scroll -->
 		<h1 class="mt-3">Cart</h1>
 		<div class="cart-cards-container  d-flex flex-row justify-content-start"></div>
@@ -78,16 +78,6 @@
 			$('#navbar-placeholder').load('navbar.html', function () {
 				$('.profile-icon').addClass('active');
 			});
-
-			//set followers, following, & chatters made
-			var followersCount = 0;
-			var followingCount = 0;
-			var chattersCount = 1;
-
-			// Update the placeholders with the numbers
-			$('#followersPlaceholder').text(followersCount);
-			$('#followingPlaceholder').text(followingCount);
-			$('#chattersPlaceholder').text(chattersCount);
 
 			// Load chatter circles & cards
 			$('.chattercircles-placeholder').load('chattercircles.html');
