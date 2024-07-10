@@ -9,6 +9,8 @@ public class Profile {
     private String password;
     private String email;
     private List<Chatter> myChatters;
+    private List<Profile> followers;
+    private List<Profile> following;
 
     // Constructors
     public Profile() {}
@@ -19,6 +21,8 @@ public class Profile {
         this.password = password;
         this.email = email;
         this.myChatters= new ArrayList<Chatter>();
+        this.followers = new ArrayList<Profile>();
+        this.following = new ArrayList<Profile>();
     }
 
     // Getters and Setters

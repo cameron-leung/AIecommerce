@@ -16,24 +16,24 @@
 	<div class="container mt-5">
 		<h1 class="text-center">Create Account</h1>
 		<div class="d-flex justify-content-center">
-		<form id=" create-account-form" class="mt-4 w-50 ">
+		<form id="create-account-form" class="mt-4 w-50 ">
 			<div class="mb-3">
-				<label for="email" class="form-label">Email</label>
-				<input type="email" class="form-control" id="email" name="email" required>
+				<label for="name" class="form-label">Name</label>
+				<input type="text" class="form-control" id="name" name="name" required>
 			</div>
 			<div class="mb-3">
 				<label for="username" class="form-label">Username</label>
 				<input type="text" class="form-control" id="username" name="username" required>
 			</div>
 			<div class="mb-3">
-				<label for="name" class="form-label">Name</label>
-				<input type="text" class="form-control" id="name" name="name" required>
+				<label for="email" class="form-label">Email</label>
+				<input type="email" class="form-control" id="email" name="email" required>
 			</div>
 			<div class="mb-3">
 				<label for="password" class="form-label">Password</label>
 				<input type="password" class="form-control" id="password" name="password" required>
 			</div>
-			<button type="submit" class="btn btn-primary" style="background-color: #FF206E; border: #FF206E;">Create Account</button>
+			<button  type="submit" class="btn btn-primary" style="background-color: #FF206E; border: #FF206E;">Create Account</button>
 		</form>
 		</div>
 	</div>
@@ -53,11 +53,12 @@
 				e.preventDefault();
 				
 				const formData = {
-					email: $('#email').val(),
-					username: $('#username').val(),
 					name: $('#name').val(),
+					username: $('#username').val(),
+					email: $('#email').val(),
 					password: $('#password').val()
 				};
+				console.log("create acc button clicked: ", formData);
 
 				$.ajax({
 					type: 'POST',
@@ -66,6 +67,7 @@
 					data: JSON.stringify(formData),
 					success: function (response) {
 						alert('Account created successfully!');
+						window.location.href = 'profilepage.html';
 					},
 					error: function (error) {
 						if (error.status === 409) {
