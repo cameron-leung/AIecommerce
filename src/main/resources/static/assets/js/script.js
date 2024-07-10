@@ -298,7 +298,6 @@ function fetchCartPurchase() {
 function updateCheckoutButton() {
 	fetchCart(function(cartItems) {
         // Check if there are items in the cart
-        console.log("things in the cart checkout button: ", cartItems);
          if (cartItems.length > 0) {
             // Cart has items: Make button pink and enable click to go to purchase page
             $('#checkoutButton')
