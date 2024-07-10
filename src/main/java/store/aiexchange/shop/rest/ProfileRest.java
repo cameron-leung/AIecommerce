@@ -30,8 +30,12 @@ public class ProfileRest {
         return new ResponseEntity<>(newProfile, HttpStatus.CREATED);
     }
 
-    @GetMapping("/findByName")
-    public Profile findByUsername(@RequestParam(value = "username", defaultValue = "") String username) {
-    	return profileRepository.findByUsername(username);
+    @GetMapping("/findByUsername")
+    public ResponseEntity<Profile> findByUsername(@RequestParam(value = "username") String username) {
+        Profile profile = profileRepository.findByUsername(username);
+        if (profile == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(profile, HttpStatus.OK);
     }
 }
