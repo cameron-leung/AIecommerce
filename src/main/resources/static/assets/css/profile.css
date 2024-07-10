@@ -56,3 +56,11 @@
 		/* log out button */
 	}
 }
+.create-account-link {
+			margin-top: 0.25rem; /* This sets the top margin to 0.25rem (equivalent to mt-1) */
+			text-decoration: none;
+			color: inherit;
+		}
+.create-account-link:hover {
+	color: #FF206E !important;
+}
