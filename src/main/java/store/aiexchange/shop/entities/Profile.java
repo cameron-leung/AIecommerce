@@ -9,6 +9,7 @@ public class Profile {
     private String password;
     private String email;
     private List<Chatter> myChatters;
+    private List<Order> myOrders;
     private List<Profile> followers;
     private List<Profile> following;
 
@@ -21,6 +22,7 @@ public class Profile {
         this.password = password;
         this.email = email;
         this.myChatters= new ArrayList<Chatter>();
+        this.myOrders = new ArrayList<Order>();
         this.followers = new ArrayList<Profile>();
         this.following = new ArrayList<Profile>();
     }
@@ -71,6 +73,12 @@ public class Profile {
     }
     public void removeFromMyChatters(Chatter chatter) {
         this.myChatters.remove(chatter);
+    }
+    public void addToMyOrders(Order order) {
+    	this.myOrders.add(order);
+    }
+    public void removeFromMyOrders(Order order) {
+    	this.myOrders.remove(order);
     }
     public List<Profile> getFollowers() {
         return followers;
