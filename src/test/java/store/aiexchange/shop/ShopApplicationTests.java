@@ -17,6 +17,6 @@ class ShopApplicationTests {
 
 	@Test
 	void contextLoads() {
-		System.out.println(profileRepository.findAll());
+		System.out.println(profileRepository.findByUsername("S"));
 	}
 }
