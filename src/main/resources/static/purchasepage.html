@@ -43,7 +43,8 @@
 						<!-- Subtotal -->
 						<div class="row justify-content-between">
 							<h4 class="col-auto m-0">Subtotal</h4>
-							<h4 id="cart-subtotal" class="cart-subtotal col-auto m-0 pb-0" style="padding-right: 30px;"></h4>
+							<h4 id="cart-subtotal" class="cart-subtotal col-auto m-0 pb-0" style="padding-right: 30px;">
+							</h4>
 						</div>
 
 						<!-- Tax + Fees -->
@@ -73,23 +74,23 @@
 			<!-- Purchase header -->
 			<h1 class="pb-3">Purchase</h1>
 
-			<!-- Personal Details -->
+			<!-- Personal Details
 			<h2 class="pb-3" style="color:#FF206E ">Personal Details</h2>
 			<div class="form-group">
 				<div class="d-flex flex-row pb-4">
-					<!-- Name field -->
+					<!-- Name field 
 					<div class="d-flex flex-column purchase-form" style="margin-right: 10%;">
 						<label for="name">Name</label>
 						<input type="text" id="name" name="name" placeholder="Enter your profile name">
 					</div>
-					<!-- Username field -->
+					<!-- Username field
 					<div class="d-flex flex-column purchase-form">
 						<label for="username">Username</label>
 						<input type="text" id="username" name="username" placeholder="Enter your username"><span
 							class="large-break"></span>
 					</div>
 				</div>
-			</div>
+			</div>  -->
 
 			<!-- Payment Details -->
 			<h2 class="pb-3" style="color: #FF206E">Payment Details</h2>
@@ -98,32 +99,32 @@
 					<!-- Card Name field -->
 					<div class="d-flex flex-column purchase-form" style="margin-right: 10%;">
 						<label for="cardholder-name">Card Holder Name</label>
-						<input type="text" id="cardholder-name" name="cardholder-name" placeholder="Enter your name">
+						<input type="text" id="cardholder-name" name="cardholder-name" placeholder="Enter your name" required>
 					</div>
 					<!-- Card number field -->
 					<div class="d-flex flex-column purchase-form">
 						<label for="card-number">Card Number</label>
-						<input type="text" id="card-number" name="card-number" placeholder="Enter your card number">
+						<input type="text" id="card-number" name="card-number" placeholder="Enter your card number" required>
 					</div>
 				</div>
 				<div class="d-flex flex-row pb-4">
 					<!-- CVV field -->
 					<div class="d-flex flex-column purchase-form" style="margin-right: 10%;">
 						<label for="cardholder-name">CVV</label>
-						<input type="text" id="cvv" name="cardholder-name" placeholder="CVV">
+						<input type="text" id="cvv" name="cardholder-name" placeholder="CVV" required>
 					</div>
 					<!-- Expiration Date -->
 					<div class="d-flex flex-column purchase-form">
 						<label for="card-number">Expiration Date</label>
-						<input type="text" id="expiration-date" name="card-number" placeholder="Enter your card number">
+						<input type="text" id="expiration-date" name="card-number" placeholder="Enter your card number" required>
 					</div>
 				</div>
 			</div>
 
 			<!--  Purchase button -->
 			<div style="position: absolute; right: 5%; bottom: 20px;">
-				<button class="border-none bg-white rounded-2 px-3"
-					style="color:#FF206E; border-color:#FF206E;" id="complete-purchase-btn">Complete Purchase</button>
+				<button class="border-none bg-white rounded-2 px-3" style="color:#FF206E; border-color:#FF206E;"
+					id="complete-purchase-btn">Complete Purchase</button>
 			</div>
 
 		</div>
@@ -141,50 +142,60 @@
 			});
 
 			fetchCartPurchase();
-			
+
 			$('#complete-purchase-btn').click(function (e) {
-			    e.preventDefault();
+				e.preventDefault();
 
-			    // Collect form data and fetch cart items asynchronously
-			    const orderData = {
-			        name: $('#name').val(),
-			        username: $('#username').val(),
-			        cardholderName: $('#cardholder-name').val()
-			    };
+				// Collect form data and fetch cart items asynchronously
+				const orderData = {
+					name: $('#name').val(),
+					username: $('#username').val(),
+					cardholderName: $('#cardholder-name').val()
+				};
 
-			    fetchCart(function(cartItems) {
-			        orderData.orderItems = cartItems;
+				fetchCart(function (cartItems) {
+					orderData.orderItems = cartItems;
 
-			        // Send data to server
-			        $.ajax({
-			            type: 'POST',
-			            url: '/addOrder',
-			            contentType: 'application/json',
-			            data: JSON.stringify(orderData),
-			            success: function(response) {
-			                console.log('Order placed successfully:', response);
-			                // Optionally, clear cart or handle UI updates
-			            },
-			            error: function(xhr, status, error) {
-			                console.error('Failed to place order:', error);
-			            }
-			        });
-			        $.ajax({
-			            type: 'POST',
-			            url: '/clearCart',
-			            success: function (response) {
-			                console.log('Cart cleared successfully:', response);
-			                window.location.href = '/profilepage.html';
-			            },
-			            error: function (xhr, status, error) {
-			                console.error('Failed to clear cart:', error);
-			            }
-			        });
-			    });
+					// Send data to server
+					$.ajax({
+						type: 'POST',
+						url: '/addOrder',
+						contentType: 'application/json',
+						data: JSON.stringify(orderData),
+						success: function (response) {
+							console.log('Order placed successfully:', response);
+							// Add chatters to profile
+							$.ajax({
+								type: 'POST',
+								url: '/addToMyChatters',
+								contentType: 'application/json',
+								data: JSON.stringify(cartItems),
+								success: function (response) {
+									console.log('Chatters added successfully:', response);
+									// Optionally, clear cart or handle UI updates
+									$.ajax({
+										type: 'POST',
+										url: '/clearCart',
+										success: function (response) {
+											console.log('Cart cleared successfully:', response);
+											window.location.href = '/profilepage.html';
+										},
+										error: function (xhr, status, error) {
+											console.error('Failed to clear cart:', error);
+										}
+									});
+								},
+								error: function (xhr, status, error) {
+									console.error('Failed to add chatters:', error);
+								}
+							});
+						},
+						error: function (xhr, status, error) {
+							console.error('Failed to place order:', error);
+						}
+					});
+				});
 			});
-
-			
-
 		});
 
 	</script>

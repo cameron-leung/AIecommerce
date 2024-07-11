@@ -1,16 +1,18 @@
 package store.aiexchange.shop.rest;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.web.bind.annotation.*;
 
+import store.aiexchange.shop.entities.Chatter;
 import store.aiexchange.shop.entities.Profile;
 import store.aiexchange.shop.entities.ProfileRepository;
 
@@ -69,5 +71,13 @@ public class ProfileRest {
     @PostMapping("/logout")
     public void logout() {
     	profile = null;
+    }
+    
+    @PostMapping("/addToMyChatters")
+    public ResponseEntity<?> addChatters(@RequestBody List<Chatter> cart) {
+        cart.forEach(profile::addToMyChatters);
+        profileRepository.save(profile);
+
+        return new ResponseEntity<>(profile, HttpStatus.OK);
     }
 }
