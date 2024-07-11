@@ -19,7 +19,7 @@ function profileButton() {
 			type: 'GET',
 			url: '/getProfile',
 			success: function(profile) {
-				if (profile === null) {
+				if (!profile) {
 					// If profile is null, redirect to login page
 					window.location.href = 'login.html';
 				} else {
