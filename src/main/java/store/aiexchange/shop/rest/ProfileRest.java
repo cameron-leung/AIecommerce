@@ -19,8 +19,6 @@ public class ProfileRest {
 
     @Autowired
     private ProfileRepository profileRepository;
-    @Autowired
-    private BCryptPasswordEncoder bCryptPasswordEncoder;
     private Profile profile;
 
     @PostMapping("/createAccount")
@@ -29,7 +27,11 @@ public class ProfileRest {
         if (existingProfile != null) {
             return new ResponseEntity<>("Username already exists", HttpStatus.CONFLICT);
         }
-        String encodedPassword = bCryptPasswordEncoder.encode(accountData.getPassword());
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder(); 
+        String encodedPassword = passwordEncoder.encode(accountData.getPassword()); 
+
+       System.out.println("Raw Password: " + accountData.getPassword()); 
+       System.out.println("Encoded Password: " + encodedPassword); 
         profile = new Profile(accountData.getName(), accountData.getUsername(),
                 accountData.getEmail(), encodedPassword);
         profileRepository.save(profile);
@@ -48,10 +50,11 @@ public class ProfileRest {
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody Profile loginData) {
         Profile existingProfile = profileRepository.findByUsername(loginData.getUsername());
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder(); 
         if (existingProfile == null) {
             return new ResponseEntity<>("Username not found", HttpStatus.NOT_FOUND);
         }
-        if (!bCryptPasswordEncoder.matches(loginData.getPassword(), existingProfile.getPassword())) {
+        if (!passwordEncoder.matches(loginData.getPassword(), existingProfile.getPassword())) {
             return new ResponseEntity<>("Incorrect password", HttpStatus.UNAUTHORIZED);
         }
         profile = existingProfile; // Set the profile if login is successful
