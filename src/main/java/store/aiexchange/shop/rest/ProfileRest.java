@@ -6,9 +6,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.web.bind.annotation.*;
 
 import store.aiexchange.shop.entities.Profile;
 import store.aiexchange.shop.entities.ProfileRepository;
@@ -18,6 +19,8 @@ public class ProfileRest {
 
     @Autowired
     private ProfileRepository profileRepository;
+    @Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
     private Profile profile;
 
     @PostMapping("/createAccount")
@@ -26,8 +29,9 @@ public class ProfileRest {
         if (existingProfile != null) {
             return new ResponseEntity<>("Username already exists", HttpStatus.CONFLICT);
         }
+        String encodedPassword = bCryptPasswordEncoder.encode(accountData.getPassword());
         profile = new Profile(accountData.getName(), accountData.getUsername(),
-                accountData.getEmail(), accountData.getPassword());
+                accountData.getEmail(), encodedPassword);
         profileRepository.save(profile);
         return new ResponseEntity<>(profile, HttpStatus.CREATED);
     }
@@ -43,12 +47,11 @@ public class ProfileRest {
     
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody Profile loginData) {
-        System.out.println("Java logging in...");
         Profile existingProfile = profileRepository.findByUsername(loginData.getUsername());
         if (existingProfile == null) {
             return new ResponseEntity<>("Username not found", HttpStatus.NOT_FOUND);
         }
-        if (!existingProfile.getPassword().equals(loginData.getPassword())) {
+        if (!bCryptPasswordEncoder.matches(loginData.getPassword(), existingProfile.getPassword())) {
             return new ResponseEntity<>("Incorrect password", HttpStatus.UNAUTHORIZED);
         }
         profile = existingProfile; // Set the profile if login is successful
