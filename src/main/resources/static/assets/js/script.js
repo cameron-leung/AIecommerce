@@ -58,23 +58,23 @@ function loadProfile() {
 		url: '/getProfile',
 		success: function(profile) {
 			if (profile) {
-                $('#profileName').text(profile.name || 'Unknown Name');
-                $('#profileUsername').text('@' + (profile.username || 'UnknownUsername'));
-                $('#followersPlaceholder').text((profile.followers && profile.followers.length) || 0);
-                $('#followingPlaceholder').text((profile.following && profile.following.length) || 0);
-                $('#chattersPlaceholder').text((profile.myChatters && profile.myChatters.length) || 0);
+				$('#profileName').text(profile.name || 'Unknown Name');
+				$('#profileUsername').text('@' + (profile.username || 'UnknownUsername'));
+				$('#followersPlaceholder').text((profile.followers && profile.followers.length) || 0);
+				$('#followingPlaceholder').text((profile.following && profile.following.length) || 0);
+				$('#chattersPlaceholder').text((profile.myChatters && profile.myChatters.length) || 0);
 
-                // Populate the chatters using myChatters from the profile
-                populateChatterCircles(profile.myChatters);
-                $('.fa-cart-plus').off('click').on('click', function() {
-					
-					})
-            } else {
-                alert('No profile found.');
-            }
+				// Populate the chatters using myChatters from the profile
+				populateChatterCircles(profile.myChatters);
+				$('.fa-cart-plus').off('click').on('click', function() {
+
+				})
+			} else {
+				window.location.href = 'login.html';
+			}
 		},
 		error: function() {
-			alert('Failed to load profile.');
+			window.location.href = 'login.html';
 		}
 	})
 }
@@ -86,7 +86,6 @@ function login() {
 			username: $('#username').val(),
 			password: $('#password').val()
 		};
-		console.log("login button clicked: ", formData);
 
 		$.ajax({
 			type: 'POST',
@@ -94,11 +93,10 @@ function login() {
 			contentType: 'application/json',
 			data: JSON.stringify(formData),
 			success: function(response) {
-				alert('Login successful!');
 				window.location.href = 'profilepage.html';
 			},
 			error: function(error) {
-				alert('Invalid username or password.');
+				$('#error-message').text('Invalid username or password');
 			}
 		});
 	});
@@ -112,7 +110,7 @@ function logout() {
 			window.location.href = 'login.html';
 		},
 		error: function() {
-			alert('Failed to logout. Please try again.');
+			console.log('Failed to logout. Please try again.');
 		}
 	});
 }
@@ -127,22 +125,19 @@ function loadCreateAccount() {
 			email: $('#email').val(),
 			password: $('#password').val()
 		};
-		console.log("create acc button clicked: ", formData);
-
 		$.ajax({
 			type: 'POST',
 			url: '/createAccount',
 			contentType: 'application/json',
 			data: JSON.stringify(formData),
 			success: function(response) {
-				alert('Account created successfully!');
 				window.location.href = 'profilepage.html';
 			},
 			error: function(error) {
 				if (error.status === 409) {
-					alert('Username already exists!');
+					$('#error-message').text('Username already exists!');
 				} else {
-					alert('An error occurred. Please try again.');
+					$('#error-message').text('Error occurred. Please try again.');
 				}
 			}
 		});
@@ -179,16 +174,16 @@ function populateChatterCircles() {
 	});
 }
 function populateChatterCircles(myChatters) {
-    const container = $('.character-circ-container');
-    // Fetch chattercard template
-    $.get('chattercircle.html', function(template) {
-        myChatters.forEach(character => {
-            const populatedCircle = populateCircle(template, character);
-            container.append(populatedCircle);
-        });
-    }).fail(function() {
-        console.error('Failed to load chattercircle.html');
-    });
+	const container = $('.character-circ-container');
+	// Fetch chattercard template
+	$.get('chattercircle.html', function(template) {
+		myChatters.forEach(character => {
+			const populatedCircle = populateCircle(template, character);
+			container.append(populatedCircle);
+		});
+	}).fail(function() {
+		console.error('Failed to load chattercircle.html');
+	});
 }
 // B cards filtering
 function loadBChatters() {
