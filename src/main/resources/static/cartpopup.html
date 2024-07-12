@@ -40,34 +40,5 @@
 		});
 
 	});
-	
-	var cartPopupOpen = false;
-	// Open the cart popup
-	function openCartPopup() {
-		if (!cartPopupOpen) {
-			$('#cartPopupOverlay').removeClass('d-none').fadeIn();
-			fetchCartPopup();
-			cartPopupOpen = true;
-		}
-	}
-	// Close the cart popup
-	function closeCartPopup() {
-		$('#cartPopupOverlay').addClass('d-none').fadeOut();
-		cartPopupOpen = false;
-	}
-	// Event listener for the icon click to open the popup and add to cart
-	$('.openCartPopupIcon').on('click', function (event) {
- // Fetch and display cart items
-		fetchCartPopup();
- 		updateCheckoutButton();
-		openCartPopup();
-		event.stopPropagation(); // Prevent event propagation
-	});
-	// Close the cart popup when clicking outside
-	$(document).on('click', function (event) {
-		if (cartPopupOpen && !$(event.target).closest('#cartPopupContent').length) {
-			closeCartPopup();
-		}
-	});
-	
+	loadCartPopup();
 </script>

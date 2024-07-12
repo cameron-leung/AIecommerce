@@ -28,9 +28,7 @@ function profileButton() {
 				}
 			},
 			error: function() {
-				// Handle error if AJAX request fails
-				console.error('Failed to fetch profile.');
-				// Redirect to login page as a fallback
+				// Redirect to login page
 				window.location.href = 'login.html';
 			}
 		});
@@ -78,6 +76,36 @@ function loadProfile() {
 		}
 	})
 }
+function loadCartPopup() {
+	var cartPopupOpen = false;
+	// Open the cart popup
+	function openCartPopup() {
+		if (!cartPopupOpen) {
+			$('#cartPopupOverlay').removeClass('d-none').fadeIn();
+			fetchCartPopup();
+			cartPopupOpen = true;
+		}
+	}
+	// Close the cart popup
+	function closeCartPopup() {
+		$('#cartPopupOverlay').addClass('d-none').fadeOut();
+		cartPopupOpen = false;
+	}
+	// Event listener for the icon click to open the popup and add to cart
+	$('.openCartPopupIcon').on('click', function (event) {
+ // Fetch and display cart items
+		fetchCartPopup();
+ 		updateCheckoutButton();
+		openCartPopup();
+		event.stopPropagation(); // Prevent event propagation
+	});
+	// Close the cart popup when clicking outside
+	$(document).on('click', function (event) {
+		if (cartPopupOpen && !$(event.target).closest('#cartPopupContent').length) {
+			closeCartPopup();
+		}
+	});
+}
 function login() {
 	$('#login-form').on('submit', function(e) {
 		e.preventDefault();
@@ -109,9 +137,7 @@ function logout() {
 			// Redirect to login page after successful logout
 			window.location.href = 'login.html';
 		},
-		error: function() {
-			console.log('Failed to logout. Please try again.');
-		}
+		
 	});
 }
 
@@ -240,7 +266,7 @@ function filterShopCharacterData(selectedCategories = [], selectedPrice = 100) {
 
 		// Display filtered data
 		if (filteredData.length === 0) {
-			console.log("none")
+			$('#no-data-message').text('No Chatters found');
 		} else {
 			$.get('chattercard.html', function(template) {
 				filteredData.forEach(character => {
@@ -248,11 +274,11 @@ function filterShopCharacterData(selectedCategories = [], selectedPrice = 100) {
 					shopContainer.append(populatedCard);
 				});
 			}).fail(function() {
-				console.error('Failed to load chattercard.html');
+				$('#no-data-message').text('No Chatters found');
 			});
 		}
 	}).fail(function() {
-		console.error('Failed to fetch chatters from API');
+		$('#no-data-message').text('No Chatters found');
 	});
 }
 function openFilterPopup() {
@@ -396,7 +422,6 @@ function fetchCartCards() {
 		$.get('chattercard.html', function(template) {
 			if (cartItems.length > 0) {
 				cartItems.forEach(function(chatter) {
-					console.log(chatter);
 					const populatedCard = populateCard(template, chatter);
 					cartCardsContainer.append(populatedCard);
 				});
@@ -411,7 +436,6 @@ function fetchCartPurchase() {
 		$('#purchaseItemsContainer').empty(); // Clear existing items
 		if (cartItems.length > 0) {
 			cartItems.forEach(function(item) {
-				console.log(item);
 				var itemHtml = purchaseItemHtml(item);
 				$('#purchaseItemsContainer').append(itemHtml);
 			});
@@ -453,7 +477,6 @@ function getPrice(cartItems) {
 	var subtotal = cartItems.reduce((total, item) => total + item.price, 0);
 	var tax = subtotal * 0.1;
 	var total = subtotal + tax;
-	console.log()
 	$('.cart-subtotal').text('$' + subtotal.toFixed(2));
 	$('.cart-tax').text('$' + tax.toFixed(2));
 	$('.cart-total').text('$' + total.toFixed(2));
@@ -466,7 +489,6 @@ function addToCart(character) {
 		contentType: 'application/json',
 		data: JSON.stringify(character),
 		success: function(response) {
-			console.log(response); // Log success message
 			updateCheckoutButton();
 			fetchCartPopup();
 			populateDetails(character); // Update character details on the page
@@ -483,14 +505,14 @@ function removeFromCart(name) {
 		contentType: 'text/plain', // Specify the content type
 		data: name, // Convert the Chatter object to JSON
 		success: function(response) {
-			console.log(response); // Handle success response as needed
+
 
 			fetchCartPopup(); // Refresh cart items after removal
 			updateCheckoutButton();
 			fetchCartCards();
 		},
 		error: function(xhr, status, error) {
-			console.error('Failed to remove item from cart', error);
+
 		}
 	});
 }
@@ -547,7 +569,6 @@ function loadQuery() {
 	document.getElementById('searchInput').addEventListener('keypress', function(event) {
 		if (event.key === 'Enter') {
 			const query = event.target.value.trim();
-			console.log(query);
 			if (query) {
 				window.location.href = `searchResults.html?query=${encodeURIComponent(query)}`;
 			}
