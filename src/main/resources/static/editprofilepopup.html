@@ -1,13 +1,9 @@
-<div id="editPopupOverlay" class="d-none position-fixed z-2 shadow end-0 w-25 overflow-hidden m-2"
-     style="height: 90vh; background-color: rgba(0, 0, 0, 0.5);">
-    <div id="editPopupContent" class="z-3 h-100 w-100 bg-light rounded-3 shadow-sm p-3 overflow-hidden position-relative"
-         style="max-height: 40vh; margin-top: 25vh;">
+<div class="d-flex z-2 justify-content-center">
+<div id="editPopupOverlay" class="d-none z-2 position-fixed rounded shadow w-50 h-auto overflow-hidden m-2">
+    <div id="editPopupContent" class="z-3 bg-light rounded-3 shadow-sm p-3 overflow-hidden">
         <!-- Form container -->
-        <div class="d-flex flex-column h-100 justify-content-center">
-            <!-- Form header -->
-            <div class="mb-3">
-                <h4 class="text-center">Enter Details</h4>
-            </div>
+        <div class="d-flex flex-column justify-content-center">
+            
             <!-- Form fields -->
             <div class="form-group mb-3">
                 <label for="nameInput">Name</label>
@@ -20,12 +16,12 @@
             <!-- Submit button -->
             <div class="text-center">
                 <button id="submitButton"
-                        class="btn btn-primary" style="color: #FF206E; border-color: #FF206E;">Submit</button>
+                        class="btn btn-primary" style="background-color: #FF206E; border-color: #FF206E;">Submit</button>
             </div>
         </div>
     </div>
 </div>
-
+</div>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
 
