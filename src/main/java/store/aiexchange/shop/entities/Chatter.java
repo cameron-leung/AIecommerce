@@ -7,6 +7,8 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document(collection = "chatter")
 public class Chatter {
 
+	@Id
+	private String _id;
 	private String name;
 	private List<String> category;
 	private String username;

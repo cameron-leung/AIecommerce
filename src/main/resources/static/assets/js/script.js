@@ -66,6 +66,9 @@ function loadProfile() {
 
                 // Populate the chatters using myChatters from the profile
                 populateChatterCircles(profile.myChatters);
+                $('.fa-cart-plus').off('click').on('click', function() {
+					
+					})
             } else {
                 alert('No profile found.');
             }

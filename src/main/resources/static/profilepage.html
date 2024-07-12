@@ -33,7 +33,7 @@
                     </div>
                     <!-- Edit and Log out buttons -->
                     <div class="row w-auto h-auto pt-0">
-                        <i class="w-auto h-auto fa-solid fa-pen" style="color: #535355;"></i>
+                        <i id="openEditPopupIcon" class="w-auto h-auto fa-solid fa-pen" style="color: #535355;"></i>
                         <div class="w-auto h-auto">
                             <button class="w-auto h-auto text-white border-0 rounded logout-button"
                                 style="background: #535355;" onclick="logout()">Log Out</button>
@@ -69,6 +69,7 @@
 		<div class="cart-cards-container  d-flex flex-row justify-content-start"></div>
 
 	</div>
+	<div id="editprofilepopup-placeholder"></div>
 
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 	<script src="assets/js/script.js"></script>
@@ -81,10 +82,13 @@
 
 			// Load chatter circles & cards
 			$('.chattercircles-placeholder').load('chattercircles.html');
+			$('#editprofilepopup-placeholder').load('editprofilepopup.html');
 			loadProfile();
 			fetchCartItems();
 			fetchCartCards();
+			
 		});
+
 
 	</script>
 </body>
