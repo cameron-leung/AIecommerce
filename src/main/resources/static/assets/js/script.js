@@ -624,16 +624,16 @@ function queryCharacterData(query) {
 		container.empty();
 		$.get('chattercard.html', function(template) {
 			if (filteredData.length === 0) {
-				console.error('No data found for query');
+				$('#no-data-message').text('No Chatters found');
 			}
 			filteredData.forEach(character => {
 				const populatedCard = populateCard(template, character);
 				container.append(populatedCard);
 			});
 		}).fail(function() {
-			console.error('Failed to load chattercard.html');
+			$('#no-data-message').text('No Chatters found');
 		});
 	}).fail(function() {
-		console.error('Failed to fetch chatters from API');
+		$('#no-data-message').text('No Chatters found');
 	});
 }
