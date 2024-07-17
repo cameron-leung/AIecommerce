@@ -51,10 +51,13 @@ public class ProfileRest {
         if (profile.getUsername().equals(updatedProfileData.getUsername()) || existingProfile != null) {
             return new ResponseEntity<>("Username already exists", HttpStatus.CONFLICT);
         }
-
-        // Update the profile's name and username
-        profile.setName(updatedProfileData.getName());
-        profile.setUsername(updatedProfileData.getUsername());
+     // Update the profile's name and username
+        if(updatedProfileData.getName() != "") {
+        	profile.setName(updatedProfileData.getName());
+        }
+        if(updatedProfileData.getUsername() != "") {
+        	profile.setUsername(updatedProfileData.getUsername());
+        }
         profileRepository.save(profile);
 
         return new ResponseEntity<>(profile, HttpStatus.OK);
