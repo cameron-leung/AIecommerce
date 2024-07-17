@@ -7,13 +7,13 @@
             <!-- Form fields -->
             <div class="form-group mb-3">
                 <label for="nameInput">Name</label>
-                <input type="text" class="form-control" id="nameInput" placeholder="Enter your name">
+                <input type="text" class="form-control" id="nameInput" placeholder="Enter new name">
             </div>
             <div class="form-group mb-3">
                 <label for="usernameInput">Username</label>
-                <input type="text" class="form-control" id="usernameInput" placeholder="Enter your username">
+                <input type="text" class="form-control" id="usernameInput" placeholder="Enter new username">
             </div>
-            
+            <div class="mb-3" id="error-message" style="color: red;"></div>
             <!-- Submit button -->
             <div class="text-center">
                 <button id="submitButton"
@@ -51,4 +51,5 @@
 			closeEditPopup();
 		}
 	});
+	loadUpdateProfile();
 </script>

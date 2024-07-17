@@ -92,15 +92,15 @@ function loadCartPopup() {
 		cartPopupOpen = false;
 	}
 	// Event listener for the icon click to open the popup and add to cart
-	$('.openCartPopupIcon').on('click', function (event) {
- // Fetch and display cart items
+	$('.openCartPopupIcon').on('click', function(event) {
+		// Fetch and display cart items
 		fetchCartPopup();
- 		updateCheckoutButton();
+		updateCheckoutButton();
 		openCartPopup();
 		event.stopPropagation(); // Prevent event propagation
 	});
 	// Close the cart popup when clicking outside
-	$(document).on('click', function (event) {
+	$(document).on('click', function(event) {
 		if (cartPopupOpen && !$(event.target).closest('#cartPopupContent').length) {
 			closeCartPopup();
 		}
@@ -137,7 +137,7 @@ function logout() {
 			// Redirect to login page after successful logout
 			window.location.href = 'login.html';
 		},
-		
+
 	});
 }
 
@@ -154,6 +154,34 @@ function loadCreateAccount() {
 		$.ajax({
 			type: 'POST',
 			url: '/createAccount',
+			contentType: 'application/json',
+			data: JSON.stringify(formData),
+			success: function(response) {
+				window.location.href = 'profilepage.html';
+			},
+			error: function(error) {
+				if (error.status === 409) {
+					$('#error-message').text('Username already exists!');
+				} else {
+					$('#error-message').text('Error occurred. Please try again.');
+				}
+			}
+		});
+	});
+}
+// Function to update the profile
+function loadUpdateProfile() {
+	$('#submitButton').on('click', function(e) {
+		e.preventDefault();
+
+		const formData = {
+			name: $('#nameInput').val(),
+			username: $('#usernameInput').val()
+		};
+
+		$.ajax({
+			type: 'POST',
+			url: '/updateProfile',
 			contentType: 'application/json',
 			data: JSON.stringify(formData),
 			success: function(response) {

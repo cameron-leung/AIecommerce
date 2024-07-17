@@ -39,6 +39,26 @@ public class ProfileRest {
         profileRepository.save(profile);
         return new ResponseEntity<>(profile, HttpStatus.CREATED);
     }
+    @PostMapping("/updateProfile")
+    public ResponseEntity<?> updateProfile(@RequestBody Profile updatedProfileData) {
+        if (profile == null) {
+            return new ResponseEntity<>("No profile is currently logged in", HttpStatus.UNAUTHORIZED);
+        }
+
+        Profile existingProfile = profileRepository.findByUsername(updatedProfileData.getUsername());
+
+        // If the username is changing and the new username already exists
+        if (profile.getUsername().equals(updatedProfileData.getUsername()) || existingProfile != null) {
+            return new ResponseEntity<>("Username already exists", HttpStatus.CONFLICT);
+        }
+
+        // Update the profile's name and username
+        profile.setName(updatedProfileData.getName());
+        profile.setUsername(updatedProfileData.getUsername());
+        profileRepository.save(profile);
+
+        return new ResponseEntity<>(profile, HttpStatus.OK);
+    }
 
     @GetMapping("/findByUsername")
     public ResponseEntity<Profile> findByUsername(@RequestParam(value = "username") String username) {
