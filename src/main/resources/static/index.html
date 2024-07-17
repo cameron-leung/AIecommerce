@@ -24,7 +24,7 @@
 		<div class="px-5 container-fluid">
 
 			<!-- Recents chatter circles section -->
-			<div id="chattercircles-placeholder"></div>
+			<div class="character-circ-container"></div>
 
 			<!-- Categories section -->
 			<h1 id="meet-new-chatters" class="display-4 mt-4">Meet New Chatters</h1>
@@ -117,8 +117,6 @@
 			$('#navbar-placeholder').load('navbar.html', function () {
 				$('.discover-icon').addClass('active');
 			});
-			// Load chatter circles widget
-			$('#chattercircles-placeholder').load('chattercircles.html');
 			// Load chatter cards widget
 			$('.chattercardscroll-placeholder').load('chattercardscroll.html');
 			// Add scrolling functionality to image

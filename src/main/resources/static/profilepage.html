@@ -55,7 +55,7 @@
         </div>
 
 		<!-- Recent chatter circles -->
-		<h1 class="mt-3">Recents</h1>
+		
 		<div class="character-circ-container"></div>
 		<!-- Original chatters scroll -->
 		<!-- <h1 class="mt-3">Original Chatters</h1>
@@ -67,7 +67,7 @@
 			</div>
 		</div>  -->
 		<!--  Chatters in your cart scroll -->
-		<h1 class="mt-3">Cart</h1>
+		<div class="cart-cards-header"></div>
 		<div class="cart-cards-container  d-flex flex-row justify-content-start"></div>
 
 	</div>
@@ -82,11 +82,11 @@
 			});
 
 			// Load chatter circles & cards
-			$('.chattercircles-placeholder').load('chattercircles.html');
+			//$('.chattercircles-placeholder').load('chattercircles.html');
 			$('#editprofilepopup-placeholder').load('editprofilepopup.html');
 			loadProfile();
 			fetchCartItems();
-			fetchCartCards();
+			//fetchCartCards();
 			
 		});
 
