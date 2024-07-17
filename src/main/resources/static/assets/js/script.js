@@ -432,7 +432,6 @@ function fetchCartItems() {
 			});
 		// Repopulate the array with fetched data
 		if (cartItems.length > 0) {
-			
 			fetchCartCards(cartItems); // Pass the cart items to the fetchCartCards function
 		}
 
@@ -457,7 +456,10 @@ function fetchCartPopup() {
 function fetchCartCards(cartItems) {
 	const cartCardsHeader = $('.cart-cards-header');
 	const cartCardsContainer = $('.cart-cards-container');
-
+	cartCardsHeader.empty();
+	cartCardsContainer.empty();
+	if (cartItems.length > 0) {
+		
 	//cartCardsContainer.empty(); // Clear existing items
 	cartCardsHeader.append('<h1 class="mt-3 display-4">Cart</h1>');
 	$.get('chattercard.html', function(template) {
@@ -469,6 +471,7 @@ function fetchCartCards(cartItems) {
 	}).fail(function() {
 		console.error('Failed to load cart cards.html');
 	})
+	}
 }
 function fetchCartPurchase() {
 	$.getJSON('/cart', function(cartItems) {
@@ -544,14 +547,9 @@ function removeFromCart(name) {
 		contentType: 'text/plain', // Specify the content type
 		data: name, // Convert the Chatter object to JSON
 		success: function(response) {
-
-
 			fetchCartPopup(); // Refresh cart items after removal
 			updateCheckoutButton();
 			fetchCartCards();
-		},
-		error: function(xhr, status, error) {
-
 		}
 	});
 }
