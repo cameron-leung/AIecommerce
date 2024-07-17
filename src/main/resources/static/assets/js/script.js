@@ -38,9 +38,7 @@ function loadIndex() {
 	$.getJSON('/chatters', function(characters) {
 		characterData.push(...characters);
 		populateIndexChatters();
-	}).fail(function() {
-		console.error('Failed to fetch chatters from API');
-	});
+	})
 	$.ajax({
 		type: 'GET',
 		url: '/getProfile',
@@ -242,9 +240,7 @@ function populateChatterCircles(myChatters) {
 			const populatedCircle = populateCircle(template, character);
 			container.append(populatedCircle);
 		});
-	}).fail(function() {
-		console.error('Failed to load chattercircle.html');
-	});
+	})
 }
 // B cards filtering
 function loadBChatters() {
