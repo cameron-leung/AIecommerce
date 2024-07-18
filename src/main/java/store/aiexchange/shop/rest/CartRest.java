@@ -70,7 +70,7 @@ public class CartRest {
     
     @PostMapping("/clearCart")
     public String clearCart() {
-    	cart = new ArrayList<>();
+    	cart.clear();
     	return "cart cleared successfully";
     }
     
