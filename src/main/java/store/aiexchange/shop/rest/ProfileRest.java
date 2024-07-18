@@ -32,9 +32,6 @@ public class ProfileRest {
         } else {
             BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder(); 
             String encodedPassword = passwordEncoder.encode(accountData.getPassword()); 
-
-            System.out.println("Raw Password: " + accountData.getPassword()); 
-            System.out.println("Encoded Password: " + encodedPassword); 
             
             Profile profile = new Profile(accountData.getName(), accountData.getUsername(),
                     accountData.getEmail(), encodedPassword);
