@@ -23,13 +23,11 @@ public class CartRest {
 
     @PostMapping("/addToCart")
     public String addToCart(@RequestBody Chatter chatter) {
-    	System.out.println("add to cart: ");
         return addToList(chatter, cart);
     }
     
     @PostMapping("/addToPurchase")
     public String addToPurchase(@RequestBody Chatter chatter) {
-    	System.out.println("add to purchase:");
         return addToList(chatter, purchaseList);
     }
     
@@ -39,15 +37,12 @@ public class CartRest {
                 .anyMatch(c -> c.getName().replaceAll("[^a-zA-Z]", "").equalsIgnoreCase(chatter.getName().replaceAll("[^a-zA-Z]", "")));
         String returnString = "";
         if (chatterExists) {
-            System.out.println("Chatter is already in the list");
             returnString = "Chatter is already in the list";
         }
-
         // Find the chatter by name to ensure valid data
         Chatter chatterToAdd = findByName(chatter.getName());
         if (chatterToAdd != null) {
             list.add(chatterToAdd);
-            System.out.println(list);
             returnString = "Chatter added to list successfully";
         } else {
             returnString = "Chatter not found";
@@ -65,7 +60,6 @@ public class CartRest {
 
     @PostMapping("/removeFromCart")
     public String removeFromCart(@RequestBody String name) {
-    	System.out.println("remove from cart ");
         return removeFromList(name, cart);
     }
     
@@ -77,7 +71,6 @@ public class CartRest {
     
     @PostMapping("/removeFromPurchase")
     public String removeFromPurchase(@RequestBody String name) {
-    	System.out.println("remove from purchase ");
         return removeFromList(name, purchaseList);
     }
     

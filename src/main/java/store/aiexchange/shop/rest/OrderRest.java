@@ -20,7 +20,6 @@ public class OrderRest {
 
     @PostMapping("/addOrder")
     public Order addOrder(@RequestBody Order orderData) {
-    	System.out.println(orderData.getOrderItems());
     	Order newOrder = new Order(orderData.getName(), orderData.getUsername(),
                 orderData.getCardholderName(), orderData.getOrderItems());
     	return orderRepository.save(newOrder);
