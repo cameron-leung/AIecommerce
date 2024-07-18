@@ -37,10 +37,10 @@ public class CartRest {
         // Check if the chatter already exists in the list
         boolean chatterExists = list.stream()
                 .anyMatch(c -> c.getName().replaceAll("[^a-zA-Z]", "").equalsIgnoreCase(chatter.getName().replaceAll("[^a-zA-Z]", "")));
-        
+        String returnString = "";
         if (chatterExists) {
             System.out.println("Chatter is already in the list");
-            return "Chatter is already in the list";
+            returnString = "Chatter is already in the list";
         }
 
         // Find the chatter by name to ensure valid data
@@ -48,10 +48,11 @@ public class CartRest {
         if (chatterToAdd != null) {
             list.add(chatterToAdd);
             System.out.println(list);
-            return "Chatter added to list successfully";
+            returnString = "Chatter added to list successfully";
         } else {
-            return "Chatter not found";
+            returnString = "Chatter not found";
         }
+        return returnString;
     }
 
     @GetMapping("/findByName")
