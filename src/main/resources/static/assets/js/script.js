@@ -255,8 +255,6 @@ function loadBChatters() {
 			const populatedCard = populateCard(template, character);
 			Bcards.append(populatedCard);
 		});
-	}).fail(function() {
-		console.error('Failed to load chattercard.html');
 	});
 }
 // Index page cards filtering
@@ -439,10 +437,14 @@ function fetchCartPopup() {
 	$.getJSON('/cart', function(cartItems) {
 		$('#cartItemsContainer').empty(); // Clear existing items
 		if (cartItems.length > 0) {
+			$('#empty-cart-message').hide();
 			cartItems.forEach(function(item) {
 				itemHtml = cartItemHtml(item);
 				$('#cartItemsContainer').append(itemHtml);
 			});
+		} else {
+			$('#empty-cart-message').show();
+			$('#empty-cart-message').text('Cart is empty');
 		}
 		getPrice(cartItems);
 		// Calculate subtotal and tax
@@ -531,9 +533,6 @@ function addToCart(character) {
 			fetchCartPopup();
 			populateDetails(character); // Update character details on the page
 		},
-		error: function() {
-			console.error('Failed to add chatter to cart');
-		}
 	});
 }
 function removeFromCart(name) {
@@ -576,8 +575,6 @@ function loadCharacterDetails(characterName) {
 				addToCart(character);
 				fetchCartItems();
 			});
-		}).fail(function() {
-			console.error('Failed to fetch chatters from API');
 		});
 	}
 }
