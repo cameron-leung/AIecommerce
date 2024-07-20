@@ -45,7 +45,7 @@ function loadIndex() {
 		success: function(profile) {
 			if (profile) {
 				// Populate the chatters using myChatters from the profile
-				if (profile.myChatters && profile.myChatters.length > 0) {
+				if (Array.isArray(profile.myChatters) && profile.myChatters.length > 0) {
 					populateChatterCircles(profile.myChatters);
 				}
 			}
