@@ -1,4 +1,5 @@
 const characterData = [];
+let profile = null;
 
 // Wrap your code in DOMContentLoaded event listener
 document.addEventListener('DOMContentLoaded', function() {
@@ -9,76 +10,78 @@ document.addEventListener('DOMContentLoaded', function() {
 			window.history.back();
 		});
 	}
+	
+	fetchProfile(function() {
+		// Now you can call functions that need the profile
+		if (document.getElementById('profile-link')) {
+			profileButton();
+		}
+		if(document.getElementById('index-page')) {
+			loadIndex();
+		}
+		if(document.getElementById('profile-page')) {
+			loadProfile();
+		}
+	});
 });
+// Function to fetch the profile and store it in the global variable
+function fetchProfile(callback) {
+	$.ajax({
+		type: 'GET',
+		url: '/getProfile',
+		success: function(data) {
+			profile = data;
+			if (callback) {
+				callback();
+			}
+		},
+		error: function() {
+			window.location.href = 'login.html';
+		}
+	});
+}
 function profileButton() {
 	$('#profile-link').on('click', function(e) {
 		e.preventDefault();
-
-		// Make AJAX request to fetch current profile
-		$.ajax({
-			type: 'GET',
-			url: '/getProfile',
-			success: function(profile) {
-				if (!profile) {
-					// If profile is null, redirect to login page
-					window.location.href = 'login.html';
-				} else {
-					// If profile is not null, redirect to profile page
-					window.location.href = 'profilepage.html';
-				}
-			},
-			error: function() {
-				// Redirect to login page
-				window.location.href = 'login.html';
-			}
-		});
+		if (!profile) {
+			// If profile is null, redirect to login page
+			window.location.href = 'login.html';
+		} else {
+			// If profile is not null, redirect to profile page
+			window.location.href = 'profilepage.html';
+		}
 	});
 }
 function loadIndex() {
 	$.getJSON('/chatters', function(characters) {
 		characterData.push(...characters);
 		populateIndexChatters();
-	})
-	$.ajax({
-		type: 'GET',
-		url: '/getProfile',
-		success: function(profile) {
-			if (profile) {
-				// Populate the chatters using myChatters from the profile
-				if (Array.isArray(profile.myChatters) && profile.myChatters.length > 0) {
-					populateChatterCircles(profile.myChatters);
-				}
+		if (profile) {
+			// Populate the chatters using myChatters from the profile
+			if (Array.isArray(profile.myChatters) && profile.myChatters.length > 0) {
+				populateChatterCircles(profile.myChatters);
 			}
 		}
-	})
+	});
 }
 function loadProfile() {
-	$.ajax({
-		type: 'GET',
-		url: '/getProfile',
-		success: function(profile) {
-			if (profile) {
-				$('#profileName').text(profile.name || 'Unknown Name');
-				$('#profileUsername').text('@' + (profile.username || 'UnknownUsername'));
-				$('#followersPlaceholder').text((profile.followers && profile.followers.length) || 0);
-				$('#followingPlaceholder').text((profile.following && profile.following.length) || 0);
-				$('#chattersPlaceholder').text((profile.myChatters && profile.myChatters.length) || 0);
+	if (profile) {
+		$('#profileName').text(profile.name || 'Unknown Name');
+		$('#profileUsername').text('@' + (profile.username || 'UnknownUsername'));
+		$('#followersPlaceholder').text((profile.followers && profile.followers.length) || 0);
+		$('#followingPlaceholder').text((profile.following && profile.following.length) || 0);
+		$('#chattersPlaceholder').text((profile.myChatters && profile.myChatters.length) || 0);
 
-				// Populate the chatters using myChatters from the profile
-				if (profile.myChatters && profile.myChatters.length > 0) {
-					populateChatterCircles(profile.myChatters);
-				}
-				$('.fa-cart-plus').off('click').on('click', function() {
-
-				})
-			} else {
-				window.location.href = 'login.html';
-			}
-		},
-		error: function() {
-			window.location.href = 'login.html';
+		// Populate the chatters using myChatters from the profile
+		if (profile.myChatters && profile.myChatters.length > 0) {
+			populateChatterCircles(profile.myChatters);
 		}
-	})
+		$('.fa-cart-plus').off('click').on('click', function() {
+			// Your event handler code here
+		});
+	} else {
+		window.location.href = 'login.html';
+	}
 }
 function loadCartPopup() {
 	var cartPopupOpen = false;
@@ -411,11 +414,12 @@ function cartItemHtml(item) {
          </div>
    `;
 }
+
 function fetchCart(callback) {
 	$.getJSON('/cart', function(data) {
 		var cartItems = data;
-		callback(cartItems);  // Pass cartItems to callback function
-	});
+		callback(cartItems)  // Pass cartItems to callback function
+	})
 }
 // Fetch data for cart items
 function fetchCartItems() {
@@ -436,13 +440,16 @@ function fetchCartItems() {
 function fetchCartPopup() {
 	$.getJSON('/cart', function(cartItems) {
 		$('#cartItemsContainer').empty(); // Clear existing items
-		if (cartItems.length > 0) {
+		if(cartItems) {
+			if (cartItems.length > 0) {
 			$('#empty-cart-message').hide();
 			cartItems.forEach(function(item) {
 				itemHtml = cartItemHtml(item);
 				$('#cartItemsContainer').append(itemHtml);
 			});
-		} else {
+		}
+		}
+		 else {
 			$('#empty-cart-message').show();
 			$('#empty-cart-message').text('Cart is empty');
 		}
@@ -452,12 +459,12 @@ function fetchCartPopup() {
 }
 // Fetch data for cart items
 function fetchCartCards(cartItems) {
-	const cartCardsHeader = $('.cart-cards-header');
+	if(cartItems) {
+		const cartCardsHeader = $('.cart-cards-header');
 	const cartCardsContainer = $('.cart-cards-container');
 	cartCardsHeader.empty();
 	cartCardsContainer.empty();
 	if (cartItems.length > 0) {
-		
 	//cartCardsContainer.empty(); // Clear existing items
 	cartCardsHeader.append('<h1 class="mt-3 display-4">Cart</h1>');
 	$.get('chattercard.html', function(template) {
@@ -465,10 +472,8 @@ function fetchCartCards(cartItems) {
 				const populatedCard = populateCard(template, chatter);
 				cartCardsContainer.append(populatedCard);
 			});
-
-	}).fail(function() {
-		console.error('Failed to load cart cards.html');
 	})
+	}
 	}
 }
 function fetchCartPurchase() {
@@ -486,7 +491,7 @@ function fetchCartPurchase() {
 function updateCheckoutButton() {
 	fetchCart(function(cartItems) {
 		// Check if there are items in the cart
-		if (cartItems.length > 0) {
+		if (cartItems.length > 0 && profile) {
 			// Cart has items: Make button pink and enable click to go to purchase page
 			$('#checkoutButton')
 				.css({
