@@ -1,5 +1,6 @@
 package store.aiexchange.shop.rest;
 
+
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,9 +13,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import store.aiexchange.shop.entities.Chatter;
-import store.aiexchange.shop.entities.Profile;
-import store.aiexchange.shop.entities.ProfileRepository;
+import store.aiexchange.shop.repositories.ProfileRepository;
+import store.aiexchange.shop.entities.*;
 
 @RestController
 public class ProfileRest {

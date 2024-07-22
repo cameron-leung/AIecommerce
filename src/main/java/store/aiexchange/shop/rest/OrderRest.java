@@ -8,9 +8,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import store.aiexchange.shop.entities.Chatter;
 import store.aiexchange.shop.entities.Order;
-import store.aiexchange.shop.entities.OrderRepository;
+import store.aiexchange.shop.repositories.OrderRepository;
 
 @RestController
 public class OrderRest {

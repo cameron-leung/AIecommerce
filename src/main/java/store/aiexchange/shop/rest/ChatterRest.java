@@ -1,12 +1,13 @@
 package store.aiexchange.shop.rest;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
-import store.aiexchange.shop.entities.Chatter;
-import store.aiexchange.shop.entities.ChatterRepository;
 
-import java.util.List;
+import store.aiexchange.shop.entities.Chatter;
+import store.aiexchange.shop.repositories.ChatterRepository;
 
 @RestController
 public class ChatterRest {

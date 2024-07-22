@@ -4,8 +4,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import store.aiexchange.shop.entities.ChatterRepository;
-import store.aiexchange.shop.entities.ProfileRepository;
+import store.aiexchange.shop.repositories.ChatterRepository;
+import store.aiexchange.shop.repositories.ProfileRepository;
 
 @SpringBootTest
 class ShopApplicationTests {
