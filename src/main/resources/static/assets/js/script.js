@@ -26,29 +26,23 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 // Function to fetch the profile and store it in the global variable
 function fetchProfile(callback) {
-	$.ajax({
-		type: 'GET',
-		url: '/getProfile',
-		success: function(data) {
-			profile = data;
-			if (callback) {
-				callback();
-			}
-		},
-		error: function() {
-			window.location.href = 'login.html';
+	$.getJSON('/getProfile', function(data) {
+		profile = data;
+		if (callback) {
+			callback();
 		}
+	}).fail(function() {
+		window.location.href = 'login.html';
 	});
 }
 function profileButton() {
 	$('#profile-link').on('click', function(e) {
 		e.preventDefault();
-		if (!profile) {
-			// If profile is null, redirect to login page
-			window.location.href = 'login.html';
-		} else {
-			// If profile is not null, redirect to profile page
+		if (profile) {
 			window.location.href = 'profilepage.html';
+			
+		} else {
+			window.location.href = 'login.html';
 		}
 	});
 }
