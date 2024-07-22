@@ -277,16 +277,17 @@ function populateIndexChatters() {
 	});
 }
 // Shop page cards filtering
-var shopContainer = $('.shop-character-card-container');
+
 // Function to filter character data based on categories and price
 function filterShopCharacterData(selectedCategories = [], selectedPrice = 100) {
+	
 	$.getJSON('/chatters', function(characterData) {
 		const filteredData = characterData.filter(character => {
 			const matchesCategory = selectedCategories.length === 0 || character.category.some(cat => selectedCategories.includes(cat));
 			const matchesPrice = character.price <= selectedPrice;
 			return matchesCategory && matchesPrice;
 		});
-
+const shopContainer = $('.shop-character-card-container');
 		// Clear previous content before appending new data
 		shopContainer.empty();
 
@@ -324,6 +325,7 @@ function updateSliderBackground(slider) {
 function loadFilterLogic() {
 	var filterPopupOpen = false;
 	// Initial data load based on URL category
+	const urlParams = new URLSearchParams(window.location.search);
 	const category = urlParams.get('category') || 'All';
 	const initialCategories = category === 'All' ? [] : [category];
 	// Open and close filter
@@ -589,9 +591,11 @@ function populateVerticalScroll() {
 	}
 }
 // Search query logic
-var urlParams = new URLSearchParams(window.location.search);
-var query = urlParams.get('query');
+
+
 function loadQuery() {
+	var urlParams = new URLSearchParams(window.location.search);
+	var query = urlParams.get('query');
 	if (query) {
 		queryCharacterData(query);
 	}
