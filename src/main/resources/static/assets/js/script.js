@@ -10,9 +10,7 @@ document.addEventListener('DOMContentLoaded', function() {
 			window.history.back();
 		});
 	}
-	console.log("loading page: ", characterData);
 	fetchProfile(function() {
-		console.log("fetching profile: ", profile);
 		// Now you can call functions that need the profile
 		if (document.getElementById('profile-link')) {
 			profileButton();
@@ -27,16 +25,13 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 // Function to fetch the profile and store it in the global variable
 function fetchProfile(callback) {
-	console.log("Fetching profile...");
 	$.getJSON('/getProfile', function(data) {
             profile = data;
-            console.log("Profile fetched:", profile);
             if (callback) {
                 callback();
             }
         }).fail(function(jqXHR, textStatus, errorThrown) {
             // Handle the failure
-            console.error("Failed to fetch profile. Status:", textStatus, "Error:", errorThrown);
             profile = null; // Set profile to null if there's an error
             if (callback) {
                 callback();
