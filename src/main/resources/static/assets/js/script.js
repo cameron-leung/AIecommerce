@@ -10,8 +10,9 @@ document.addEventListener('DOMContentLoaded', function() {
 			window.history.back();
 		});
 	}
-
+	console.log("loading page: ", characterData);
 	fetchProfile(function() {
+		console.log("fetching profile: ", profile);
 		// Now you can call functions that need the profile
 		if (document.getElementById('profile-link')) {
 			profileButton();
@@ -26,14 +27,21 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 // Function to fetch the profile and store it in the global variable
 function fetchProfile(callback) {
+	console.log("Fetching profile...");
 	$.getJSON('/getProfile', function(data) {
-		profile = data;
-		if (callback) {
-			callback();
-		}
-	}).fail(function() {
-		window.location.href = 'login.html';
-	});
+            profile = data;
+            console.log("Profile fetched:", profile);
+            if (callback) {
+                callback();
+            }
+        }).fail(function(jqXHR, textStatus, errorThrown) {
+            // Handle the failure
+            console.error("Failed to fetch profile. Status:", textStatus, "Error:", errorThrown);
+            profile = null; // Set profile to null if there's an error
+            if (callback) {
+                callback();
+            }
+        });
 }
 function profileButton() {
 	$('#profile-link').on('click', function(e) {
@@ -47,8 +55,10 @@ function profileButton() {
 	});
 }
 function loadIndex() {
+	console.log("character Data: ", characterData);
 	$.getJSON('/chatters', function(characters) {
 		characterData.push(...characters);
+		console.log("character Data: ", characterData);
 		populateIndexChatters();
 		if (profile) {
 			// Populate the chatters using myChatters from the profile
@@ -239,34 +249,24 @@ function populateChatterCircles(myChatters) {
 		});
 	})
 }
-// B cards filtering
-function loadBChatters() {
-	const Bcards = $('.B-character-card-container');
-	// Fetch character data from the backend
-
-	// Filter by username for Browse by Creator section
-	const userBFilteredData = characterData.filter(character => character.username === '@B');
-	// Fetch chattercard template
-	$.get('chattercard.html', function(template) {
-		userBFilteredData.forEach(character => {
-			const populatedCard = populateCard(template, character);
-			Bcards.append(populatedCard);
-		});
-	});
-}
 // Index page cards filtering
 function populateIndexChatters() {
+	const Bcards = $('.B-character-card-container');
 	const Friendscards = $('.Friends-character-card-container');
 	const Metacards = $('.Meta-character-card-container');
-	loadBChatters();
+	
 	// Fetch character data from the backend
-
+	const userBFilteredData = characterData.filter(character => character.username === '@B');
 	const userMetaFilteredData = characterData.filter(character => character.username === '@Meta');
 	// Fetch chattercard template
 	$.get('chattercard.html', function(template) {
 		userMetaFilteredData.forEach(character => {
 			const populatedCard = populateCard(template, character);
 			Metacards.append(populatedCard);
+		});
+		userBFilteredData.forEach(character => {
+			const populatedCard = populateCard(template, character);
+			Bcards.append(populatedCard);
 		});
 		characterData.forEach(character => {
 			const populatedCard = populateCard(template, character);
