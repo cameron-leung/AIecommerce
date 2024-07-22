@@ -10,16 +10,16 @@ document.addEventListener('DOMContentLoaded', function() {
 			window.history.back();
 		});
 	}
-	
+
 	fetchProfile(function() {
 		// Now you can call functions that need the profile
 		if (document.getElementById('profile-link')) {
 			profileButton();
 		}
-		if(document.getElementById('index-page')) {
+		if (document.getElementById('index-page')) {
 			loadIndex();
 		}
-		if(document.getElementById('profile-page')) {
+		if (document.getElementById('profile-page')) {
 			loadProfile();
 		}
 	});
@@ -426,8 +426,8 @@ function fetchCartItems() {
 	$.getJSON('/cart', function(data) {
 		var cartItems = [];
 		data.forEach(item => {
-				cartItems.push(item);
-			});
+			cartItems.push(item);
+		});
 		// Repopulate the array with fetched data
 		if (cartItems.length > 0) {
 			fetchCartCards(cartItems); // Pass the cart items to the fetchCartCards function
@@ -440,16 +440,16 @@ function fetchCartItems() {
 function fetchCartPopup() {
 	$.getJSON('/cart', function(cartItems) {
 		$('#cartItemsContainer').empty(); // Clear existing items
-		if(cartItems) {
+		if (cartItems) {
 			if (cartItems.length > 0) {
-			$('#empty-cart-message').hide();
-			cartItems.forEach(function(item) {
-				itemHtml = cartItemHtml(item);
-				$('#cartItemsContainer').append(itemHtml);
-			});
+				$('#empty-cart-message').hide();
+				cartItems.forEach(function(item) {
+					itemHtml = cartItemHtml(item);
+					$('#cartItemsContainer').append(itemHtml);
+				});
+			}
 		}
-		}
-		 else {
+		else {
 			$('#empty-cart-message').show();
 			$('#empty-cart-message').text('Cart is empty');
 		}
@@ -459,21 +459,21 @@ function fetchCartPopup() {
 }
 // Fetch data for cart items
 function fetchCartCards(cartItems) {
-	if(cartItems) {
+	if (cartItems) {
 		const cartCardsHeader = $('.cart-cards-header');
-	const cartCardsContainer = $('.cart-cards-container');
-	cartCardsHeader.empty();
-	cartCardsContainer.empty();
-	if (cartItems.length > 0) {
-	//cartCardsContainer.empty(); // Clear existing items
-	cartCardsHeader.append('<h1 class="mt-3 display-4">Cart</h1>');
-	$.get('chattercard.html', function(template) {
-			cartItems.forEach(function(chatter) {
-				const populatedCard = populateCard(template, chatter);
-				cartCardsContainer.append(populatedCard);
-			});
-	})
-	}
+		const cartCardsContainer = $('.cart-cards-container');
+		cartCardsHeader.empty();
+		cartCardsContainer.empty();
+		if (cartItems.length > 0) {
+			//cartCardsContainer.empty(); // Clear existing items
+			cartCardsHeader.append('<h1 class="mt-3 display-4">Cart</h1>');
+			$.get('chattercard.html', function(template) {
+				cartItems.forEach(function(chatter) {
+					const populatedCard = populateCard(template, chatter);
+					cartCardsContainer.append(populatedCard);
+				});
+			})
+		}
 	}
 }
 function fetchCartPurchase() {
