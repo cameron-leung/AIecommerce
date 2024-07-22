@@ -50,10 +50,8 @@ function profileButton() {
 	});
 }
 function loadIndex() {
-	console.log("character Data: ", characterData);
 	$.getJSON('/chatters', function(characters) {
 		characterData.push(...characters);
-		console.log("character Data: ", characterData);
 		populateIndexChatters();
 		if (profile) {
 			// Populate the chatters using myChatters from the profile
