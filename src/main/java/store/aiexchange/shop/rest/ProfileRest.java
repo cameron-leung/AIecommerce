@@ -52,7 +52,7 @@ public class ProfileRest {
             Profile existingProfile = profileRepository.findByUsername(updatedProfileData.getUsername());
 
             // If the username is changing and the new username already exists
-            if (!profile.getUsername().equals(updatedProfileData.getUsername()) && existingProfile != null) {
+            if (profile.getUsername().equals(updatedProfileData.getUsername()) || existingProfile != null) {
                 response = new ResponseEntity<>("Username already exists", HttpStatus.CONFLICT);
             } else {
                 // Update the profile's name and username

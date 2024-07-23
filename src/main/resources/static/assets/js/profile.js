@@ -1,13 +1,10 @@
-$(document).ready(function () {
-
-
-			// Load chatter circles & cards
-			//$('.chattercircles-placeholder').load('chattercircles.html');
-			$('#editprofilepopup-placeholder').load('editprofilepopup.html');
-			fetchCartItems();
-			//fetchCartCards();
-			
-		});
+$(document).ready(function() {
+	// Load chatter circles & cards
+	//$('.chattercircles-placeholder').load('chattercircles.html');
+	$('#editprofilepopup-placeholder').load('editprofilepopup.html');
+	fetchCartItems();
+	//fetchCartCards();
+});
 function loadProfile() {
 	if (profile) {
 		$('#profileName').text(profile.name || 'Unknown Name');
