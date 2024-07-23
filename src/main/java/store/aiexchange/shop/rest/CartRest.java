@@ -11,12 +11,15 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import store.aiexchange.shop.entities.Chatter;
+import store.aiexchange.shop.repositories.ChatterRepository;
 
 @RestController
 public class CartRest {
     
     @Autowired
     private ChatterRest chatterRest;
+    @Autowired
+    private ChatterRepository chatterRepository;
     
     private List<Chatter> cart = new ArrayList<>();
     private List<Chatter> purchaseList = new ArrayList<>();
@@ -52,10 +55,7 @@ public class CartRest {
 
     @GetMapping("/findByName")
     public Chatter findByName(@RequestParam(value = "name", defaultValue = "") String name) {
-        return chatterRest.getChatters().stream()
-            .filter(chatter -> chatter.getName().equalsIgnoreCase(name))
-            .findFirst()
-            .orElse(null);
+        return chatterRepository.findByName(name);
     }
 
     @PostMapping("/removeFromCart")
@@ -77,17 +77,20 @@ public class CartRest {
     private String removeFromList(String name, List<Chatter> list) {
         // Check if the chatter exists in the list
         String trimmedName = name.replaceAll("[^a-zA-Z]", "");
+        String returnString;
         boolean chatterExists = list.stream()
                 .anyMatch(c -> c.getName().replaceAll("[^a-zA-Z]", "").equalsIgnoreCase(trimmedName));
 
         synchronized (list) {
             if (chatterExists) {
                 list.removeIf(c -> c.getName().replaceAll("[^a-zA-Z]", "").equalsIgnoreCase(trimmedName));
-                return "Chatter removed from list successfully";
+                returnString = "Chatter removed from list successfully";
+                 
             } else {
-                return "Chatter not found in the list";
+                returnString = "Chatter not found in the list";
             }
         }
+        return returnString;
     }
     
     @GetMapping("/cart")
