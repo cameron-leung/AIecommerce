@@ -49,18 +49,7 @@ function profileButton() {
 		}
 	});
 }
-function loadIndex() {
-	$.getJSON('/chatters', function(characters) {
-		characterData.push(...characters);
-		populateIndexChatters();
-		if (profile) {
-			// Populate the chatters using myChatters from the profile
-			if (Array.isArray(profile.myChatters) && profile.myChatters.length > 0) {
-				populateChatterCircles(profile.myChatters);
-			}
-		}
-	});
-}
+
 function loadProfile() {
 	if (profile) {
 		$('#profileName').text(profile.name || 'Unknown Name');
@@ -242,33 +231,7 @@ function populateChatterCircles(myChatters) {
 		});
 	})
 }
-// Index page cards filtering
-function populateIndexChatters() {
-	const Bcards = $('.B-character-card-container');
-	const Friendscards = $('.Friends-character-card-container');
-	const Metacards = $('.Meta-character-card-container');
-	
-	// Fetch character data from the backend
-	const userBFilteredData = characterData.filter(character => character.username === '@B');
-	const userMetaFilteredData = characterData.filter(character => character.username === '@Meta');
-	// Fetch chattercard template
-	$.get('chattercard.html', function(template) {
-		userMetaFilteredData.forEach(character => {
-			const populatedCard = populateCard(template, character);
-			Metacards.append(populatedCard);
-		});
-		userBFilteredData.forEach(character => {
-			const populatedCard = populateCard(template, character);
-			Bcards.append(populatedCard);
-		});
-		characterData.forEach(character => {
-			const populatedCard = populateCard(template, character);
-			Friendscards.append(populatedCard);
-		});
-	}).fail(function() {
-		console.error('Failed to load chattercard.html');
-	});
-}
+
 // Shop page cards filtering
 
 // Function to filter character data based on categories and price
