@@ -120,18 +120,6 @@
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 	<script src="assets/js/script.js"></script>
 	<script src="assets/js/cart.js"></script>
-	<script>
-		$(document).ready(function () {
-			// Load navbar & activate discover icon
-			$('#navbar-placeholder').load('navbar.html', function () {
-				$('.discover-icon').addClass('active');
-			});
-			// Load details
-			const urlParams = new URLSearchParams(window.location.search);
-			const characterName = urlParams.get('name');
-			loadCharacterDetails(characterName);
-			populateVerticalScroll();
-		});
-	</script>
+	<script src="assets/js/chatterpreview.js"></script>
 
 </body>
