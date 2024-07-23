@@ -26,24 +26,24 @@ document.addEventListener('DOMContentLoaded', function() {
 // Function to fetch the profile and store it in the global variable
 function fetchProfile(callback) {
 	$.getJSON('/getProfile', function(data) {
-            profile = data;
-            if (callback) {
-                callback();
-            }
-        }).fail(function(jqXHR, textStatus, errorThrown) {
-            // Handle the failure
-            profile = null; // Set profile to null if there's an error
-            if (callback) {
-                callback();
-            }
-        });
+		profile = data;
+		if (callback) {
+			callback();
+		}
+	}).fail(function(jqXHR, textStatus, errorThrown) {
+		// Handle the failure
+		profile = null; // Set profile to null if there's an error
+		if (callback) {
+			callback();
+		}
+	});
 }
 function profileButton() {
 	$('#profile-link').on('click', function(e) {
 		e.preventDefault();
 		if (profile) {
 			window.location.href = 'profilepage.html';
-			
+
 		} else {
 			window.location.href = 'login.html';
 		}
@@ -99,69 +99,10 @@ function loadCartPopup() {
 		}
 	});
 }
-function login() {
-	$('#login-form').on('submit', function(e) {
-		e.preventDefault();
 
-		const formData = {
-			username: $('#username').val(),
-			password: $('#password').val()
-		};
 
-		$.ajax({
-			type: 'POST',
-			url: '/login',
-			contentType: 'application/json',
-			data: JSON.stringify(formData),
-			success: function(response) {
-				window.location.href = 'profilepage.html';
-			},
-			error: function(error) {
-				$('#error-message').text('Invalid username or password');
-			}
-		});
-	});
-}
-function logout() {
-	$.ajax({
-		type: 'POST',
-		url: '/logout',
-		success: function() {
-			// Redirect to login page after successful logout
-			window.location.href = 'login.html';
-		},
 
-	});
-}
 
-function loadCreateAccount() {
-	$('#create-account-form').on('submit', function(e) {
-		e.preventDefault();
-
-		const formData = {
-			name: $('#name').val(),
-			username: $('#username').val(),
-			email: $('#email').val(),
-			password: $('#password').val()
-		};
-		$.ajax({
-			type: 'POST',
-			url: '/createAccount',
-			contentType: 'application/json',
-			data: JSON.stringify(formData),
-			success: function(response) {
-				window.location.href = 'profilepage.html';
-			},
-			error: function(error) {
-				if (error.status === 409) {
-					$('#error-message').text('Username already exists!');
-				} else {
-					$('#error-message').text('Error occurred. Please try again.');
-				}
-			}
-		});
-	});
-}
 // Function to update the profile
 function loadUpdateProfile() {
 	$('#submitButton').on('click', function(e) {
@@ -236,14 +177,13 @@ function populateChatterCircles(myChatters) {
 
 // Function to filter character data based on categories and price
 function filterShopCharacterData(selectedCategories = [], selectedPrice = 100) {
-	
 	$.getJSON('/chatters', function(characterData) {
 		const filteredData = characterData.filter(character => {
 			const matchesCategory = selectedCategories.length === 0 || character.category.some(cat => selectedCategories.includes(cat));
 			const matchesPrice = character.price <= selectedPrice;
 			return matchesCategory && matchesPrice;
 		});
-const shopContainer = $('.shop-character-card-container');
+		const shopContainer = $('.shop-character-card-container');
 		// Clear previous content before appending new data
 		shopContainer.empty();
 
