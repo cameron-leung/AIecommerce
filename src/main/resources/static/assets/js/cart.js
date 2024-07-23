@@ -58,21 +58,7 @@ function fetchCart(callback) {
 		callback(cartItems)  // Pass cartItems to callback function
 	})
 }
-// Fetch data for cart items
-function fetchCartItems() {
-	$.getJSON('/cart', function(data) {
-		var cartItems = [];
-		data.forEach(item => {
-			cartItems.push(item);
-		});
-		// Repopulate the array with fetched data
-		if (cartItems.length > 0) {
-			fetchCartCards(cartItems); // Pass the cart items to the fetchCartCards function
-		}
 
-		return cartItems;
-	})
-}
 function loadCartPopup() {
 	var cartPopupOpen = false;
 	// Open the cart popup
