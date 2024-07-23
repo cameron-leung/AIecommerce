@@ -109,25 +109,7 @@ function fetchCartPopup() {
 		// Calculate subtotal and tax
 	})
 }
-// Fetch data for cart items
-function fetchCartCards(cartItems) {
-	if (cartItems) {
-		const cartCardsHeader = $('.cart-cards-header');
-		const cartCardsContainer = $('.cart-cards-container');
-		cartCardsHeader.empty();
-		cartCardsContainer.empty();
-		if (cartItems.length > 0) {
-			//cartCardsContainer.empty(); // Clear existing items
-			cartCardsHeader.append('<h1 class="mt-3 display-4">Cart</h1>');
-			$.get('chattercard.html', function(template) {
-				cartItems.forEach(function(chatter) {
-					const populatedCard = populateCard(template, chatter);
-					cartCardsContainer.append(populatedCard);
-				});
-			})
-		}
-	}
-}
+
 function fetchCartPurchase() {
 	$.getJSON('/cart', function(cartItems) {
 		$('#purchaseItemsContainer').empty(); // Clear existing items
