@@ -29,18 +29,4 @@
 	</div>
 </div>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
-<script>
-	$(document).ready(function () {
-		$(document).on('click', '#check-icon', function () {
-			$(this).toggleClass("fa-square fa-square-check");
-		});
-		// Event listener for trash
-		$(document).on('click', '.fa-trash', function () {
-			var chatterName = $(this).attr('id');
-			removeFromCart(chatterName);
-		});
-
-	});
-	loadCartPopup();
-</script>
+<script src="assets/js/cart.js"></script>
