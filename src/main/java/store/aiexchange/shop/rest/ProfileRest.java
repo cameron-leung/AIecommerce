@@ -26,7 +26,6 @@ public class ProfileRest {
 
     @Autowired
     private ProfileRepository profileRepository;
-    private Profile profile;
 
     @PostMapping("/createAccount")
     public ResponseEntity<?> createProfile(@RequestBody Profile accountData) {
