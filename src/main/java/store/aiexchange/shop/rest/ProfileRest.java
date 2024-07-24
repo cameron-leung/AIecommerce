@@ -41,7 +41,7 @@ public class ProfileRest {
                     accountData.getEmail(), encodedPassword);
             profileRepository.save(profile);
             
-            response = new ResponseEntity<>(profile, HttpStatus.CREATED);
+            response = new ResponseEntity<>(profile.toProfileData(), HttpStatus.CREATED);
         }
 
         return response;
@@ -73,7 +73,7 @@ public class ProfileRest {
                 }
                 profileRepository.save(profile);
 
-                response = new ResponseEntity<>(profile, HttpStatus.OK);
+                response = new ResponseEntity<>(profile.toProfileData(), HttpStatus.OK);
             }
         }
 
@@ -88,7 +88,7 @@ public class ProfileRest {
         if (profile == null) {
             response = new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } else {
-        	response = new ResponseEntity<>(profile, HttpStatus.OK);
+        	response = new ResponseEntity<>(profile.toProfileData(), HttpStatus.OK);
         }
         return response;
     }

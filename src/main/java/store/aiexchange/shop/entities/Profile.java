@@ -6,8 +6,8 @@ import java.util.List;
 import org.springframework.data.annotation.Id;
 
 public class Profile {
-	@Id
-	private String _id;
+    @Id
+    private String _id;
     private String name;
     private String username;
     private String password;
@@ -25,10 +25,10 @@ public class Profile {
         this.username = username;
         this.password = password;
         this.email = email;
-        this.myChatters= new ArrayList<Chatter>();
-        this.myOrders = new ArrayList<Order>();
-        this.followers = new ArrayList<Profile>();
-        this.following = new ArrayList<Profile>();
+        this.myChatters = new ArrayList<>();
+        this.myOrders = new ArrayList<>();
+        this.followers = new ArrayList<>();
+        this.following = new ArrayList<>();
     }
 
     // Getters and Setters
@@ -67,47 +67,68 @@ public class Profile {
     public List<Chatter> getMyChatters() {
         return myChatters;
     }
-    
-    public int getNumMyChatters() {
-    	return myChatters.size();
+
+    public void setMyChatters(List<Chatter> myChatters) {
+        this.myChatters = myChatters;
     }
 
-    public void addToMyChatters(Chatter chatter) {
-        this.myChatters.add(chatter);
+    public List<Order> getMyOrders() {
+        return myOrders;
     }
-    public void removeFromMyChatters(Chatter chatter) {
-        this.myChatters.remove(chatter);
+
+    public void setMyOrders(List<Order> myOrders) {
+        this.myOrders = myOrders;
     }
-    public void addToMyOrders(Order order) {
-    	this.myOrders.add(order);
-    }
-    public void removeFromMyOrders(Order order) {
-    	this.myOrders.remove(order);
-    }
+
     public List<Profile> getFollowers() {
         return followers;
     }
-    
-    public int getNumFollowers() {
-    	return followers.size();
+
+    public void setFollowers(List<Profile> followers) {
+        this.followers = followers;
     }
 
-    public void addToFollowers(Profile profile) {
-        this.followers.add(profile);
-    }
     public List<Profile> getFollowing() {
-        return followers;
-    }
-    
-    public int getNumFollowing() {
-    	return following.size();
+        return following;
     }
 
-    public void addToFollowing(Profile profile) {
-        this.following.add(profile);
+    public void setFollowing(List<Profile> following) {
+        this.following = following;
     }
-    public void removeFromFollowing(Profile profile) {
-        this.following.remove(profile);
+
+    // Convert to ProfileData
+    public ProfileData toProfileData() {
+        ProfileData profileData = new ProfileData();
+        profileData.setMyChatters(this.myChatters);
+        profileData.setMyOrders(this.myOrders);
+        profileData.setFollowers(convertProfilesToProfileData(this.followers));
+        profileData.setFollowing(convertProfilesToProfileData(this.following));
+        return profileData;
     }
-    //method to convert profile into profiledata class
+
+    // Convert ProfileData to Profile
+    public static Profile fromProfileData(ProfileData profileData, String name, String username, String email, String password) {
+        Profile profile = new Profile(name, username, email, password);
+        profile.setMyChatters(profileData.getMyChatters());
+        profile.setMyOrders(profileData.getMyOrders());
+        profile.setFollowers(convertProfileDataToProfiles(profileData.getFollowers()));
+        profile.setFollowing(convertProfileDataToProfiles(profileData.getFollowing()));
+        return profile;
+    }
+
+    private static List<Profile> convertProfileDataToProfiles(List<ProfileData> profileDataList) {
+        List<Profile> profiles = new ArrayList<>();
+        for (ProfileData data : profileDataList) {
+            profiles.add(Profile.fromProfileData(data, "", "", "", ""));
+        }
+        return profiles;
+    }
+
+    private static List<ProfileData> convertProfilesToProfileData(List<Profile> profiles) {
+        List<ProfileData> profileDataList = new ArrayList<>();
+        for (Profile profile : profiles) {
+            profileDataList.add(profile.toProfileData());
+        }
+        return profileDataList;
+    }
 }
