@@ -10,6 +10,7 @@ $(document).ready(function() {
 function login() {
 	$('#login-form').on('submit', function(e) {
 		e.preventDefault();
+		console.log('logging in');
 
 		const formData = {
 			username: $('#username').val(),
@@ -25,6 +26,7 @@ function login() {
 				window.location.href = 'profilepage.html';
 			},
 			error: function(error) {
+				console.error('Login failed:', error);
 				$('#error-message').text('Invalid username or password');
 			}
 		});

@@ -3,6 +3,11 @@ package store.aiexchange.shop.rest;
 
 import java.util.List;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,7 +26,7 @@ public class ProfileRest {
 
     @Autowired
     private ProfileRepository profileRepository;
-    private Profile profile;
+
 
     @PostMapping("/createAccount")
     public ResponseEntity<?> createProfile(@RequestBody Profile accountData) {
@@ -31,8 +36,7 @@ public class ProfileRest {
             response = new ResponseEntity<>("Username already exists", HttpStatus.CONFLICT);
         } else {
             BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder(); 
-            String encodedPassword = passwordEncoder.encode(accountData.getPassword()); 
-            
+            String encodedPassword = passwordEncoder.encode(accountData.getPassword());
             Profile profile = new Profile(accountData.getName(), accountData.getUsername(),
                     accountData.getEmail(), encodedPassword);
             profileRepository.save(profile);
@@ -43,9 +47,11 @@ public class ProfileRest {
         return response;
     }
     @PostMapping("/updateProfile")
-    public ResponseEntity<?> updateProfile(@RequestBody Profile updatedProfileData) {
+    public ResponseEntity<?> updateProfile(HttpServletRequest request, @RequestBody Profile updatedProfileData) {
         ResponseEntity<?> response;
-
+        HttpSession session = request.getSession();
+        Profile profile = (Profile) session.getAttribute("profile");
+        
         if (profile == null) {
             response = new ResponseEntity<>("No profile is currently logged in", HttpStatus.UNAUTHORIZED);
         } else {
@@ -85,8 +91,8 @@ public class ProfileRest {
     }
     
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody Profile loginData) {
-        Profile existingProfile = profileRepository.findByUsername(loginData.getUsername());
+    public ResponseEntity<?> login(HttpServletRequest request, @RequestBody Profile loginData) {
+    	Profile existingProfile = profileRepository.findByUsername(loginData.getUsername());
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder(); 
         ResponseEntity<?> response;
         if (existingProfile == null) {
@@ -95,26 +101,34 @@ public class ProfileRest {
         	if (!passwordEncoder.matches(loginData.getPassword(), existingProfile.getPassword())) {
         		response = new ResponseEntity<>("Incorrect password", HttpStatus.UNAUTHORIZED);
             } else {
-            	profile = existingProfile; // Set the profile if login is successful
-            	response = new ResponseEntity<>(profile, HttpStatus.OK);
+            	request.getSession().setAttribute("profile", existingProfile);
+                return new ResponseEntity<>(existingProfile, HttpStatus.OK);
             }
-            
         }
         return response;
     }
     
     @GetMapping("/getProfile")
-    public Profile getProfile() {
-    	return profile;
+    public Profile getProfile(HttpServletRequest request) {
+    	HttpSession session = request.getSession();
+        Profile profile = (Profile) session.getAttribute("profile");
+        return profile;
     }
     
     @PostMapping("/logout")
-    public void logout() {
-    	profile = null;
+    public ResponseEntity<?> logout(HttpServletRequest request) {
+        request.getSession().invalidate();
+        return new ResponseEntity<>(HttpStatus.OK);
     }
     
     @PostMapping("/addToMyChatters")
-    public ResponseEntity<?> addChatters(@RequestBody List<Chatter> cart) {
+    public ResponseEntity<?> addChatters(HttpServletRequest request, @RequestBody List<Chatter> cart) {
+        HttpSession session = request.getSession();
+        Profile profile = (Profile) session.getAttribute("profile");
+        if (profile == null) {
+            return new ResponseEntity<>("No profile is currently logged in", HttpStatus.UNAUTHORIZED);
+        }
+
         cart.forEach(profile::addToMyChatters);
         profileRepository.save(profile);
 
