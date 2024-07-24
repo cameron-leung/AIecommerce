@@ -3,14 +3,13 @@ $(document).ready(function() {
 	$('#navbar-placeholder').load('navbar.html', function() {
 		$('.profile-icon').addClass('active');
 	});
-
+	console.log("doc ready. calling login");
 	login();
 	loadCreateAccount();
 });
 function login() {
 	$('#login-form').on('submit', function(e) {
 		e.preventDefault();
-		console.log('logging in');
 
 		const formData = {
 			username: $('#username').val(),
@@ -23,8 +22,8 @@ function login() {
 			contentType: 'application/json',
 			data: JSON.stringify(formData),
 			success: function(response) {
+				document.cookie = `username=${formData.username}; path=/`;
 				window.location.href = 'profilepage.html';
-				//use form data -- reutrn name for profile store cookie
 			},
 			error: function(error) {
 				console.error('Login failed:', error);
@@ -34,12 +33,14 @@ function login() {
 	});
 }
 function logout() {
+	const username = getCookie('username');
 	$.ajax({
 		type: 'POST',
 		url: '/logout',
-		//from cookie pull profile username to logout data: ,
+		data: JSON.stringify({ username: username }),
+		contentType: 'application/json',
 		success: function() {
-			// Redirect to login page after successful logout
+			document.cookie = 'username=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/';
 			window.location.href = 'login.html';
 		},
 
@@ -73,3 +74,4 @@ function loadCreateAccount() {
 		});
 	});
 }
+

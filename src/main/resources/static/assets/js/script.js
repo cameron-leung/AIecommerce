@@ -25,18 +25,26 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 // Function to fetch the profile and store it in the global variable
 function fetchProfile(callback) {
-	$.getJSON('/getProfile', function(data) {
-		profile = data;
-		if (callback) {
-			callback();
-		}
-	}).fail(function(jqXHR, textStatus, errorThrown) {
-		// Handle the failure
-		profile = null; // Set profile to null if there's an error
-		if (callback) {
-			callback();
-		}
-	});
+	const username = getCookie('username');
+    if (username) {
+        $.getJSON(`/findByUsername?username=${username}`, function(data) {
+            profile = data;
+            if (callback) {
+                callback();
+            }
+        }).fail(function(jqXHR, textStatus, errorThrown) {
+            // Handle the failure
+            profile = null; // Set profile to null if there's an error
+            if (callback) {
+                callback();
+            }
+        });
+    } else {
+        profile = null;
+        if (callback) {
+            callback();
+        }
+    }
 }
 function profileButton() {
 	$('#profile-link').on('click', function(e) {
@@ -126,4 +134,9 @@ function populateChatterCircles(myChatters) {
 			container.append(populatedCircle);
 		});
 	})
+}
+function getCookie(name) {
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; ${name}=`);
+    if (parts.length === 2) return parts.pop().split(';').shift();
 }
