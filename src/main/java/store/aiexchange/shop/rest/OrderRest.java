@@ -16,12 +16,21 @@ public class OrderRest {
 
     @Autowired
     private OrderRepository orderRepository;
+    @Autowired
+    private ProfileRest profileRest;
+    //PROFILErest.getprofileMap()
+    @Autowired
+    private CartRest cartRest;
+    @Autowired
+    private ChatterRest chatterRest;
 
     @PostMapping("/addOrder")
     public Order addOrder(@RequestBody Order orderData) {
     	Order newOrder = new Order(orderData.getName(), orderData.getUsername(),
                 orderData.getCardholderName(), orderData.getOrderItems());
-    	return orderRepository.save(newOrder);
+    	profileRest.addChatters(orderData.getUsername(), orderData.getOrderItems());
+    	cartRest.clearCart();
+    	return orderRepository.save(newOrder); //return HTTPS success
     }
 
     @GetMapping("/orders")

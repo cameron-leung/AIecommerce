@@ -27,31 +27,7 @@ $(document).ready(function() {
 				data: JSON.stringify(orderData),
 				success: function(response) {
 					console.log('Order placed successfully:', response);
-					// Add chatters to profile
-					$.ajax({
-						type: 'POST',
-						url: '/addToMyChatters',
-						contentType: 'application/json',
-						data: JSON.stringify(cartItems),
-						success: function(response) {
-							console.log('Chatters added successfully:', response);
-							// Optionally, clear cart or handle UI updates
-							$.ajax({
-								type: 'POST',
-								url: '/clearCart',
-								success: function(response) {
-									console.log('Cart cleared successfully:', response);
-									window.location.href = '/profilepage.html';
-								},
-								error: function(xhr, status, error) {
-									console.error('Failed to clear cart:', error);
-								}
-							});
-						},
-						error: function(xhr, status, error) {
-							console.error('Failed to add chatters:', error);
-						}
-					});
+					window.location.href = 'profilepage.html';
 				},
 				error: function(xhr, status, error) {
 					console.error('Failed to place order:', error);

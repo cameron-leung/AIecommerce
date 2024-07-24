@@ -24,6 +24,7 @@ function login() {
 			data: JSON.stringify(formData),
 			success: function(response) {
 				window.location.href = 'profilepage.html';
+				//use form data -- reutrn name for profile store cookie
 			},
 			error: function(error) {
 				console.error('Login failed:', error);
@@ -36,6 +37,7 @@ function logout() {
 	$.ajax({
 		type: 'POST',
 		url: '/logout',
+		//from cookie pull profile username to logout data: ,
 		success: function() {
 			// Redirect to login page after successful logout
 			window.location.href = 'login.html';

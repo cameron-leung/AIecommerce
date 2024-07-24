@@ -63,10 +63,8 @@ public class CartRest {
         return removeFromList(name, cart);
     }
     
-    @PostMapping("/clearCart")
-    public String clearCart() {
+    public void clearCart() {
     	cart.clear();
-    	return "cart cleared successfully";
     }
     
     @PostMapping("/removeFromPurchase")

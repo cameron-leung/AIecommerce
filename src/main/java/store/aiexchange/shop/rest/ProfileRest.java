@@ -2,11 +2,8 @@ package store.aiexchange.shop.rest;
 
 
 import java.util.List;
-
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,15 +15,18 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import store.aiexchange.shop.entities.Chatter;
+import store.aiexchange.shop.entities.Login;
+import store.aiexchange.shop.entities.Profile;
 import store.aiexchange.shop.repositories.ProfileRepository;
-import store.aiexchange.shop.entities.*;
 
 @RestController
 public class ProfileRest {
+	private static final Map<String, Profile> PROFILE_MAP = new ConcurrentHashMap<String, Profile>();
 
     @Autowired
     private ProfileRepository profileRepository;
-
+    private Profile profile;
 
     @PostMapping("/createAccount")
     public ResponseEntity<?> createProfile(@RequestBody Profile accountData) {
@@ -36,7 +36,8 @@ public class ProfileRest {
             response = new ResponseEntity<>("Username already exists", HttpStatus.CONFLICT);
         } else {
             BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder(); 
-            String encodedPassword = passwordEncoder.encode(accountData.getPassword());
+            String encodedPassword = passwordEncoder.encode(accountData.getPassword()); 
+            
             Profile profile = new Profile(accountData.getName(), accountData.getUsername(),
                     accountData.getEmail(), encodedPassword);
             profileRepository.save(profile);
@@ -47,11 +48,9 @@ public class ProfileRest {
         return response;
     }
     @PostMapping("/updateProfile")
-    public ResponseEntity<?> updateProfile(HttpServletRequest request, @RequestBody Profile updatedProfileData) {
+    public ResponseEntity<?> updateProfile(@RequestBody Profile updatedProfileData) {
         ResponseEntity<?> response;
-        HttpSession session = request.getSession();
-        Profile profile = (Profile) session.getAttribute("profile");
-        
+
         if (profile == null) {
             response = new ResponseEntity<>("No profile is currently logged in", HttpStatus.UNAUTHORIZED);
         } else {
@@ -91,8 +90,8 @@ public class ProfileRest {
     }
     
     @PostMapping("/login")
-    public ResponseEntity<?> login(HttpServletRequest request, @RequestBody Profile loginData) {
-    	Profile existingProfile = profileRepository.findByUsername(loginData.getUsername());
+    public ResponseEntity<?> login(@RequestBody Login loginData) {
+        Profile existingProfile = profileRepository.findByUsername(loginData.getUsername());
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder(); 
         ResponseEntity<?> response;
         if (existingProfile == null) {
@@ -101,37 +100,29 @@ public class ProfileRest {
         	if (!passwordEncoder.matches(loginData.getPassword(), existingProfile.getPassword())) {
         		response = new ResponseEntity<>("Incorrect password", HttpStatus.UNAUTHORIZED);
             } else {
-            	request.getSession().setAttribute("profile", existingProfile);
-                return new ResponseEntity<>(existingProfile, HttpStatus.OK);
+            	PROFILE_MAP.put(existingProfile.getUsername(), existingProfile); 
+            	response = new ResponseEntity<>(existingProfile.getUsername(), HttpStatus.OK);
             }
+            
         }
         return response;
     }
     
     @GetMapping("/getProfile")
-    public Profile getProfile(HttpServletRequest request) {
-    	HttpSession session = request.getSession();
-        Profile profile = (Profile) session.getAttribute("profile");
-        return profile;
+    public Profile getProfile() {
+    	return profile;
     }
     
     @PostMapping("/logout")
-    public ResponseEntity<?> logout(HttpServletRequest request) {
-        request.getSession().invalidate();
-        return new ResponseEntity<>(HttpStatus.OK);
+    public void logout(@RequestBody String username) {
+    	PROFILE_MAP.remove(username);
     }
     
-    @PostMapping("/addToMyChatters")
-    public ResponseEntity<?> addChatters(HttpServletRequest request, @RequestBody List<Chatter> cart) {
-        HttpSession session = request.getSession();
-        Profile profile = (Profile) session.getAttribute("profile");
-        if (profile == null) {
-            return new ResponseEntity<>("No profile is currently logged in", HttpStatus.UNAUTHORIZED);
-        }
-
+    
+    public void addChatters(String username, List<Chatter> cart) {
+    	Profile profile =  PROFILE_MAP.get(username);
         cart.forEach(profile::addToMyChatters);
         profileRepository.save(profile);
-
-        return new ResponseEntity<>(profile, HttpStatus.OK);
+        // all return w profile change to profile.get...() 
     }
 }

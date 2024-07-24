@@ -109,4 +109,5 @@ public class Profile {
     public void removeFromFollowing(Profile profile) {
         this.following.remove(profile);
     }
+    //method to convert profile into profiledata class
 }
