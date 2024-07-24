@@ -3,7 +3,7 @@ $(document).ready(function() {
 	$('#navbar-placeholder').load('navbar.html', function() {
 		$('.profile-icon').addClass('active');
 	});
-	console.log("doc ready. calling login");
+
 	login();
 	loadCreateAccount();
 });

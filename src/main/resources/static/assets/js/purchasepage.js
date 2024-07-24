@@ -26,11 +26,10 @@ $(document).ready(function() {
 				contentType: 'application/json',
 				data: JSON.stringify(orderData),
 				success: function(response) {
-					console.log('Order placed successfully:', response);
 					window.location.href = 'profilepage.html';
 				},
 				error: function(xhr, status, error) {
-					console.error('Failed to place order:', error);
+					$('#purchase-error-message').text('Failed to place order');
 				}
 			});
 		});

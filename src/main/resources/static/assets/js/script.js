@@ -1,6 +1,7 @@
 const characterData = [];
 let profile = null;
 
+
 // Wrap your code in DOMContentLoaded event listener
 document.addEventListener('DOMContentLoaded', function() {
 	// Check if the backButton element exists before adding event listener
@@ -26,7 +27,14 @@ document.addEventListener('DOMContentLoaded', function() {
 // Function to fetch the profile and store it in the global variable
 function fetchProfile(callback) {
 	const username = getCookie('username');
-    if (username) {
+
+	if(username == 'someuser') {
+		profile = null;
+        if (callback) {
+            callback();
+        }
+	} else {
+		if (username) {
         $.getJSON(`/findByUsername?username=${username}`, function(data) {
             profile = data;
             if (callback) {
@@ -39,12 +47,8 @@ function fetchProfile(callback) {
                 callback();
             }
         });
-    } else {
-        profile = null;
-        if (callback) {
-            callback();
-        }
-    }
+	}
+	}
 }
 function profileButton() {
 	$('#profile-link').on('click', function(e) {

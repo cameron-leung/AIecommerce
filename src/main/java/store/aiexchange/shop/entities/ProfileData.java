@@ -1,11 +1,21 @@
 package store.aiexchange.shop.entities;
 
+import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.data.annotation.Id;
-
 public class ProfileData {
-
+	private List<Chatter> myChatters;
+    private List<Order> myOrders;
+    private List<Profile> followers;
+    private List<Profile> following;
+    
+    public ProfileData() {
+		this.myChatters = new ArrayList<>();
+		this.myOrders = new ArrayList<>();
+		this.followers = new ArrayList<>();
+		this.following = new ArrayList<>();
+	}
+    
     public List<Chatter> getMyChatters() {
 		return myChatters;
 	}
@@ -30,8 +40,5 @@ public class ProfileData {
 	public void setFollowing(List<Profile> following) {
 		this.following = following;
 	}
-	private List<Chatter> myChatters;
-    private List<Order> myOrders;
-    private List<Profile> followers;
-    private List<Profile> following;
+	
 }
