@@ -32,8 +32,10 @@ function loadProfile() {
 function loadUpdateProfile() {
 	$('#submitButton').on('click', function(e) {
 		e.preventDefault();
+		const username = getCookie('username');
 		var nameInput = $('#nameInput').val().trim();
 		var usernameInput = $('#usernameInput').val().trim();
+		console.log('updating: ', username);
 
 		if (nameInput === '' && usernameInput === '') {
 			$('#error-message').text('Please fill out at least one field.');
@@ -42,7 +44,8 @@ function loadUpdateProfile() {
 
 		const formData = {
 			name: nameInput,
-			username: usernameInput
+			username: usernameInput,
+			currentUsername: username
 		};
 
 		$.ajax({
