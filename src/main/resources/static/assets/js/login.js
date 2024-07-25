@@ -26,7 +26,6 @@ function login() {
 				window.location.href = 'profilepage.html';
 			},
 			error: function(error) {
-				console.error('Login failed:', error);
 				$('#error-message').text('Invalid username or password');
 			}
 		});

@@ -27,30 +27,21 @@ document.addEventListener('DOMContentLoaded', function() {
 function fetchProfile(callback) {
 	const username = Cookies.get('username');
 
-	if (username == 'someuser') {
+	if (username == 'someuser' || !username || username == null) {
 		profile = null;
 		Cookies.set('profile', null, { path: '/' });
-		if (callback) {
-			callback();
-		}
+		callback();
 	} else {
 		if (username) {
-			console.log('finding by username', username);
 			$.getJSON(`/findByUsername?username=${username}`, function(data) {
 				profile = data;
-				console.log("found username: ", profile);
 				Cookies.set('profile', JSON.stringify(profile), { path: '/' });
-				if (callback) {
-					callback();
-				}
+				callback();
 			}).fail(function(jqXHR, textStatus, errorThrown) {
 				// Handle the failure
 				profile = null; // Set profile to null if there's an error
-				console.log("didnt find username: ", profile);
 				Cookies.set('profile', null, { path: '/' });
-				if (callback) {
-					callback();
-				}
+				callback();
 			});
 		}
 	}

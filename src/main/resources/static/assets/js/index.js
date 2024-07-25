@@ -29,9 +29,7 @@ function loadIndex() {
 				populateChatterCircles(profile.myChatters);
 			}
 		}
-	}).fail(function() {
-		console.error('Failed to fetch chatters data');
-	});;
+	});
 }
 // Index page cards filtering
 function populateIndexChatters() {
@@ -56,7 +54,5 @@ function populateIndexChatters() {
 			const populatedCard = populateCard(template, character);
 			Friendscards.append(populatedCard);
 		});
-	}).fail(function() {
-		console.error('Failed to load chattercard.html');
 	});
 }

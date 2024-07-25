@@ -14,7 +14,6 @@ function loadProfile() {
         try {
             profile = JSON.parse(profileCookie);
         } catch (e) {
-            console.error('Failed to parse profile cookie:', e);
             profile = null;
         }
     }
@@ -43,7 +42,6 @@ function loadUpdateProfile() {
 		var nameInput = $('#nameInput').val().trim();
 		var usernameInput = $('#usernameInput').val().trim();
 		const username = Cookies.get('username');
-		console.log('updating: ', username);
 
 		if (nameInput === '' && usernameInput === '') {
 			$('#error-message').text('Please fill out at least one field.');
