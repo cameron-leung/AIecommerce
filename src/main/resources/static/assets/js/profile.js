@@ -78,18 +78,15 @@ function loadUpdateProfile() {
 }
 // Fetch data for cart items
 function fetchCartItems() {
-	$.getJSON('/cart', function(data) {
-		var cartItems = [];
-		data.forEach(item => {
-			cartItems.push(item);
-		});
-		// Repopulate the array with fetched data
-		if (cartItems.length > 0) {
-			fetchCartCards(cartItems); // Pass the cart items to the fetchCartCards function
-		}
-
-		return cartItems;
-	})
+	const cartData = Cookies.get('cart');
+    let cartItems = [];
+    if (cartData) {
+        cartItems = JSON.parse(cartData);
+    }
+    if (cartItems.length > 0) {
+        fetchCartCards(cartItems); // Pass the cart items to the fetchCartCards function
+    }
+    return cartItems;
 }
 // Fetch data for cart items
 function fetchCartCards(cartItems) {

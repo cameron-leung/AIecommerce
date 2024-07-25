@@ -9,26 +9,20 @@ $(document).ready(function() {
 	});
 	loadCartPopup();
 });
-
-// Frontend for purchase page cart
-function purchaseItemHtml(item) {
-	return `
-        <!--  Cart item -->
-        <div class="d-flex flex-column w-100 overflow-hidden mb-3">
-            <div class="d-flex flex-row align-items-flex-start justify-content-start">
-                <img class="chatter-image object-fit-cover rounded-3 w-50" src="assets/img/${item.name.replace(/\s+/g, '')}Rectangle.jpg" style="height: 20vh;">
-                <div class="flex-column w-50 pl-1">
-                    <h3 class="chatter-name m-0 p-0">${item.name}</h3>
-                    <h5 class="chatter-username mt-0 mb-5">${item.username}</h5>
-                    <div class="d-flex flex-row justify-content-between">
-                        <h5 class="m-0 w-auto">Price</h5>
-                        <h5 class="chatter-price w-auto mr-0 text-end">$${item.price}</h5>
-                    </div>
-                </div>
-            </div>
-        </div>
-    `;
+function initializeCart() {
+    const cartData = Cookies.get('cart');
+    if (cartData) {
+        return JSON.parse(cartData);
+    } else {
+        return [];
+    }
 }
+
+function saveCart(cart) {
+    Cookies.set('cart', JSON.stringify(cart), { path: '/' });
+}
+
+
 // Frontend for cart popup
 function cartItemHtml(item) {
 	return `
@@ -90,69 +84,52 @@ function loadCartPopup() {
 }
 
 function fetchCartPopup() {
-	$.getJSON('/cart', function(cartItems) {
-		$('#cartItemsContainer').empty(); // Clear existing items
-		if (cartItems) {
-			if (cartItems.length > 0) {
-				$('#empty-cart-message').hide();
-				cartItems.forEach(function(item) {
-					itemHtml = cartItemHtml(item);
-					$('#cartItemsContainer').append(itemHtml);
-				});
-			} else {
-			$('#empty-cart-message').show();
-			$('#empty-cart-message').text('Cart is empty');
-		}
-		}
-		
-		getPrice(cartItems);
-		// Calculate subtotal and tax
-	})
+    let cart = initializeCart();
+    $('#cartItemsContainer').empty(); // Clear existing items
+    if (cart.length > 0) {
+        $('#empty-cart-message').hide();
+        cart.forEach(function(item) {
+            var itemHtml = cartItemHtml(item);
+            $('#cartItemsContainer').append(itemHtml);
+        });
+    } else {
+        $('#empty-cart-message').show();
+        $('#empty-cart-message').text('Cart is empty');
+    }
+    getPrice(cart);
 }
 
-function fetchCartPurchase() {
-	$.getJSON('/cart', function(cartItems) {
-		$('#purchaseItemsContainer').empty(); // Clear existing items
-		if (cartItems.length > 0) {
-			cartItems.forEach(function(item) {
-				var itemHtml = purchaseItemHtml(item);
-				$('#purchaseItemsContainer').append(itemHtml);
-			});
-		}
-		getPrice(cartItems);
-	});
-}
+
+
+
 function updateCheckoutButton() {
-	fetchCart(function(cartItems) {
-		// Check if there are items in the cart
-		const profile = Cookies.get('profile');
-		if (cartItems.length > 0 && profile) {
-			// Cart has items: Make button pink and enable click to go to purchase page
-			$('#checkoutButton')
-				.css({
-					'color': '#FF206E',
-					'border-color': '#FF206E',
-					'cursor': 'pointer'
-				})
-				.removeAttr('disabled')
-				.click(function() {
-					window.location.href = 'purchasepage.html'; // Replace with your purchase page URL
-				});
-		} else {
-			// Cart is empty: Make button grey and disable click
-			$('#checkoutButton')
-				.css({
-					'color': 'grey',
-					'border-color': 'grey',
-					'cursor': 'not-allowed'
-				})
-				.attr('disabled', 'disabled')
-				.click(function(event) {
-					event.preventDefault(); // Prevent default action if clicked (though button is disabled)
-				});
-		}
-	});
+    let cart = initializeCart();
+    const profile = Cookies.get('profile');
+    if (cart.length > 0 && profile) {
+        $('#checkoutButton')
+            .css({
+                'color': '#FF206E',
+                'border-color': '#FF206E',
+                'cursor': 'pointer'
+            })
+            .removeAttr('disabled')
+            .click(function() {
+                window.location.href = 'purchasepage.html'; // Replace with your purchase page URL
+            });
+    } else {
+        $('#checkoutButton')
+            .css({
+                'color': 'grey',
+                'border-color': 'grey',
+                'cursor': 'not-allowed'
+            })
+            .attr('disabled', 'disabled')
+            .click(function(event) {
+                event.preventDefault(); // Prevent default action if clicked (though button is disabled)
+            });
+    }
 }
+
 function getPrice(cartItems) {
 	var subtotal = cartItems.reduce((total, item) => total + item.price, 0);
 	var tax = subtotal * 0.1;
@@ -163,28 +140,21 @@ function getPrice(cartItems) {
 }
 // Cart functionalities
 function addToCart(character) {
-	$.ajax({
-		type: 'POST',
-		url: '/addToCart',
-		contentType: 'application/json',
-		data: JSON.stringify(character),
-		success: function(response) {
-			updateCheckoutButton();
-			fetchCartPopup();
-			populateDetails(character); // Update character details on the page
-		},
-	});
+    let cart = initializeCart();
+    // Check if the character is already in the cart
+    const characterExists = cart.some(item => item.name.replace(/\s+/g, '') === character.name.replace(/\s+/g, ''));
+    if (!characterExists) {
+        cart.push(character);
+        saveCart(cart);
+    }
+    updateCheckoutButton();
+    fetchCartPopup();
 }
+
 function removeFromCart(name) {
-	$.ajax({
-		url: '/removeFromCart',
-		type: 'POST',
-		contentType: 'text/plain', // Specify the content type
-		data: name, // Convert the Chatter object to JSON
-		success: function(response) {
-			fetchCartPopup(); // Refresh cart items after removal
-			updateCheckoutButton();
-			fetchCartCards();
-		}
-	});
+    let cart = initializeCart();
+    cart = cart.filter(item => item.name.replace(/\s+/g, '') !== name.replace(/\s+/g, ''));
+    saveCart(cart);
+    fetchCartPopup();
+    updateCheckoutButton();
 }

@@ -104,5 +104,11 @@ public class ProfileData{
     public void removeFromMyChatters(Chatter chatter) {
         this.myChatters.remove(chatter);
     }
+    public void addToCart(List<Chatter> chatters) {
+    	cart = new Cart(chatters);
+    }
+    public Cart getCart() {
+    	return cart;
+    }
     
 }

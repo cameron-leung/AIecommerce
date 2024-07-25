@@ -10,6 +10,9 @@ public class Cart {
 	public Cart() {
 		cart = new ArrayList<>();
 	}
+	public Cart(List<Chatter> chatters) {
+		cart = chatters;
+	}
 	
 	public void addToCart(Chatter chatter) {
 		boolean chatterInCart = cart.stream()
