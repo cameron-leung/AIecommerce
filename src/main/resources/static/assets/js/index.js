@@ -19,10 +19,17 @@ $(document).ready(function() {
 
 });
 function loadIndex() {
+	const profileCookie = Cookies.get('profile');
+    if (profileCookie && profileCookie !== 'null') {
+        try {
+            profile = JSON.parse(profileCookie);
+        } catch (e) {
+            profile = null;
+        }
+    }
 	$.getJSON('/chatters', function(characters) {
 		characterData.push(...characters);
 		populateIndexChatters();
-		const profile = Cookies.get('profile');
 		if (profile) {
 			// Populate the chatters using myChatters from the profile
 			if (Array.isArray(profile.myChatters) && profile.myChatters.length > 0) {

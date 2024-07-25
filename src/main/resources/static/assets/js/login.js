@@ -42,7 +42,6 @@ function logout() {
 			Cookies.remove('username', { path: '/' });
 			window.location.href = 'login.html';
 		},
-
 	});
 }
 function loadCreateAccount() {

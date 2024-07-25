@@ -1,4 +1,3 @@
-
 const characterData = [];
 let profile = null;
 
