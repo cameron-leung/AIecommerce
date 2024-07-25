@@ -41,8 +41,9 @@ public class ProfileRest {
             Profile profile = new Profile(accountData.getName(), accountData.getUsername(),
                     accountData.getEmail(), encodedPassword);
             profileRepository.save(profile);
+            ProfileData profileData = new ProfileData(profile);
             
-            response = new ResponseEntity<>((ProfileData) profile, HttpStatus.CREATED);
+            response = new ResponseEntity<>(profileData, HttpStatus.CREATED);
         }
 
         return response;
@@ -72,9 +73,12 @@ public class ProfileRest {
                 if (newUsername != "") {
                     profile.setUsername(newUsername);
                 }
+                PROFILE_MAP.remove(currentUsername);
+                PROFILE_MAP.put(newUsername, profile);
                 profileRepository.save(profile);
+                ProfileData profileData = new ProfileData(profile);
 
-                response = new ResponseEntity<>((ProfileData) profile, HttpStatus.OK);
+                response = new ResponseEntity<>(profileData, HttpStatus.OK); 
             }
         }
 
@@ -89,8 +93,7 @@ public class ProfileRest {
             response = new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         } else {
         	Profile profile = profileRepository.findByUsername(username);
-        	profile.setPassword(null);
-        	ProfileData profileData = profile;
+        	ProfileData profileData = new ProfileData(profile);
         	
             if (profile == null) {
                 response = new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -128,13 +131,6 @@ public class ProfileRest {
     	PROFILE_MAP.remove(username);
     }
     
-    
-    //public void addChatters(String username, List<Chatter> cart) {
-    	//Profile profile =  PROFILE_MAP.get(username);
-    	//cart.forEach(profile::addToMyChatters);
-        //profileRepository.save(profile);
-        // all return w profile change to profile.get...() 
-    //}
     
     public void addChatters( String username, List<Chatter> chatters) {
         Profile profile = PROFILE_MAP.get(username);

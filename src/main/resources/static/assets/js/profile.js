@@ -9,7 +9,7 @@ $(document).ready(function() {
 	
 });
 function loadProfile() {
-	const profileCookie = getCookie('profile');
+	const profileCookie = Cookies.get('profile');
     if (profileCookie && profileCookie !== 'null') {
         try {
             profile = JSON.parse(profileCookie);
@@ -41,9 +41,10 @@ function loadProfile() {
 function loadUpdateProfile() {
 	$('#submitButton').on('click', function(e) {
 		e.preventDefault();
-		const username = getCookie('username');
+
 		var nameInput = $('#nameInput').val().trim();
 		var usernameInput = $('#usernameInput').val().trim();
+		const username = Cookies.get('username');
 		console.log('updating: ', username);
 
 		if (nameInput === '' && usernameInput === '') {
@@ -63,6 +64,7 @@ function loadUpdateProfile() {
 			contentType: 'application/json',
 			data: JSON.stringify(formData),
 			success: function(response) {
+				Cookies.set('username', formData.username, { path: '/' });
 				window.location.href = 'profilepage.html';
 			},
 			error: function(error) {
@@ -73,6 +75,7 @@ function loadUpdateProfile() {
 				} else {
 					$('#error-message').text('Error occurred. Please try again.');
 				}
+				
 			}
 		});
 	})

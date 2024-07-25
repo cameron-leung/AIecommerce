@@ -20,7 +20,7 @@ public class OrderRest {
     private OrderRepository orderRepository;
     @Autowired
     private ProfileRest profileRest;
-    //PROFILErest.getprofileMap()
+
     @Autowired
     private CartRest cartRest;
     @Autowired
@@ -28,15 +28,19 @@ public class OrderRest {
 
     @PostMapping("/addOrder")
     public Order addOrder(@RequestBody Order orderData) {
-    	//check if orderdata username is real
-    	Order newOrder = new Order(orderData.getName(), orderData.getUsername(),
-                orderData.getCardholderName(), orderData.getOrderItems());
 
-         // Call addChatters with the constructed requestBody map
-         profileRest.addChatters(orderData.getUsername(), orderData.getOrderItems());
+    	Order returnOrder = null;
+    	if(orderData.getUsername() != null) {
+    		Order newOrder = new Order(orderData.getName(), orderData.getUsername(),
+                    orderData.getCardholderName(), orderData.getOrderItems());
 
-         cartRest.clearCart();
-         return orderRepository.save(newOrder);
+             // Call addChatters with the constructed requestBody map
+             profileRest.addChatters(orderData.getUsername(), orderData.getOrderItems());
+
+             cartRest.clearCart();
+             returnOrder = orderRepository.save(newOrder);  
+    	}
+    	return returnOrder;
     }
 
     @GetMapping("/orders")

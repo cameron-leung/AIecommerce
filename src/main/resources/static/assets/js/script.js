@@ -1,6 +1,6 @@
+
 const characterData = [];
 let profile = null;
-
 
 // Wrap your code in DOMContentLoaded event listener
 document.addEventListener('DOMContentLoaded', function() {
@@ -21,7 +21,6 @@ document.addEventListener('DOMContentLoaded', function() {
 		}
 		if (document.getElementById('index-page')) {
 			loadIndex();
-			document.cookie = null;
 		}
 		if (document.getElementById('profile-page')) {
 			loadProfile();
@@ -30,11 +29,11 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 // Function to fetch the profile and store it in the global variable
 function fetchProfile(callback) {
-	const username = getCookie('username');
+	const username = Cookies.get('username');
 
 	if (username == 'someuser') {
 		profile = null;
-		document.cookie = "profile=null; path=/";
+		Cookies.set('profile', null, { path: '/' });
 		if (callback) {
 			callback();
 		}
@@ -44,7 +43,7 @@ function fetchProfile(callback) {
 			$.getJSON(`/findByUsername?username=${username}`, function(data) {
 				profile = data;
 				console.log("found username: ", profile);
-				document.cookie = `profile=${JSON.stringify(profile)}; path=/`;
+				Cookies.set('profile', JSON.stringify(profile), { path: '/' });
 				if (callback) {
 					callback();
 				}
@@ -52,7 +51,7 @@ function fetchProfile(callback) {
 				// Handle the failure
 				profile = null; // Set profile to null if there's an error
 				console.log("didnt find username: ", profile);
-				document.cookie = "profile=null; path=/";
+				Cookies.set('profile', null, { path: '/' });
 				if (callback) {
 					callback();
 				}
@@ -148,9 +147,4 @@ function populateChatterCircles(myChatters) {
 			container.append(populatedCircle);
 		});
 	})
-}
-function getCookie(name) {
-	const value = `; ${document.cookie}`;
-	const parts = value.split(`; ${name}=`);
-	if (parts.length === 2) return parts.pop().split(';').shift();
 }

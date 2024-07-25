@@ -22,7 +22,7 @@ function login() {
 			contentType: 'application/json',
 			data: JSON.stringify(formData),
 			success: function(response) {
-				document.cookie = `username=${formData.username}; path=/`;
+				Cookies.set('username', formData.username, { path: '/' });
 				window.location.href = 'profilepage.html';
 			},
 			error: function(error) {
@@ -33,14 +33,14 @@ function login() {
 	});
 }
 function logout() {
-	const username = getCookie('username');
+	const username = Cookies.get('username');
 	$.ajax({
 		type: 'POST',
 		url: '/logout',
 		data: JSON.stringify({ username: username }),
 		contentType: 'application/json',
 		success: function() {
-			document.cookie = 'username=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/';
+			Cookies.remove('username', { path: '/' });
 			window.location.href = 'login.html';
 		},
 

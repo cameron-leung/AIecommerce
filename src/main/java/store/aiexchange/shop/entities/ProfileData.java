@@ -27,6 +27,15 @@ public class ProfileData{
         this.followers = new ArrayList<>();
         this.following = new ArrayList<>();
     }
+    public ProfileData(ProfileData other) {
+        this.name = other.name;
+        this.username = other.username;
+        this.email = other.email;
+        this.myChatters = new ArrayList<>(other.myChatters);
+        this.myOrders = new ArrayList<>(other.myOrders);
+        this.followers = new ArrayList<>(other.followers);
+        this.following = new ArrayList<>(other.following);
+    }
 
     // Getters and Setters
     public String getName() {
