@@ -9,6 +9,15 @@ $(document).ready(function() {
 	
 });
 function loadProfile() {
+	const profileCookie = getCookie('profile');
+    if (profileCookie && profileCookie !== 'null') {
+        try {
+            profile = JSON.parse(profileCookie);
+        } catch (e) {
+            console.error('Failed to parse profile cookie:', e);
+            profile = null;
+        }
+    }
 	if (profile) {
 		$('#profileName').text(profile.name || 'Unknown Name');
 		$('#profileUsername').text('@' + (profile.username || 'UnknownUsername'));

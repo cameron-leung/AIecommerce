@@ -1,6 +1,8 @@
 package store.aiexchange.shop.rest;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,11 +28,15 @@ public class OrderRest {
 
     @PostMapping("/addOrder")
     public Order addOrder(@RequestBody Order orderData) {
+    	//check if orderdata username is real
     	Order newOrder = new Order(orderData.getName(), orderData.getUsername(),
                 orderData.getCardholderName(), orderData.getOrderItems());
-    	profileRest.addChatters(orderData.getUsername(), orderData.getOrderItems());
-    	cartRest.clearCart();
-    	return orderRepository.save(newOrder); //return HTTPS success
+
+         // Call addChatters with the constructed requestBody map
+         profileRest.addChatters(orderData.getUsername(), orderData.getOrderItems());
+
+         cartRest.clearCart();
+         return orderRepository.save(newOrder);
     }
 
     @GetMapping("/orders")

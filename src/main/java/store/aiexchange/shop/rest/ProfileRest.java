@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import store.aiexchange.shop.entities.Chatter;
 import store.aiexchange.shop.entities.Login;
 import store.aiexchange.shop.entities.Profile;
+import store.aiexchange.shop.entities.ProfileData;
 import store.aiexchange.shop.repositories.ProfileRepository;
 
 @RestController
@@ -41,7 +42,7 @@ public class ProfileRest {
                     accountData.getEmail(), encodedPassword);
             profileRepository.save(profile);
             
-            response = new ResponseEntity<>(profile.toProfileData(), HttpStatus.CREATED);
+            response = new ResponseEntity<>((ProfileData) profile, HttpStatus.CREATED);
         }
 
         return response;
@@ -73,7 +74,7 @@ public class ProfileRest {
                 }
                 profileRepository.save(profile);
 
-                response = new ResponseEntity<>(profile.toProfileData(), HttpStatus.OK);
+                response = new ResponseEntity<>((ProfileData) profile, HttpStatus.OK);
             }
         }
 
@@ -82,26 +83,36 @@ public class ProfileRest {
 
 
     @GetMapping("/findByUsername")
-    public ResponseEntity<Profile> findByUsername(@RequestParam(value = "username") String username) {
-    	ResponseEntity<Profile> response;
-        Profile profile = profileRepository.findByUsername(username);
-        if (profile == null) {
-            response = new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    public ResponseEntity<ProfileData> findByUsername(@RequestParam(value = "username") String username) {
+    	ResponseEntity<ProfileData> response;
+    	if (username == null || username.isEmpty()) {
+            response = new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         } else {
-        	response = new ResponseEntity<>(profile.toProfileData(), HttpStatus.OK);
+        	Profile profile = profileRepository.findByUsername(username);
+        	profile.setPassword(null);
+        	ProfileData profileData = profile;
+        	
+            if (profile == null) {
+                response = new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            } else {
+                response = new ResponseEntity<>(profileData, HttpStatus.OK);
+            }
         }
         return response;
     }
     
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody Login loginData) {
+    	System.out.println(loginData);
         Profile existingProfile = profileRepository.findByUsername(loginData.getUsername());
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder(); 
         ResponseEntity<?> response;
         if (existingProfile == null) {
+        	System.out.println("Username not found");
             response = new ResponseEntity<>("Username not found", HttpStatus.NOT_FOUND);
         } else {
         	if (!passwordEncoder.matches(loginData.getPassword(), existingProfile.getPassword())) {
+        		System.out.println("Incorrect password");
         		response = new ResponseEntity<>("Incorrect password", HttpStatus.UNAUTHORIZED);
             } else {
             	PROFILE_MAP.put(existingProfile.getUsername(), existingProfile); 
@@ -118,10 +129,19 @@ public class ProfileRest {
     }
     
     
-    public void addChatters(String username, List<Chatter> cart) {
-    	Profile profile =  PROFILE_MAP.get(username);
-        cart.forEach(profile::addToMyChatters);
-        profileRepository.save(profile);
+    //public void addChatters(String username, List<Chatter> cart) {
+    	//Profile profile =  PROFILE_MAP.get(username);
+    	//cart.forEach(profile::addToMyChatters);
+        //profileRepository.save(profile);
         // all return w profile change to profile.get...() 
+    //}
+    
+    public void addChatters( String username, List<Chatter> chatters) {
+        Profile profile = PROFILE_MAP.get(username);
+
+        for (Chatter chatter : chatters) {
+            profile.addToMyChatters(chatter);
+        }
+        profileRepository.save(profile);
     }
 }

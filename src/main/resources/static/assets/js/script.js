@@ -11,13 +11,17 @@ document.addEventListener('DOMContentLoaded', function() {
 			window.history.back();
 		});
 	}
+	const cookies = document.cookie.split(";");
+
+	// Loop through each cookie and delete it
+
 	fetchProfile(function() {
-		// Now you can call functions that need the profile
 		if (document.getElementById('profile-link')) {
 			profileButton();
 		}
 		if (document.getElementById('index-page')) {
 			loadIndex();
+			document.cookie = null;
 		}
 		if (document.getElementById('profile-page')) {
 			loadProfile();
@@ -28,26 +32,32 @@ document.addEventListener('DOMContentLoaded', function() {
 function fetchProfile(callback) {
 	const username = getCookie('username');
 
-	if(username == 'someuser') {
+	if (username == 'someuser') {
 		profile = null;
-        if (callback) {
-            callback();
-        }
+		document.cookie = "profile=null; path=/";
+		if (callback) {
+			callback();
+		}
 	} else {
 		if (username) {
-        $.getJSON(`/findByUsername?username=${username}`, function(data) {
-            profile = data;
-            if (callback) {
-                callback();
-            }
-        }).fail(function(jqXHR, textStatus, errorThrown) {
-            // Handle the failure
-            profile = null; // Set profile to null if there's an error
-            if (callback) {
-                callback();
-            }
-        });
-	}
+			console.log('finding by username', username);
+			$.getJSON(`/findByUsername?username=${username}`, function(data) {
+				profile = data;
+				console.log("found username: ", profile);
+				document.cookie = `profile=${JSON.stringify(profile)}; path=/`;
+				if (callback) {
+					callback();
+				}
+			}).fail(function(jqXHR, textStatus, errorThrown) {
+				// Handle the failure
+				profile = null; // Set profile to null if there's an error
+				console.log("didnt find username: ", profile);
+				document.cookie = "profile=null; path=/";
+				if (callback) {
+					callback();
+				}
+			});
+		}
 	}
 }
 function profileButton() {
@@ -140,7 +150,7 @@ function populateChatterCircles(myChatters) {
 	})
 }
 function getCookie(name) {
-    const value = `; ${document.cookie}`;
-    const parts = value.split(`; ${name}=`);
-    if (parts.length === 2) return parts.pop().split(';').shift();
+	const value = `; ${document.cookie}`;
+	const parts = value.split(`; ${name}=`);
+	if (parts.length === 2) return parts.pop().split(';').shift();
 }
