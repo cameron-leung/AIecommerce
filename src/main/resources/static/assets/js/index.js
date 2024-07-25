@@ -22,13 +22,16 @@ function loadIndex() {
 	$.getJSON('/chatters', function(characters) {
 		characterData.push(...characters);
 		populateIndexChatters();
+		const profile = Cookies.get('profile');
 		if (profile) {
 			// Populate the chatters using myChatters from the profile
 			if (Array.isArray(profile.myChatters) && profile.myChatters.length > 0) {
 				populateChatterCircles(profile.myChatters);
 			}
 		}
-	});
+	}).fail(function() {
+		console.error('Failed to fetch chatters data');
+	});;
 }
 // Index page cards filtering
 function populateIndexChatters() {

@@ -29,9 +29,7 @@ function loadProfile() {
 		if (profile.myChatters && profile.myChatters.length > 0) {
 			populateChatterCircles(profile.myChatters);
 		}
-		$('.fa-cart-plus').off('click').on('click', function() {
-			// Your event handler code here
-		});
+
 	} else {
 		window.location.href = 'login.html';
 	}

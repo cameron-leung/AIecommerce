@@ -11,10 +11,6 @@ document.addEventListener('DOMContentLoaded', function() {
 			window.history.back();
 		});
 	}
-	const cookies = document.cookie.split(";");
-
-	// Loop through each cookie and delete it
-
 	fetchProfile(function() {
 		if (document.getElementById('profile-link')) {
 			profileButton();
