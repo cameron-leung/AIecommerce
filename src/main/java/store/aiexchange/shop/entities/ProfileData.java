@@ -14,6 +14,7 @@ public class ProfileData{
     private List<Order> myOrders;
     private List<Profile> followers;
     private List<Profile> following;
+    private Cart cart;
 
     // Constructors
 
@@ -26,6 +27,7 @@ public class ProfileData{
         this.myOrders = new ArrayList<>();
         this.followers = new ArrayList<>();
         this.following = new ArrayList<>();
+        this.cart = new Cart();
     }
     public ProfileData(ProfileData other) {
         this.name = other.name;
@@ -35,9 +37,11 @@ public class ProfileData{
         this.myOrders = new ArrayList<>(other.myOrders);
         this.followers = new ArrayList<>(other.followers);
         this.following = new ArrayList<>(other.following);
+        this.cart = other.cart;
     }
 
-    // Getters and Setters
+    
+	// Getters and Setters
     public String getName() {
         return name;
     }
@@ -100,4 +104,5 @@ public class ProfileData{
     public void removeFromMyChatters(Chatter chatter) {
         this.myChatters.remove(chatter);
     }
+    
 }

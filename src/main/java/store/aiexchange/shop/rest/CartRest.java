@@ -30,10 +30,6 @@ public class CartRest {
         return addToList(chatter, cart);
     }
     
-    @PostMapping("/addToPurchase")
-    public String addToPurchase(@RequestBody Chatter chatter) {
-        return addToList(chatter, purchaseList);
-    }
     
     private String addToList(Chatter chatter, List<Chatter> list) {
         // Check if the chatter already exists in the list
@@ -54,10 +50,7 @@ public class CartRest {
         return returnString;
     }
 
-    @GetMapping("/findByName")
-    public Chatter findByName(@RequestParam(value = "name", defaultValue = "") String name) {
-        return chatterRepository.findByName(name);
-    }
+    
 
     @PostMapping("/removeFromCart")
     public String removeFromCart(@RequestBody String name) {
@@ -68,36 +61,10 @@ public class CartRest {
     	cart.clear();
     }
     
-    @PostMapping("/removeFromPurchase")
-    public String removeFromPurchase(@RequestBody String name) {
-        return removeFromList(name, purchaseList);
-    }
-    
-    private String removeFromList(String name, List<Chatter> list) {
-        // Check if the chatter exists in the list
-        String trimmedName = name.replaceAll("[^a-zA-Z]", "");
-        String returnString;
-        boolean chatterExists = list.stream()
-                .anyMatch(c -> c.getName().replaceAll("[^a-zA-Z]", "").equalsIgnoreCase(trimmedName));
-
-        synchronized (list) {
-            if (chatterExists) {
-                list.removeIf(c -> c.getName().replaceAll("[^a-zA-Z]", "").equalsIgnoreCase(trimmedName));
-                returnString = "Chatter removed from list successfully";
-                 
-            } else {
-                returnString = "Chatter not found in the list";
-            }
-        }
-        return returnString;
-    }
     
     @GetMapping("/cart")
     public List<Chatter> getCart() {
     	return cart;
     }
-    @GetMapping("/purchaseList")
-    public List<Chatter> getPurchase() {
-    	return purchaseList;
-    }
+
 }
