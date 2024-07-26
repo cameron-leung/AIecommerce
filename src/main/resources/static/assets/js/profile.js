@@ -3,7 +3,6 @@ $(document).ready(function() {
 	//$('.chattercircles-placeholder').load('chattercircles.html');
 	$('#editprofilepopup-placeholder').load('editprofilepopup.html');
 	if (!window.cartItemsLoaded) {
-        fetchCartItems();
         window.cartItemsLoaded = true;
     }
 	
@@ -28,6 +27,7 @@ function loadProfile() {
 		if (profile.myChatters && profile.myChatters.length > 0) {
 			populateChatterCircles(profile.myChatters);
 		}
+		fetchCartCards(fetchCart());
 
 	} else {
 		window.location.href = 'login.html';
@@ -76,18 +76,7 @@ function loadUpdateProfile() {
 		});
 	})
 }
-// Fetch data for cart items
-function fetchCartItems() {
-	const cartData = Cookies.get('cart');
-    let cartItems = [];
-    if (cartData) {
-        cartItems = JSON.parse(cartData);
-    }
-    if (cartItems.length > 0) {
-        fetchCartCards(cartItems); // Pass the cart items to the fetchCartCards function
-    }
-    return cartItems;
-}
+
 // Fetch data for cart items
 function fetchCartCards(cartItems) {
 	if (cartItems) {
@@ -96,7 +85,7 @@ function fetchCartCards(cartItems) {
 		cartCardsHeader.empty();
 		cartCardsContainer.empty();
 		if (cartItems.length > 0) {
-			//cartCardsContainer.empty(); // Clear existing items
+			cartCardsContainer.empty(); // Clear existing items
 			cartCardsHeader.append('<h1 class="mt-3 display-4">Cart</h1>');
 			$.get('chattercard.html', function(template) {
 				cartItems.forEach(function(chatter) {

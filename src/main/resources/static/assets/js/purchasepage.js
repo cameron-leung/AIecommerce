@@ -8,16 +8,24 @@ $(document).ready(function() {
 
 	$('#complete-purchase-btn').click(function(e) {
 		e.preventDefault();
+		
+		if (this.checkValidity() === false) {
+            e.preventDefault();
+            e.stopPropagation();
+            $('#purchase-error-message').text('Please fill out all required fields.');
+        } else {
+		const username = $('#username');
+		const cardholderName = $('#cardholder-name');
+		console.log(username, cardholderName);
+		
 
-		// Collect form data and fetch cart items asynchronously
-		const orderData = {
-			name: $('#name').val(),
-			username: $('#username').val(),
-			cardholderName: $('#cardholder-name').val()
-		};
-
-		fetchCart(function(cartItems) {
-			orderData.orderItems = cartItems;
+			console.log("pass order in");
+			const orderData = {
+	
+					username: username,
+					cardholderName: cardholderName,
+					orderItems: fetchCart()
+				};
 
 			// Send data to server
 			$.ajax({
@@ -30,10 +38,11 @@ $(document).ready(function() {
 					window.location.href = 'profilepage.html';
 				},
 				error: function(xhr, status, error) {
+					console.log("Failed to place order");
 					$('#purchase-error-message').text('Failed to place order');
 				}
 			});
-		});
+		}
 	});
 });
 // Frontend for purchase page cart
@@ -57,7 +66,7 @@ function purchaseItemHtml(item) {
 }
 function fetchCartPurchase() {
     let cart = initializeCart();
-    $('#purchaseItemsContainer').empty(); // Clear existing items
+    //$('#purchaseItemsContainer').empty(); // Clear existing items
     if (cart.length > 0) {
         cart.forEach(function(item) {
             var itemHtml = purchaseItemHtml(item);

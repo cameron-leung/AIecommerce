@@ -74,49 +74,32 @@
 			<!-- Purchase header -->
 			<h1 class="pb-3">Purchase</h1>
 
-			<!-- Personal Details
-			<h2 class="pb-3" style="color:#FF206E ">Personal Details</h2>
-			<div class="form-group">
-				<div class="d-flex flex-row pb-4">
-					<!-- Name field 
-					<div class="d-flex flex-column purchase-form" style="margin-right: 10%;">
-						<label for="name">Name</label>
-						<input type="text" id="name" name="name" placeholder="Enter your profile name">
-					</div>
-					<!-- Username field
-					<div class="d-flex flex-column purchase-form">
-						<label for="username">Username</label>
-						<input type="text" id="username" name="username" placeholder="Enter your username"><span
-							class="large-break"></span>
-					</div>
-				</div>
-			</div>  -->
-
 			<!-- Payment Details -->
 			<h2 class="pb-3" style="color: #FF206E">Payment Details</h2>
+			<form id="purchase-form">
 			<div class="form-group">
 				<div class="d-flex flex-row pb-4">
 					<!-- Card Name field -->
 					<div class="d-flex flex-column purchase-form" style="margin-right: 10%;">
 						<label for="cardholder-name">Card Holder Name</label>
-						<input type="text" id="cardholder-name" name="cardholder-name" placeholder="Enter your name" required>
+						<input type="text" id="cardholder-name" placeholder="Enter your name" required>
 					</div>
 					<!-- Card number field -->
 					<div class="d-flex flex-column purchase-form">
 						<label for="card-number">Card Number</label>
-						<input type="text" id="card-number" name="card-number" placeholder="Enter your card number" required>
+						<input type="text" id="card-number"  placeholder="Enter your card number" required>
 					</div>
 				</div>
 				<div class="d-flex flex-row pb-4">
 					<!-- CVV field -->
 					<div class="d-flex flex-column purchase-form" style="margin-right: 10%;">
-						<label for="cardholder-name">CVV</label>
-						<input type="text" id="cvv" name="cardholder-name" placeholder="CVV" required>
+						<label for="cvv">CVV</label>
+						<input type="text" id="cvv" placeholder="CVV" required>
 					</div>
 					<!-- Expiration Date -->
 					<div class="d-flex flex-column purchase-form">
-						<label for="card-number">Expiration Date</label>
-						<input type="text" id="expiration-date" name="card-number" placeholder="Enter your card number" required>
+						<label for="expiration-date">Expiration Date</label>
+						<input type="text" id="expiration-date" placeholder="Enter your card number" required>
 					</div>
 				</div>
 			</div>
@@ -127,6 +110,7 @@
 					id="complete-purchase-btn">Complete Purchase</button>
 			</div>
 			<div class="mb-3 text-right" id="purchase-error-message" style="color: red"></div>
+			</form>
 
 		</div>
 
@@ -134,7 +118,6 @@
 
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.1/dist/js.cookie.min.js"></script>
-	
 	<script src="assets/js/script.js"></script>
 	<script src="assets/js/purchasepage.js"></script>
 	<script src="assets/js/cart.js"></script>

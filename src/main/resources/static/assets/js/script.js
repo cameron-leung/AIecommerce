@@ -102,6 +102,15 @@ function queryCharacterData(query) {
 		$('#no-data-message').text('No Chatters found');
 	});
 }
+function fetchCart() {
+	const cartData = Cookies.get('cart');
+    let cartItems = [];
+    if (cartData) {
+        cartItems = JSON.parse(cartData);
+    }
+    return cartItems;
+}
+
 // Function to fill in card data
 function populateCard(template, character) {
 	const imageName = character.name.replace(/\s+/g, '');

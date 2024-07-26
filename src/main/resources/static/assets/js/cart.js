@@ -22,7 +22,25 @@ function saveCart(cart) {
     Cookies.set('cart', JSON.stringify(cart), { path: '/' });
 }
 
-
+// Frontend for purchase page cart
+function purchaseItemHtml(item) {
+	return `
+        <!--  Cart item -->
+        <div class="d-flex flex-column w-100 overflow-hidden mb-3">
+            <div class="d-flex flex-row align-items-flex-start justify-content-start">
+                <img class="chatter-image object-fit-cover rounded-3 w-50" src="assets/img/${item.name.replace(/\s+/g, '')}Rectangle.jpg" style="height: 20vh;">
+                <div class="flex-column w-50 pl-1">
+                    <h3 class="chatter-name m-0 p-0">${item.name}</h3>
+                    <h5 class="chatter-username mt-0 mb-5">${item.username}</h5>
+                    <div class="d-flex flex-row justify-content-between">
+                        <h5 class="m-0 w-auto">Price</h5>
+                        <h5 class="chatter-price w-auto mr-0 text-end">$${item.price}</h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `;
+}
 // Frontend for cart popup
 function cartItemHtml(item) {
 	return `
@@ -46,12 +64,7 @@ function cartItemHtml(item) {
    `;
 }
 
-function fetchCart(callback) {
-	$.getJSON('/cart', function(data) {
-		var cartItems = data;
-		callback(cartItems)  // Pass cartItems to callback function
-	})
-}
+
 
 function loadCartPopup() {
 	var cartPopupOpen = false;
@@ -100,36 +113,37 @@ function fetchCartPopup() {
 }
 
 
-
-
 function updateCheckoutButton() {
-    let cart = initializeCart();
-    const profile = Cookies.get('profile');
-    if (cart.length > 0 && profile) {
-        $('#checkoutButton')
-            .css({
-                'color': '#FF206E',
-                'border-color': '#FF206E',
-                'cursor': 'pointer'
-            })
-            .removeAttr('disabled')
-            .click(function() {
-                window.location.href = 'purchasepage.html'; // Replace with your purchase page URL
-            });
-    } else {
-        $('#checkoutButton')
-            .css({
-                'color': 'grey',
-                'border-color': 'grey',
-                'cursor': 'not-allowed'
-            })
-            .attr('disabled', 'disabled')
-            .click(function(event) {
-                event.preventDefault(); // Prevent default action if clicked (though button is disabled)
-            });
-    }
-}
+		cartItems = fetchCart();
+		// Check if there are items in the cart
+		const profile = Cookies.get('profile');
+		if (cartItems.length > 0 && profile) {
+			// Cart has items: Make button pink and enable click to go to purchase page
+			$('#checkoutButton')
+				.css({
+					'color': '#FF206E',
+					'border-color': '#FF206E',
+					'cursor': 'pointer'
+				})
+				.removeAttr('disabled')
+				.click(function() {
+					window.location.href = 'purchasepage.html'; // Replace with your purchase page URL
+				});
+		} else {
+			// Cart is empty: Make button grey and disable click
+			$('#checkoutButton')
+				.css({
+					'color': 'grey',
+					'border-color': 'grey',
+					'cursor': 'not-allowed'
+				})
+				.attr('disabled', 'disabled')
+				.click(function(event) {
+					event.preventDefault(); // Prevent default action if clicked (though button is disabled)
+				});
+		}
 
+}
 function getPrice(cartItems) {
 	var subtotal = cartItems.reduce((total, item) => total + item.price, 0);
 	var tax = subtotal * 0.1;

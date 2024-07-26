@@ -32,7 +32,7 @@ function loadCharacterDetails(characterName) {
 			// Attach event handler to the cart icon
 			$('.fa-cart-plus').off('click').on('click', function() {
 				addToCart(character);
-				fetchCartItems();
+				//fetchCartItems();
 			});
 		});
 	}
