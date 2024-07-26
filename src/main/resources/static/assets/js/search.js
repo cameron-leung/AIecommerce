@@ -18,13 +18,13 @@ function loadQuery() {
 function profileCircleHtml(name) {
 	return `
          <div style = "
-			align-items: center;
-			justify-content: center;
-			padding-right: 1%;
-			font-size: 5em;
+         	display: flex;
+         	flex-direction: column;
+			padding-right: 2rem;
+			font-size: 7rem;
 			color: #535355;">
-			<i class="fa-solid fa-circle-user responsive-icon w-auto pr-1 pt-1" alt="profile icon"></i>
-    		<h3 class = "text-center">${name}</h3>
+			<i class="fa-solid fa-circle-user responsive-icon w-auto pr-1 pb-2" alt="profile icon"></i>
+    		<h3 class = "align-items-start text-center">${name}</h3>
 		</div> 
    `;
 }
