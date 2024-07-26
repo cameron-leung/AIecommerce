@@ -7,24 +7,10 @@ $(document).ready(function() {
 		var chatterName = $(this).attr('id');
 		removeFromCart(chatterName);
 	});
+	console.log("cart js loaded");
 	loadCartPopup();
 });
-function initializeCart() {
-	const profile = JSON.parse(Cookies.get('profile') || '{}');
-    const username = profile.username;
-    const cartData = Cookies.get('cart_' + username);
-    if (cartData) {
-        return JSON.parse(cartData);
-    } else {
-        return [];
-    }
-}
 
-function saveCart(cart) {
-   const profile = JSON.parse(Cookies.get('profile') || '{}');
-    const username = profile.username;
-    Cookies.set('cart_' + username, JSON.stringify(cart), { path: '/' });
-}
 
 // Frontend for purchase page cart
 function purchaseItemHtml(item) {

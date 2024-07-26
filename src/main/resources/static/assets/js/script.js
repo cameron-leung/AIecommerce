@@ -3,7 +3,17 @@ let profile = null;
 
 // Wrap your code in DOMContentLoaded event listener
 document.addEventListener('DOMContentLoaded', function() {
+	console.log("dom loaded");
 	// Check if the backButton element exists before adding event listener
+	$('#cartpopup-placeholder').load('cartpopup.html', function(response, status, xhr) {
+    if (status == "success") {
+        console.log("cartpopup html loaded");
+        // Any additional code you want to run after loading the content
+    } else if (status == "error") {
+        console.log("Error loading cartpopup.html: " + xhr.status + " " + xhr.statusText);
+    }
+});
+
 	const $backButton = $('#backButton');
 	if ($backButton.length) {
 		$backButton.on('click', function() {
@@ -57,50 +67,21 @@ function profileButton() {
 	});
 }
 
-// Search query logic
-function loadQuery() {
-	var urlParams = new URLSearchParams(window.location.search);
-	var query = urlParams.get('query');
-	if (query) {
-		queryCharacterData(query);
-	}
-	$('#searchInput').on('keypress', function(event) {
-		if (event.key === 'Enter') {
-			const query = event.target.value.trim();
-			if (query) {
-				window.location.href = `searchResults.html?query=${encodeURIComponent(query)}`;
-			}
-		}
-	});
+function initializeCart() {
+	const profile = JSON.parse(Cookies.get('profile') || '{}');
+    const username = profile.username;
+    const cartData = Cookies.get('cart_' + username);
+    if (cartData) {
+        return JSON.parse(cartData);
+    } else {
+        return [];
+    }
 }
 
-function queryCharacterData(query) {
-	$.getJSON('/chatters', function(characterData) {
-		const filteredData = characterData.filter(character =>
-			character.name.toLowerCase().includes(query.toLowerCase()) ||
-			character.username.toLowerCase().includes(query.toLowerCase()) ||
-			character.blurb.toLowerCase().includes(query.toLowerCase()) ||
-			character.description.toLowerCase().includes(query.toLowerCase()) ||
-			character.category.some(c => c.toLowerCase().includes(query))
-		);
-		const container = $('.character-card-container');
-		container.empty();
-		// Display filtered data
-		container.empty();
-		$.get('chattercard.html', function(template) {
-			if (filteredData.length === 0) {
-				$('#no-data-message').text('No Chatters found');
-			}
-			filteredData.forEach(character => {
-				const populatedCard = populateCard(template, character);
-				container.append(populatedCard);
-			});
-		}).fail(function() {
-			$('#no-data-message').text('No Chatters found');
-		});
-	}).fail(function() {
-		$('#no-data-message').text('No Chatters found');
-	});
+function saveCart(cart) {
+   const profile = JSON.parse(Cookies.get('profile') || '{}');
+    const username = profile.username;
+    Cookies.set('cart_' + username, JSON.stringify(cart), { path: '/' });
 }
 function fetchCart() {
 	const cartData = Cookies.get('cart');
