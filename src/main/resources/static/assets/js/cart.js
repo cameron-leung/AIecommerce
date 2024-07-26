@@ -51,8 +51,6 @@ function cartItemHtml(item) {
    `;
 }
 
-
-
 function loadCartPopup() {
 	var cartPopupOpen = false;
 	// Open the cart popup

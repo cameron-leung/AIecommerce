@@ -15,7 +15,19 @@ function loadQuery() {
 		}
 	});
 }
-
+function profileCircleHtml(name) {
+	return `
+         <div style = "
+			align-items: center;
+			justify-content: center;
+			padding-right: 1%;
+			font-size: 5em;
+			color: #535355;">
+			<i class="fa-solid fa-circle-user responsive-icon w-auto pr-1 pt-1" alt="profile icon"></i>
+    		<h3 class = "text-center">${name}</h3>
+		</div> 
+   `;
+}
 function queryCharacterData(query) {
 	$.getJSON('/chatters', function(characterData) {
 		const filteredData = characterData.filter(character =>
@@ -33,9 +45,9 @@ function queryCharacterData(query) {
 				$('#no-data-message').text('No Chatters found');
 			} else {
 				filteredData.forEach(character => {
-				const populatedCard = populateCard(template, character);
-				container.append(populatedCard);
-			});
+					const populatedCard = populateCard(template, character);
+					container.append(populatedCard);
+				});
 			}
 		}).fail(function() {
 			$('#no-data-message').text('No Chatters found');
@@ -44,11 +56,7 @@ function queryCharacterData(query) {
 		$('#no-data-message').text('No Chatters found');
 	});
 }
-function populateProfileCircle(template, name) {
-	
-    return template
-        .replace('NAME', name);
-}
+
 function queryProfileData(query) {
 	$.getJSON('/profiles', function(profileData) {
 		const filteredData = profileData.filter(profile =>
@@ -62,12 +70,9 @@ function queryProfileData(query) {
 				$('#no-data-message').text('No Profiles found');
 			} else {
 				filteredData.forEach(profile => {
-					$('.profile_icon').addClass('fa-solid fa-circle-user responsive-icon w-auto pr-1 pt-1');
-	$(template).find('img').remove();
-				const populatedCircle = template
-        .replace('NAME', profile.name);
-				container.append(populatedCircle);
-			});
+					var profileHtml = profileCircleHtml(profile.name);
+            		container.append(profileHtml);
+				});
 			}
 		})
 	});
