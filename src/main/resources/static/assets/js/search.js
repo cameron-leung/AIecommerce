@@ -28,6 +28,7 @@ function loadQuery() {
 }
 function profileCircleHtml(name) {
 	return `
+		<a href="searchprofile.html" onclick='saveProfileData(${JSON.stringify(profile)})'>
          <div style = "
          	display: flex;
          	flex-direction: column;
@@ -37,7 +38,11 @@ function profileCircleHtml(name) {
 			<i class="fa-solid fa-circle-user responsive-icon w-auto pr-1 pb-2" alt="profile icon"></i>
     		<h3 class = "align-items-start text-center">${name}</h3>
 		</div> 
+		</a>
    `;
+}
+function saveProfileData(profile) {
+	localStorage.setItem('selectedProfile', JSON.stringify(profile));
 }
 function queryCharacterData(query) {
 	return new Promise((resolve, reject) => {
