@@ -37,8 +37,8 @@
                     <div class="row w-auto h-auto pt-0">
                         
                         <div class="w-auto h-auto">
-                            <button class="w-auto h-auto text-white border-0 rounded logout-button"
-                                style="background: #535355;" onclick="follow()">Follow</button>
+                            <button class="w-auto h-auto text-white border-0 rounded fs-4 follow-button"
+                                 onclick="follow()">Follow</button>
                         </div>
                     </div>
                 </div>
@@ -78,13 +78,25 @@
 				$('.discover-icon').addClass('active');
 			});
 			
-			const profile = JSON.parse(localStorage.getItem('selectedProfile'));
-			if (profile) {
-				$('#profileName').text(profile.name);
-				$('#profileUsername').text('@'+profile.username);
-				$('#followersPlaceholder').text((profile.followers && profile.followers.length) || 0); // Update with actual data field
-				$('#followingPlaceholder').text((profile.following && profile.following.length) || 0); // Update with actual data field
+			var searchProfile = localStorage.getItem('selectedProfile');
+			
+			const currentProfile = Cookies.get('profile');
+
+			if(currentProfile.following && currentProfile.following.includes(searchProfile)) {
+				$('.follow-button').text('Unfollow');
+				$('.follow-button').css('background', '#535355');
+			} else {
+				$('.follow-button').text('Follow');
+				$('.follow-button').css('background', '#FF206E');
 			}
+			searchProfile = JSON.parse(searchProfile);
+			if (searchProfile) {
+				$('#profileName').text(searchProfile.name);
+				$('#profileUsername').text('@'+searchProfile.username);
+				$('#followersPlaceholder').text((searchProfile.followers && searchProfile.followers.length) || 0); 
+				$('#followingPlaceholder').text((searchProfile.following && searchProfile.following.length) || 0); 
+			}
+			
 		});
 	</script>
 </body>
