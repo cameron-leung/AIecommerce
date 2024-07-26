@@ -17,8 +17,6 @@ public class ProfileData{
     private Cart cart;
 
     // Constructors
-
-
     public ProfileData(String name, String username, String email) {
         this.name = name;
         this.username = username;

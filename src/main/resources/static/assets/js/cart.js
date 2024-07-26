@@ -10,7 +10,9 @@ $(document).ready(function() {
 	loadCartPopup();
 });
 function initializeCart() {
-    const cartData = Cookies.get('cart');
+	const profile = JSON.parse(Cookies.get('profile') || '{}');
+    const username = profile.username;
+    const cartData = Cookies.get('cart_' + username);
     if (cartData) {
         return JSON.parse(cartData);
     } else {
@@ -19,7 +21,9 @@ function initializeCart() {
 }
 
 function saveCart(cart) {
-    Cookies.set('cart', JSON.stringify(cart), { path: '/' });
+   const profile = JSON.parse(Cookies.get('profile') || '{}');
+    const username = profile.username;
+    Cookies.set('cart_' + username, JSON.stringify(cart), { path: '/' });
 }
 
 // Frontend for purchase page cart

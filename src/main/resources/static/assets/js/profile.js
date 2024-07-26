@@ -27,7 +27,7 @@ function loadProfile() {
 		if (profile.myChatters && profile.myChatters.length > 0) {
 			populateChatterCircles(profile.myChatters);
 		}
-		fetchCartCards(fetchCart());
+		fetchCartCards();
 
 	} else {
 		window.location.href = 'login.html';
@@ -78,17 +78,18 @@ function loadUpdateProfile() {
 }
 
 // Fetch data for cart items
-function fetchCartCards(cartItems) {
-	if (cartItems) {
+function fetchCartCards() {
+	let cart = initializeCart();
+	if (cart) {
 		const cartCardsHeader = $('.cart-cards-header');
 		const cartCardsContainer = $('.cart-cards-container');
 		cartCardsHeader.empty();
 		cartCardsContainer.empty();
-		if (cartItems.length > 0) {
+		if (cart.length > 0) {
 			cartCardsContainer.empty(); // Clear existing items
 			cartCardsHeader.append('<h1 class="mt-3 display-4">Cart</h1>');
 			$.get('chattercard.html', function(template) {
-				cartItems.forEach(function(chatter) {
+				cart.forEach(function(chatter) {
 					const populatedCard = populateCard(template, chatter);
 					cartCardsContainer.append(populatedCard);
 				});
