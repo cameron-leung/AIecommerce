@@ -8,25 +8,22 @@ $(document).ready(function() {
 
 	$('#complete-purchase-btn').click(function(e) {
 		e.preventDefault();
-		
-		if (this.checkValidity() === false) {
+
+		if (!$('#purchase-form')[0].checkValidity()) {
             e.preventDefault();
             e.stopPropagation();
             $('#purchase-error-message').text('Please fill out all required fields.');
         } else {
-		const username = $('#username');
-		const cardholderName = $('#cardholder-name');
-		console.log(username, cardholderName);
-		
+		const cardholderName = $('#cardholder-name').val().trim();
 
 			console.log("pass order in");
 			const orderData = {
-	
-					username: username,
+					name: JSON.parse(Cookies.get('profile')).name,
+					username: Cookies.get('username'),
 					cardholderName: cardholderName,
 					orderItems: fetchCart()
 				};
-
+			console.log(orderData);
 			// Send data to server
 			$.ajax({
 				type: 'POST',
