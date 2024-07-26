@@ -21,7 +21,6 @@ public class OrderRest {
     @Autowired
     private ProfileRest profileRest;
 
-
     @Autowired
     private ChatterRest chatterRest;
 
