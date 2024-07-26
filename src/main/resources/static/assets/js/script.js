@@ -3,16 +3,8 @@ let profile = null;
 
 // Wrap your code in DOMContentLoaded event listener
 document.addEventListener('DOMContentLoaded', function() {
-	console.log("dom loaded");
 	// Check if the backButton element exists before adding event listener
-	$('#cartpopup-placeholder').load('cartpopup.html', function(response, status, xhr) {
-    if (status == "success") {
-        console.log("cartpopup html loaded");
-        // Any additional code you want to run after loading the content
-    } else if (status == "error") {
-        console.log("Error loading cartpopup.html: " + xhr.status + " " + xhr.statusText);
-    }
-});
+	$('#cartpopup-placeholder').load('cartpopup.html');
 
 	const $backButton = $('#backButton');
 	if ($backButton.length) {
@@ -109,6 +101,7 @@ function populateCircle(template, character) {
 		.replace('CIRC_IMAGE_URL', 'assets/img/' + imageName + 'Circle.jpg')
 		.replace('NAME', character.name)
 }
+
 
 function populateChatterCircles(myChatters) {
 	const container = $('.character-circ-container');

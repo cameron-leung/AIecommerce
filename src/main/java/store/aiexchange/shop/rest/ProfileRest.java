@@ -1,6 +1,7 @@
 package store.aiexchange.shop.rest;
 
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -139,5 +140,15 @@ public class ProfileRest {
             profile.addToMyChatters(chatter);
         }
         profileRepository.save(profile);
+    }
+    
+    @GetMapping("/profiles")
+    public List<ProfileData> getProfiles() {
+    	List<Profile> profiles = profileRepository.findAll();
+    	List<ProfileData> profileDatas = new ArrayList<ProfileData>();
+    	for(Profile profile : profiles) {
+    		profileDatas.add(new ProfileData(profile));
+    	}
+    	return profileDatas;
     }
 }

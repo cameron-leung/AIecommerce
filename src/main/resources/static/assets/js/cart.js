@@ -7,7 +7,6 @@ $(document).ready(function() {
 		var chatterName = $(this).attr('id');
 		removeFromCart(chatterName);
 	});
-	console.log("cart js loaded");
 	loadCartPopup();
 });
 
@@ -46,7 +45,6 @@ function cartItemHtml(item) {
                    		<a href="#"><img class="m-0 p-0" style="width: 25px;" src="assets/img/AIchatlogo.jpg" alt="Logo"></a>
 					    <i id="${item.name}" class="d-flex justify-content-center pt-2 w-25 fs-3 cursor-pointer fa-solid fa-trash m-1"></i>
 					    <!-- <i id="check-icon" class="d-flex justify-content-center pt-2 w-25 fs-3 cursor-pointer fa-regular fa-square-check"></i> -->
-					    
 					</div>
               </div>
          </div>
