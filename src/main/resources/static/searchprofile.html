@@ -81,9 +81,9 @@
 			const profile = JSON.parse(localStorage.getItem('selectedProfile'));
 			if (profile) {
 				$('#profileName').text(profile.name);
-				$('#profileUsername').text(profile.username);
-				$('#followersPlaceholder').text(profile.followers); // Update with actual data field
-				$('#followingPlaceholder').text(profile.following); // Update with actual data field
+				$('#profileUsername').text('@'+profile.username);
+				$('#followersPlaceholder').text((profile.followers && profile.followers.length) || 0); // Update with actual data field
+				$('#followingPlaceholder').text((profile.following && profile.following.length) || 0); // Update with actual data field
 			}
 		});
 	</script>

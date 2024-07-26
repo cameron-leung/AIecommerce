@@ -2,8 +2,6 @@ loadQuery();
 function loadQuery() {
 	var urlParams = new URLSearchParams(window.location.search);
 	var query = urlParams.get('query');
-	var queryCharData = true;
-	var queryProfData = true;
 	if (query) {
 		Promise.all([
             queryCharacterData(query),
@@ -26,7 +24,7 @@ function loadQuery() {
 		}
 	});
 }
-function profileCircleHtml(name) {
+function profileCircleHtml(profile) {
 	return `
 		<a href="searchprofile.html" onclick='saveProfileData(${JSON.stringify(profile)})'>
          <div style = "
@@ -36,7 +34,7 @@ function profileCircleHtml(name) {
 			font-size: 7rem;
 			color: #535355;">
 			<i class="fa-solid fa-circle-user responsive-icon w-auto pr-1 pb-2" alt="profile icon"></i>
-    		<h3 class = "align-items-start text-center">${name}</h3>
+    		<h3 class = "align-items-start text-center">${profile.name}</h3>
 		</div> 
 		</a>
    `;
@@ -74,10 +72,15 @@ function queryCharacterData(query) {
 function queryProfileData(query) {
 	return new Promise((resolve, reject) => {
         $.getJSON('/profiles', function(profileData) {
-            const filteredData = profileData.filter(profile =>
+            let filteredData = profileData.filter(profile =>
                 profile.name.toLowerCase().includes(query.toLowerCase()) ||
                 profile.username.toLowerCase().includes(query.toLowerCase())
             );
+            const username = Cookies.get('username');
+            if (!(username == 'someuser' || !username || username == null)) {
+				filteredData = filteredData.filter(profile =>
+					profile.username !== username);
+			} 
             const container = $('.profiles-container');
             container.empty();
             $.get('chattercircle.html', function() {
@@ -85,7 +88,7 @@ function queryProfileData(query) {
                     resolve(false);
                 } else {
                     filteredData.forEach(profile => {
-                        var profileHtml = profileCircleHtml(profile.name);
+                        var profileHtml = profileCircleHtml(profile);
                         container.append(profileHtml);
                     });
                     resolve(true);
