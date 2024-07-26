@@ -40,12 +40,13 @@ function loadCharacterDetails(characterName) {
 
 function populateVerticalScroll() {
 	// Vertical scroll images
-	var imageContainer = document.getElementById('image-container');
+	var $imageContainer = $('#image-container');
 	var numberOfImages = 5; // Number of times to repeat the image
 	for (var i = 0; i < numberOfImages; i++) {
-		var img = document.createElement('img');
-		img.classList.add('chatter-image'); // Add chatter-image class
-		img.alt = 'Chatter Card ' + (i + 1);
-		imageContainer.appendChild(img);
+		var $img = $('<img>', {
+            class: 'chatter-image', // Add chatter-image class
+            alt: 'Chatter Card ' + (i + 1)
+        });
+        $imageContainer.append($img);
 	}
 }
