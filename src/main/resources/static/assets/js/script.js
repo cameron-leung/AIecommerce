@@ -4,20 +4,20 @@ let profile = null;
 // Wrap your code in DOMContentLoaded event listener
 document.addEventListener('DOMContentLoaded', function() {
 	// Check if the backButton element exists before adding event listener
-	const backButton = document.getElementById('backButton');
-	if (backButton) {
-		backButton.addEventListener('click', function() {
+	const $backButton = $('#backButton');
+	if ($backButton.length) {
+		$backButton.on('click', function() {
 			window.history.back();
 		});
 	}
 	fetchProfile(function() {
-		if (document.getElementById('profile-link')) {
+		if ($('#profile-link').length) {
 			profileButton();
 		}
-		if (document.getElementById('index-page')) {
+		if ($('#index-page').length) {
 			loadIndex();
 		}
-		if (document.getElementById('profile-page')) {
+		if ($('#profile-page').length) {
 			loadProfile();
 		}
 	});
@@ -64,7 +64,7 @@ function loadQuery() {
 	if (query) {
 		queryCharacterData(query);
 	}
-	document.getElementById('searchInput').addEventListener('keypress', function(event) {
+	$('#searchInput').on('keypress', function(event) {
 		if (event.key === 'Enter') {
 			const query = event.target.value.trim();
 			if (query) {
@@ -131,7 +131,6 @@ function populateCircle(template, character) {
 
 function populateChatterCircles(myChatters) {
 	const container = $('.character-circ-container');
-	//container.empty(); // Clear the container before appending new content
 
 	// Add the header to the container
 	container.append('<h1 class="mt-3 display-4">Recents</h1>');
