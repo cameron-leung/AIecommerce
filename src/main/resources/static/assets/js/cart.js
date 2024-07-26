@@ -62,7 +62,6 @@ function cartItemHtml(item) {
 					    <!-- <i id="check-icon" class="d-flex justify-content-center pt-2 w-25 fs-3 cursor-pointer fa-regular fa-square-check"></i> -->
 					    
 					</div>
-
               </div>
          </div>
    `;
