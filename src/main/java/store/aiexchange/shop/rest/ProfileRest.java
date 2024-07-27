@@ -133,13 +133,29 @@ public class ProfileRest {
     }
     
     
-    public void addChatters( String username, List<Chatter> chatters) {
+    public void addChatters(String username, List<Chatter> chatters) {
         Profile profile = PROFILE_MAP.get(username);
 
         for (Chatter chatter : chatters) {
             profile.addToMyChatters(chatter);
         }
         profileRepository.save(profile);
+    }
+    
+    @PostMapping("/follow")
+    public ResponseEntity<?> follow(@RequestBody Map<String, String> followData) {
+    	String currentUsername = followData.get("currentUsername");
+        String otherUsername = followData.get("otherUsername");
+        Profile currentProfile = profileRepository.findByUsername(currentUsername);
+        Profile otherProfile = profileRepository.findByUsername(otherUsername);
+        
+        currentProfile.addToFollowing(otherProfile);
+        otherProfile.addToFollowers(currentProfile);
+
+        profileRepository.save(currentProfile);
+        profileRepository.save(otherProfile);
+
+        return new ResponseEntity<>("Follow request successful", HttpStatus.OK);
     }
     
     @GetMapping("/profiles")

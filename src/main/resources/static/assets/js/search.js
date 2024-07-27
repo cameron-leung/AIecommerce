@@ -26,7 +26,7 @@ function loadQuery() {
 }
 function profileCircleHtml(profile) {
 	return `
-		<a href="searchprofile.html" onclick='saveProfileData(${JSON.stringify(profile)})'>
+		<a href="profilesearch.html" onclick='saveProfileData(${JSON.stringify(profile)})'>
          <div style = "
          	display: flex;
          	flex-direction: column;

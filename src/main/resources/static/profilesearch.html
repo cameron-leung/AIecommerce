@@ -77,7 +77,39 @@
 			$('#navbar-placeholder').load('navbar.html', function () {
 				$('.discover-icon').addClass('active');
 			});
+			loadProfileSearch();
 			
+			
+			
+			
+			
+		});
+		function follow() {
+			
+			var currentProfile = Cookies.get('username');
+			var searchProfile = localStorage.getItem('selectedProfile').username;
+			console.log(currentProfile);
+			const followData = {
+					currentProfile: currentProfile,
+					otherProfile: searchProfile,
+				};
+
+				$.ajax({
+					type: 'POST',
+					url: '/follow',
+					contentType: 'application/json',
+					data: JSON.stringify(followData),
+					success: function(response) {
+						console.log('Follow request successful');
+						loadProfileSearch();
+					},
+					error: function(error) {
+						console.log('Follow request failed');
+						
+					}
+				});
+		}
+		function loadProfileSearch() {
 			var searchProfile = localStorage.getItem('selectedProfile');
 			
 			const currentProfile = Cookies.get('profile');
@@ -96,8 +128,7 @@
 				$('#followersPlaceholder').text((searchProfile.followers && searchProfile.followers.length) || 0); 
 				$('#followingPlaceholder').text((searchProfile.following && searchProfile.following.length) || 0); 
 			}
-			
-		});
+		}
 	</script>
 </body>
 

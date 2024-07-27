@@ -95,6 +95,26 @@ public class ProfileData{
     public void setFollowing(List<Profile> following) {
         this.following = following;
     }
+    public void addToFollowing(Profile profile) {
+    	if(!following.contains(profile)) {
+        	following.add(profile);
+        }
+    }
+    public void removeFromFollowing(Profile profile) {
+        if(following.contains(profile)) {
+        	following.remove(profile);
+        }
+    }
+    public void addToFollowers(Profile profile) {
+    	if(!followers.contains(profile)) {
+        	followers.add(profile);
+        }
+    }
+    public void removeFromFollowers(Profile profile) {
+        if(followers.contains(profile)) {
+        	followers.remove(profile);
+        }
+    }
     public void addToMyChatters(Chatter chatter) {
         this.myChatters.add(chatter);
     }
