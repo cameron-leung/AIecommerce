@@ -2,6 +2,7 @@ package store.aiexchange.shop.rest;
 
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -144,19 +145,25 @@ public class ProfileRest {
     
     @PostMapping("/follow")
     public ResponseEntity<?> follow(@RequestBody Map<String, String> followData) {
-    	String currentUsername = followData.get("currentUsername");
-        String otherUsername = followData.get("otherUsername");
-        Profile currentProfile = profileRepository.findByUsername(currentUsername);
-        Profile otherProfile = profileRepository.findByUsername(otherUsername);
+
+            String currentUsername = followData.get("currentUsername");
+            String otherUsername = followData.get("otherUsername");
+
+            Profile currentProfile = profileRepository.findByUsername(currentUsername);
+            Profile otherProfile = profileRepository.findByUsername(otherUsername);
+            Map<String, Object> response = new HashMap<>();
+            
+            currentProfile.addToFollowing(otherProfile);
+            otherProfile.addToFollowers(currentProfile);
+            response.put("currentProfile", currentProfile);
+            response.put("otherProfile", otherProfile);
+            profileRepository.save(currentProfile);
+            profileRepository.save(otherProfile);
+            return new ResponseEntity<>(response, HttpStatus.OK);
+            
         
-        currentProfile.addToFollowing(otherProfile);
-        otherProfile.addToFollowers(currentProfile);
-
-        profileRepository.save(currentProfile);
-        profileRepository.save(otherProfile);
-
-        return new ResponseEntity<>("Follow request successful", HttpStatus.OK);
     }
+
     
     @GetMapping("/profiles")
     public List<ProfileData> getProfiles() {

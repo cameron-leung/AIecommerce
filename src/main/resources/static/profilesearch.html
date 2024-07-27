@@ -79,32 +79,27 @@
 			});
 			loadProfileSearch();
 			
-			
-			
-			
-			
 		});
 		function follow() {
 			
-			var currentProfile = Cookies.get('username');
-			var searchProfile = localStorage.getItem('selectedProfile').username;
-			console.log(currentProfile);
+			var currentUsername = Cookies.get('username');
+			var otherUsername = (JSON.parse(localStorage.getItem('selectedProfile'))).username;
 			const followData = {
-					currentProfile: currentProfile,
-					otherProfile: searchProfile,
+					currentUsername: currentUsername,
+					otherUsername: otherUsername,
 				};
-
+			console.log(followData);
 				$.ajax({
 					type: 'POST',
 					url: '/follow',
 					contentType: 'application/json',
 					data: JSON.stringify(followData),
 					success: function(response) {
-						console.log('Follow request successful');
+						console.log(response);
 						loadProfileSearch();
 					},
 					error: function(error) {
-						console.log('Follow request failed');
+						console.log('Follow request failed', error);
 						
 					}
 				});
