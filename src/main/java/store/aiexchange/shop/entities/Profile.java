@@ -12,6 +12,9 @@ public class Profile extends ProfileData{
 		super(name, username, email);
 		this.password = password;
 	}
+	public String getId() {
+		return _id;
+	}
 	
 	public String getPassword() {
 		return password;

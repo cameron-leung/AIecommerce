@@ -12,9 +12,9 @@ public class ProfileData{
     private String email;
     private List<Chatter> myChatters;
     private List<Order> myOrders;
-    private List<Profile> followers;
-    private List<Profile> following;
-    //private Cart cart;
+    private List<String> followers;
+    private List<String> following;
+    
 
     // Constructors
     public ProfileData(String name, String username, String email) {
@@ -38,7 +38,6 @@ public class ProfileData{
         
     }
 
-    
 	// Getters and Setters
     public String getName() {
         return name;
@@ -80,39 +79,39 @@ public class ProfileData{
         this.myOrders = myOrders;
     }
 
-    public List<Profile> getFollowers() {
+    public List<String> getFollowers() {
         return followers;
     }
 
-    public void setFollowers(List<Profile> followers) {
+    public void setFollowers(List<String> followers) {
         this.followers = followers;
     }
 
-    public List<Profile> getFollowing() {
+    public List<String> getFollowing() {
         return following;
     }
 
-    public void setFollowing(List<Profile> following) {
+    public void setFollowing(List<String> following) {
         this.following = following;
     }
-    public void addToFollowing(Profile profile) {
-    	if(!following.contains(profile)) {
-        	following.add(profile);
+    public void addToFollowing(String profileId) {
+        if (!following.contains(profileId)) {
+            following.add(profileId);
         }
     }
-    public void removeFromFollowing(Profile profile) {
-        if(following.contains(profile)) {
-        	following.remove(profile);
+    public void removeFromFollowing(String profileId) {
+        if(following.contains(profileId)) {
+        	following.remove(profileId);
         }
     }
-    public void addToFollowers(Profile profile) {
-    	if(!followers.contains(profile)) {
-        	followers.add(profile);
+    public void addToFollowers(String profileId) {
+    	if(!followers.contains(profileId)) {
+        	followers.add(profileId);
         }
     }
-    public void removeFromFollowers(Profile profile) {
-        if(followers.contains(profile)) {
-        	followers.remove(profile);
+    public void removeFromFollowers(String profileId) {
+        if(followers.contains(profileId)) {
+        	followers.remove(profileId);
         }
     }
     public void addToMyChatters(Chatter chatter) {

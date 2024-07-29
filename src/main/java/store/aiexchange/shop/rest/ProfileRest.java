@@ -153,15 +153,11 @@ public class ProfileRest {
             Profile otherProfile = profileRepository.findByUsername(otherUsername);
             Map<String, Object> response = new HashMap<>();
             
-            currentProfile.addToFollowing(otherProfile);
-            otherProfile.addToFollowers(currentProfile);
-            response.put("currentProfile", currentProfile);
-            response.put("otherProfile", otherProfile);
+            currentProfile.addToFollowing(otherProfile.getId());
+            otherProfile.addToFollowers(currentProfile.getId());
             profileRepository.save(currentProfile);
             profileRepository.save(otherProfile);
             return new ResponseEntity<>(response, HttpStatus.OK);
-            
-        
     }
 
     

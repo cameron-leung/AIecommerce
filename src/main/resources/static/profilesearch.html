@@ -105,18 +105,20 @@
 				});
 		}
 		function loadProfileSearch() {
-			var searchProfile = localStorage.getItem('selectedProfile');
+			var searchProfile = JSON.parse(localStorage.getItem('selectedProfile'));
 			
-			const currentProfile = Cookies.get('profile');
-
-			if(currentProfile.following && currentProfile.following.includes(searchProfile)) {
+			const currentProfile = JSON.parse(Cookies.get('profile'));
+			console.log(currentProfile.following, searchProfile._id, searchProfile);
+			if(currentProfile.following && currentProfile.following.includes(searchProfile._id)) {
 				$('.follow-button').text('Unfollow');
 				$('.follow-button').css('background', '#535355');
 			} else {
 				$('.follow-button').text('Follow');
 				$('.follow-button').css('background', '#FF206E');
 			}
-			searchProfile = JSON.parse(searchProfile);
+			
+			//searchProfile = JSON.parse(searchProfile);
+			
 			if (searchProfile) {
 				$('#profileName').text(searchProfile.name);
 				$('#profileUsername').text('@'+searchProfile.username);
