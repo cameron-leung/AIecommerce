@@ -42,9 +42,11 @@ public class ProfileRest {
             
             Profile profile = new Profile(accountData.getName(), accountData.getUsername(),
                     accountData.getEmail(), encodedPassword);
-            profile.setSuperId();
-            profileRepository.save(profile);
-            ProfileData profileData = new ProfileData(profile);
+            Profile savedProfile = profileRepository.save(profile);
+
+            // Update ProfileData with the ID from the saved Profile
+            ProfileData profileData = new ProfileData(savedProfile);
+           profileData.setId(savedProfile.getId());
             
             response = new ResponseEntity<>(profileData, HttpStatus.CREATED);
         }

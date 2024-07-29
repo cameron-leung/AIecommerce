@@ -12,12 +12,14 @@ public class Profile extends ProfileData{
 		super(name, username, email);
 		this.password = password;
 	}
-	public String getId() {
-		return _id;
-	}
-	public void setSuperId() {
-		super.setId(_id);
-	}
+	@Override
+    public String getId() {
+        return _id;
+    }
+
+    public void setId() {
+        super.setId(this._id);
+    }
 	
 	public String getPassword() {
 		return password;
