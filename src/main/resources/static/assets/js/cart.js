@@ -155,5 +155,6 @@ function removeFromCart(name) {
     cart = cart.filter(item => item.name.replace(/\s+/g, '') !== name.replace(/\s+/g, ''));
     saveCart(cart);
     fetchCartPopup();
+    fetchCartCards();
     updateCheckoutButton();
 }
