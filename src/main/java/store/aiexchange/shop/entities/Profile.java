@@ -15,6 +15,9 @@ public class Profile extends ProfileData{
 	public String getId() {
 		return _id;
 	}
+	public void setSuperId() {
+		super.setId(_id);
+	}
 	
 	public String getPassword() {
 		return password;

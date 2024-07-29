@@ -42,6 +42,7 @@ public class ProfileRest {
             
             Profile profile = new Profile(accountData.getName(), accountData.getUsername(),
                     accountData.getEmail(), encodedPassword);
+            profile.setSuperId();
             profileRepository.save(profile);
             ProfileData profileData = new ProfileData(profile);
             

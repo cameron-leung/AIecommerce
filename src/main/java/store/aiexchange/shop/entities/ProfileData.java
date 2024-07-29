@@ -6,7 +6,7 @@ import java.util.List;
 import org.springframework.data.annotation.Id;
 
 public class ProfileData{
-
+	private String id;
     private String name;
     private String username;
     private String email;
@@ -18,7 +18,7 @@ public class ProfileData{
 
     // Constructors
     public ProfileData(String name, String username, String email) {
-        this.name = name;
+    	this.name = name;
         this.username = username;
         this.email = email;
         this.myChatters = new ArrayList<>();
@@ -39,6 +39,13 @@ public class ProfileData{
     }
 
 	// Getters and Setters
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
     public String getName() {
         return name;
     }
