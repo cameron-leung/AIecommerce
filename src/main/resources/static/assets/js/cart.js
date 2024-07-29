@@ -99,7 +99,7 @@ function fetchCartPopup() {
 
 
 function updateCheckoutButton() {
-		cartItems = fetchCart();
+		let cartItems = fetchCart();
 		// Check if there are items in the cart
 		const profile = Cookies.get('profile');
 		if (cartItems.length > 0 && profile) {

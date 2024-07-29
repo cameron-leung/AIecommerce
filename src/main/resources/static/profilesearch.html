@@ -107,7 +107,6 @@
 			var searchProfile = JSON.parse(localStorage.getItem('selectedProfile'));
 			
 			const currentProfile = JSON.parse(Cookies.get('profile'));
-			console.log(currentProfile.following, searchProfile.id, searchProfile);
 			if(currentProfile.following && currentProfile.following.includes(searchProfile.id)) {
 				$('.follow-button').text('Unfollow');
 				$('.follow-button').css('background', '#535355');

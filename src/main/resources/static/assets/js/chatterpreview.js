@@ -31,6 +31,7 @@ function loadCharacterDetails(characterName) {
 			populateDetails(character);
 			// Attach event handler to the cart icon
 			$('.fa-cart-plus').off('click').on('click', function() {
+				console.log("add to cart clicked");
 				addToCart(character);
 			});
 		});

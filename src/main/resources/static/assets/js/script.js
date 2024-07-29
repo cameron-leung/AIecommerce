@@ -63,7 +63,9 @@ function initializeCart() {
 	const profile = JSON.parse(Cookies.get('profile') || '{}');
     const username = profile.username;
     const cartData = Cookies.get('cart_' + username);
+    console.log("initialize cart pre: ", username, cartData);
     if (cartData) {
+		console.log("returns cartData");
         return JSON.parse(cartData);
     } else {
         return [];
@@ -71,15 +73,18 @@ function initializeCart() {
 }
 
 function saveCart(cart) {
+	console.log("inside saveCart");
    const profile = JSON.parse(Cookies.get('profile') || '{}');
     const username = profile.username;
     Cookies.set('cart_' + username, JSON.stringify(cart), { path: '/' });
 }
 function fetchCart() {
-	const cartData = Cookies.get('cart');
+	const profile = JSON.parse(Cookies.get('profile') || '{}');
+    const username = profile.username;
+    const cartData = Cookies.get('cart_' + username);
     let cartItems = [];
     if (cartData) {
-        cartItems = JSON.parse(cartData);
+            cartItems = JSON.parse(cartData);
     }
     return cartItems;
 }
