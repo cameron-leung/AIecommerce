@@ -27,7 +27,8 @@ public class ProfileData{
         this.following = new ArrayList<>();
         
     }
-    public ProfileData(ProfileData other) {
+    public ProfileData(ProfileData other, String id) {
+    	this.id = id;
         this.name = other.name;
         this.username = other.username;
         this.email = other.email;

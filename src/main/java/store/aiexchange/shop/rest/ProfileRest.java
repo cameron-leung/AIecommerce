@@ -45,8 +45,7 @@ public class ProfileRest {
             Profile savedProfile = profileRepository.save(profile);
 
             // Update ProfileData with the ID from the saved Profile
-            ProfileData profileData = new ProfileData(savedProfile);
-           profileData.setId(savedProfile.getId());
+            ProfileData profileData = new ProfileData(savedProfile, savedProfile.getId());
             
             response = new ResponseEntity<>(profileData, HttpStatus.CREATED);
         }
@@ -81,7 +80,7 @@ public class ProfileRest {
                 PROFILE_MAP.remove(currentUsername);
                 PROFILE_MAP.put(newUsername, profile);
                 profileRepository.save(profile);
-                ProfileData profileData = new ProfileData(profile);
+                ProfileData profileData = new ProfileData(profile, profile.getId());
 
                 response = new ResponseEntity<>(profileData, HttpStatus.OK); 
             }
@@ -98,7 +97,7 @@ public class ProfileRest {
             response = new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         } else {
         	Profile profile = profileRepository.findByUsername(username);
-        	ProfileData profileData = new ProfileData(profile);
+        	ProfileData profileData = new ProfileData(profile, profile.getId());
         	
             if (profile == null) {
                 response = new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -169,7 +168,7 @@ public class ProfileRest {
     	List<Profile> profiles = profileRepository.findAll();
     	List<ProfileData> profileDatas = new ArrayList<ProfileData>();
     	for(Profile profile : profiles) {
-    		profileDatas.add(new ProfileData(profile));
+    		profileDatas.add(new ProfileData(profile, profile.getId()));
     	}
     	return profileDatas;
     }
