@@ -31,6 +31,12 @@ function fetchProfile(callback) {
 	if (username == 'someuser' || !username || username == null) {
 		profile = null;
 		Cookies.set('profile', null, { path: '/' });
+		$.ajax({
+			type: 'POST',
+			url: '/loggedIn',
+			contentType: 'application/json',
+			data: JSON.stringify(username)
+		})
 		callback();
 	} else {
 		if (username) {
@@ -61,32 +67,30 @@ function profileButton() {
 
 function initializeCart() {
 	const profile = JSON.parse(Cookies.get('profile') || '{}');
-    const username = profile.username;
-    const cartData = Cookies.get('cart_' + username);
-    console.log("initialize cart pre: ", username, cartData);
-    if (cartData) {
-		console.log("returns cartData");
-        return JSON.parse(cartData);
-    } else {
-        return [];
-    }
+	const username = profile.username;
+	const cartData = Cookies.get('cart_' + username);
+	console.log("initialize cart pre: ", username, cartData);
+	if (cartData) {
+		return JSON.parse(cartData);
+	} else {
+		return [];
+	}
 }
 
 function saveCart(cart) {
-	console.log("inside saveCart");
-   const profile = JSON.parse(Cookies.get('profile') || '{}');
-    const username = profile.username;
-    Cookies.set('cart_' + username, JSON.stringify(cart), { path: '/' });
+	const profile = JSON.parse(Cookies.get('profile') || '{}');
+	const username = profile.username;
+	Cookies.set('cart_' + username, JSON.stringify(cart), { path: '/' });
 }
 function fetchCart() {
 	const profile = JSON.parse(Cookies.get('profile') || '{}');
-    const username = profile.username;
-    const cartData = Cookies.get('cart_' + username);
-    let cartItems = [];
-    if (cartData) {
-            cartItems = JSON.parse(cartData);
-    }
-    return cartItems;
+	const username = profile.username;
+	const cartData = Cookies.get('cart_' + username);
+	let cartItems = [];
+	if (cartData) {
+		cartItems = JSON.parse(cartData);
+	}
+	return cartItems;
 }
 
 // Function to fill in card data

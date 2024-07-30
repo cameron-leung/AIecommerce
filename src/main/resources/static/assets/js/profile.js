@@ -53,6 +53,14 @@ function loadUpdateProfile() {
 			username: usernameInput,
 			currentUsername: username
 		};
+		$.ajax({
+			type: 'GET',
+			url: '/getLoggedIn',
+			contentType: 'application/json',
+			success: function(response) {
+				console.log(response)
+			}
+			})
 
 		$.ajax({
 			type: 'POST',

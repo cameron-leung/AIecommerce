@@ -52,6 +52,7 @@ public class ProfileRest {
 
         return response;
     }
+    
     @PostMapping("/updateProfile")
     public ResponseEntity<?> updateProfile(@RequestBody Map<String, String> formData) {
         ResponseEntity<?> response;
@@ -71,10 +72,10 @@ public class ProfileRest {
                 response = new ResponseEntity<>("Username already exists", HttpStatus.CONFLICT);
             } else {
                 // Update the profile's name and username
-                if (newName != "") {
+                if (newName != null && !newName.isEmpty()) {
                     profile.setName(newName);
                 }
-                if (newUsername != "") {
+                if (newName != null && !newUsername.isEmpty()) {
                     profile.setUsername(newUsername);
                 }
                 PROFILE_MAP.remove(currentUsername);
@@ -89,7 +90,14 @@ public class ProfileRest {
         return response;
     }
 
-
+    @GetMapping("/getLoggedIn") 
+    public List<String> getMap() {
+    	List<String> returnList = new ArrayList<>();
+    	for (Map.Entry<String, Profile> entry : PROFILE_MAP.entrySet()) {
+            returnList.add(entry.getKey());
+        }
+    	return returnList;
+    }
     @GetMapping("/findByUsername")
     public ResponseEntity<ProfileData> findByUsername(@RequestParam(value = "username") String username) {
     	ResponseEntity<ProfileData> response;
@@ -110,16 +118,13 @@ public class ProfileRest {
     
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody Login loginData) {
-    	System.out.println(loginData);
         Profile existingProfile = profileRepository.findByUsername(loginData.getUsername());
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder(); 
         ResponseEntity<?> response;
         if (existingProfile == null) {
-        	System.out.println("Username not found");
             response = new ResponseEntity<>("Username not found", HttpStatus.NOT_FOUND);
         } else {
         	if (!passwordEncoder.matches(loginData.getPassword(), existingProfile.getPassword())) {
-        		System.out.println("Incorrect password");
         		response = new ResponseEntity<>("Incorrect password", HttpStatus.UNAUTHORIZED);
             } else {
             	PROFILE_MAP.put(existingProfile.getUsername(), existingProfile); 
@@ -130,6 +135,20 @@ public class ProfileRest {
         return response;
     }
     
+    @PostMapping("/loggedIn")
+    public ResponseEntity<?> loggedIn(@RequestBody String username) {
+    	Profile existingProfile = profileRepository.findByUsername(username);
+    	ResponseEntity<?> response;
+    	if (existingProfile != null) {
+    		if (PROFILE_MAP.get(username) == null) {
+    			PROFILE_MAP.put(username, existingProfile);
+    		}
+    		response = new ResponseEntity<>(username, HttpStatus.OK);
+    	} else {
+    		response = new ResponseEntity<>("Username not found", HttpStatus.NOT_FOUND);
+    	}
+    	return response; 
+    }
     @PostMapping("/logout")
     public void logout(@RequestBody String username) {
     	PROFILE_MAP.remove(username);
