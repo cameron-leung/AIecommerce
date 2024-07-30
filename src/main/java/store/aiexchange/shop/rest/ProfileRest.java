@@ -136,7 +136,7 @@ public class ProfileRest {
     }
     
     @PostMapping("/loggedIn")
-    public ResponseEntity<?> loggedIn(@RequestBody String username) {
+    public ResponseEntity<?> loggedIn(@RequestParam String username) {
     	Profile existingProfile = profileRepository.findByUsername(username);
     	ResponseEntity<?> response;
     	if (existingProfile != null) {
@@ -145,7 +145,7 @@ public class ProfileRest {
     		}
     		response = new ResponseEntity<>(username, HttpStatus.OK);
     	} else {
-    		response = new ResponseEntity<>("Username not found", HttpStatus.NOT_FOUND);
+    		response = new ResponseEntity<>("Username not found" + username, HttpStatus.NOT_FOUND);
     	}
     	return response; 
     }

@@ -31,15 +31,21 @@ function fetchProfile(callback) {
 	if (username == 'someuser' || !username || username == null) {
 		profile = null;
 		Cookies.set('profile', null, { path: '/' });
-		$.ajax({
-			type: 'POST',
-			url: '/loggedIn',
-			contentType: 'application/json',
-			data: JSON.stringify(username)
-		})
 		callback();
 	} else {
 		if (username) {
+			$.ajax({
+			type: 'POST',
+			url: '/loggedIn',
+			contentType: 'application/json',
+			data: { username: username }, 
+			success: function(response) {
+            console.log('got user:', response);
+        },
+        error: function(error) {
+            console.error('Error:', error.responseText);
+        }
+		})
 			$.getJSON(`/findByUsername?username=${username}`, function(data) {
 				profile = data;
 				Cookies.set('profile', JSON.stringify(profile), { path: '/' });

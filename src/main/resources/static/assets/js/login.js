@@ -60,6 +60,7 @@ function loadCreateAccount() {
 			contentType: 'application/json',
 			data: JSON.stringify(formData),
 			success: function(response) {
+				Cookies.set('username', formData.username, { path: '/' });
 				window.location.href = 'profilepage.html';
 			},
 			error: function(error) {
