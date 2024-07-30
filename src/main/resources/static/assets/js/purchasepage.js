@@ -16,14 +16,12 @@ $(document).ready(function() {
         } else {
 		const cardholderName = $('#cardholder-name').val().trim();
 
-			console.log("pass order in");
 			const orderData = {
 					name: JSON.parse(Cookies.get('profile')).name,
 					username: Cookies.get('username'),
 					cardholderName: cardholderName,
 					orderItems: fetchCart()
 				};
-			console.log(orderData);
 			// Send data to server
 			$.ajax({
 				type: 'POST',
@@ -31,11 +29,10 @@ $(document).ready(function() {
 				contentType: 'application/json',
 				data: JSON.stringify(orderData),
 				success: function(response) {
-					Cookies.remove('cart', { path: '/' });
+					Cookies.remove('cart_' + orderData.username, { path: '/' });
 					window.location.href = 'profilepage.html';
 				},
 				error: function(xhr, status, error) {
-					console.log("Failed to place order");
 					$('#purchase-error-message').text('Failed to place order');
 				}
 			});

@@ -24,14 +24,13 @@ function loadCharacterDetails(characterName) {
 		$.getJSON('/chatters', function(characterData) {
 			const character = characterData.find(c => c.name === characterName);
 			if (!character) {
-				console.error(`Character with name ${characterName} not found.`);
+				window.location.href = 'index.html';
 				return;
 			}
 			// Update with character details
 			populateDetails(character);
 			// Attach event handler to the cart icon
 			$('.fa-cart-plus').off('click').on('click', function() {
-				console.log("add to cart clicked");
 				addToCart(character);
 			});
 		});
