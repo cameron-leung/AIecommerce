@@ -69,7 +69,6 @@ function initializeCart() {
 	const profile = JSON.parse(Cookies.get('profile') || '{}');
 	const username = profile.username;
 	const cartData = Cookies.get('cart_' + username);
-	console.log("initialize cart pre: ", username, cartData);
 	if (cartData) {
 		return JSON.parse(cartData);
 	} else {
