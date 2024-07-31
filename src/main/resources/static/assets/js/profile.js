@@ -3,39 +3,29 @@ $(document).ready(function() {
 	//$('.chattercircles-placeholder').load('chattercircles.html');
 	$('#editprofilepopup-placeholder').load('editprofilepopup.html');
 	if (!window.cartItemsLoaded) {
-        window.cartItemsLoaded = true;
-    }
-    //loadProfile();
+		window.cartItemsLoaded = true;
+	}
+	//loadProfile();
 });
 function loadProfile() {
-    const username = Cookies.get('username');
+	const username = Cookies.get('username');
 	console.log("loading profile: ", username);
-    if (username) {
-        $.ajax({
-            type: 'GET',
-            url: `/findByUsername`,
-            data: { username: username },
-            success: function(profileData) {
-                profile = profileData;
-                $('#profileName').text(profile.name || 'Unknown Name');
-                $('#profileUsername').text('@' + (profile.username || 'UnknownUsername'));
-                $('#followersPlaceholder').text((profile.followers && profile.followers.length) || 0);
-                $('#followingPlaceholder').text((profile.following && profile.following.length) || 0);
-                $('#chattersPlaceholder').text((profile.myChatters && profile.myChatters.length) || 0);
+	if (username) {
+		const profile = JSON.parse(Cookies.get("profile"));
+		$('#profileName').text(profile.name || 'Unknown Name');
+		$('#profileUsername').text('@' + (profile.username || 'UnknownUsername'));
+		$('#followersPlaceholder').text((profile.followers && profile.followers.length) || 0);
+		$('#followingPlaceholder').text((profile.following && profile.following.length) || 0);
+		$('#chattersPlaceholder').text((profile.myChatters && profile.myChatters.length) || 0);
 
-                // Populate the chatters using myChatters from the profile
-                if (profile.myChatters && profile.myChatters.length > 0) {
-                    populateChatterCircles(profile.myChatters);
-                }
-                fetchCartCards();
-            },
-            error: function() {
-                window.location.href = 'login.html';
-            }
-        });
-    } else {
-        window.location.href = 'login.html';
-    }
+		// Populate the chatters using myChatters from the profile
+		if (profile.myChatters && profile.myChatters.length > 0) {
+			populateChatterCircles(profile.myChatters);
+		}
+		fetchCartCards();
+	} else {
+	window.location.href = 'login.html';
+}
 }
 
 
@@ -76,7 +66,7 @@ function loadUpdateProfile() {
 				} else {
 					$('#error-message').text('Error occurred. Please try again.');
 				}
-				
+
 			}
 		});
 	})

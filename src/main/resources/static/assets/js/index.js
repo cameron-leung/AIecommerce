@@ -21,11 +21,7 @@ $(document).ready(function() {
 function loadIndex() {
 	const profileCookie = Cookies.get('profile');
     if (profileCookie && profileCookie !== 'null') {
-        try {
             profile = JSON.parse(profileCookie);
-        } catch (e) {
-            profile = null;
-        }
     }
 	$.getJSON('/chatters', function(characters) {
 		characterData.push(...characters);

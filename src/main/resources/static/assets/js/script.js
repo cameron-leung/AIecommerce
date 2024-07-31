@@ -32,20 +32,29 @@ document.addEventListener('DOMContentLoaded', function() {
 function fetchProfile(callback) {
 	const username = Cookies.get('username');
 
-		if (username) {
+	if (username) {
+		$.ajax({
+			type: 'GET',
+			url: `/findByUsername`,
+			data: { username: username },
+			success: function(profileData) {
+				Cookies.set('profile', JSON.stringify(profileData), { path: '/' });
+				callback();
+			}
+		})
 
-			$.ajax({
-				type: 'POST',
-				url: '/loggedIn',
-				data: { username: username },
-				success: function(response) {
-					callback();
-				}
-			})
-			
-		} else {
-			callback();
-		}
+		//$.ajax({
+		//	type: 'POST',
+		//	url: '/loggedIn',
+		//	data: { username: username },
+		//	success: function(response) {
+		//		callback();
+		//	}
+		//})
+
+	} else {
+		callback();
+	}
 
 }
 function profileButton() {
