@@ -105,18 +105,15 @@
 		}
 		function loadProfileSearch() {
 			//var searchProfile = JSON.parse(localStorage.getItem('selectedProfile'));
-			var searchProfile = null;
+
 			$.ajax({
 				type: 'GET',
 				url: `/findByUsername`,
 				data: { username: JSON.parse(localStorage.getItem('selectedProfile')).username },
-				success: function(profileData) {
-					console.log("fetched from backend");
-					searchProfile = profileData;
+				success: function(searchProfile) {
+					console.log(searchProfile);
+					
 					const currentProfile = JSON.parse(Cookies.get('profile'));
-					
-					
-					//searchProfile = JSON.parse(searchProfile);
 					
 					if (searchProfile) {
 						$('#profileName').text(searchProfile.name);
@@ -124,7 +121,7 @@
 						$('#followersPlaceholder').text((searchProfile.followers && searchProfile.followers.length) || 0); 
 						$('#followingPlaceholder').text((searchProfile.following && searchProfile.following.length) || 0); 
 					}
-					if(currentProfile.following && currentProfile.following.includes(searchProfile.id)) {
+					if(searchProfile.followers && searchProfile.followers.includes(currentProfile.id)) {
 						$('.follow-button').text('Unfollow');
 						$('.follow-button').css('background', '#535355');
 					} else {
