@@ -95,6 +95,7 @@ function fetchCartPopup() {
         $('#empty-cart-message').text('Cart is empty');
     }
     getPrice(cart);
+    $('#cartPopupOverlay').fadeIn();
 }
 
 
@@ -154,7 +155,10 @@ function removeFromCart(name) {
     let cart = initializeCart();
     cart = cart.filter(item => item.name.replace(/\s+/g, '') !== name.replace(/\s+/g, ''));
     saveCart(cart);
+    $('#cartPopupOverlay').removeClass('d-none').fadeIn();
     fetchCartPopup();
-    fetchCartCards();
     updateCheckoutButton();
+    if($('#profile-page').length) {
+		    fetchCartCards();
+	}
 }

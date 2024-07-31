@@ -66,7 +66,13 @@ function profileButton() {
 
 function initializeCart() {
 	const profile = JSON.parse(Cookies.get('profile') || '{}');
-	const username = profile.username;
+	let username = "";
+	if(profile != null) {
+		username = profile.username;
+	
+	} else {
+		username = null;
+	}
 	const cartData = Cookies.get('cart_' + username);
 	if (cartData) {
 		return JSON.parse(cartData);
@@ -77,18 +83,31 @@ function initializeCart() {
 
 function saveCart(cart) {
 	const profile = JSON.parse(Cookies.get('profile') || '{}');
-	const username = profile.username;
+	let username = "";
+	if(profile != null) {
+		username = profile.username;
+	
+	} else {
+		username = null;
+	}
 	Cookies.set('cart_' + username, JSON.stringify(cart), { path: '/' });
 }
 function fetchCart() {
 	const profile = JSON.parse(Cookies.get('profile') || '{}');
-	const username = profile.username;
+	let username = "";
+	if(profile != null) {
+		username = profile.username;
+	
+	} else {
+		username = null;
+	}
 	const cartData = Cookies.get('cart_' + username);
 	let cartItems = [];
 	if (cartData) {
 		cartItems = JSON.parse(cartData);
 	}
 	return cartItems;
+	
 }
 
 // Function to fill in card data

@@ -42,6 +42,7 @@ public class ProfileRest {
             
             Profile profile = new Profile(accountData.getName(), accountData.getUsername(),
                     accountData.getEmail(), encodedPassword);
+            PROFILE_MAP.put(accountData.getUsername(), profile);
             Profile savedProfile = profileRepository.save(profile);
 
             // Update ProfileData with the ID from the saved Profile
