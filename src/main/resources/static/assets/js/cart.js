@@ -75,7 +75,7 @@ function loadCartPopup() {
 	});
 	// Close the cart popup when clicking outside
 	$(document).on('click', function(event) {
-		if (cartPopupOpen && !$(event.target).closest('#cartPopupContent').length) {
+		if (cartPopupOpen && !$(event.target).closest('#cartPopupContent').length && !$(event.target).hasClass('fa-trash')) {
 			closeCartPopup();
 		}
 	});
@@ -113,7 +113,7 @@ function updateCheckoutButton() {
 				})
 				.removeAttr('disabled')
 				.click(function() {
-					window.location.href = 'purchasepage.html'; // Replace with your purchase page URL
+					window.location.href = 'purchasepage.html'; 
 				});
 		} else {
 			// Cart is empty: Make button grey and disable click
@@ -125,7 +125,7 @@ function updateCheckoutButton() {
 				})
 				.attr('disabled', 'disabled')
 				.click(function(event) {
-					event.preventDefault(); // Prevent default action if clicked (though button is disabled)
+					event.preventDefault(); 
 				});
 		}
 
@@ -155,7 +155,6 @@ function removeFromCart(name) {
     let cart = initializeCart();
     cart = cart.filter(item => item.name.replace(/\s+/g, '') !== name.replace(/\s+/g, ''));
     saveCart(cart);
-    $('#cartPopupOverlay').removeClass('d-none').fadeIn();
     fetchCartPopup();
     updateCheckoutButton();
     if($('#profile-page').length) {
