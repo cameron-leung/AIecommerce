@@ -21,6 +21,7 @@ document.addEventListener('DOMContentLoaded', function() {
 			if ($('#index-page').length) {
 				loadIndex();
 			}
+			console.log($('#profile-page').length);
 			if ($('#profile-page').length) {
 				loadProfile();
 			}
@@ -34,32 +35,35 @@ function fetchProfile(callback) {
 	if (username == 'someuser' || !username || username == null) {
 		profile = null;
 		Cookies.set('profile', null, { path: '/' });
-		
+		callback();
 	} else {
 		if (username) {
 			$.getJSON(`/findByUsername?username=${username}`, function(data) {
 				profile = data;
+				console.log("setting profile cookie");
 				Cookies.set('profile', JSON.stringify(profile), { path: '/' });
+				
 
 			}).fail(function(jqXHR, textStatus, errorThrown) {
 				// Handle the failure
 				profile = null; // Set profile to null if there's an error
 				Cookies.set('profile', null, { path: '/' });
-
+				
 			});
 			$.ajax({
 				type: 'POST',
 				url: '/loggedIn',
 				data: { username: username },
+				success: function(response) {
+					callback();
+				}
 			})
 			
 		}
 	}
-	callback();
 }
 function profileButton() {
 	$(document).on('click', '#profile-link', function(e) {
-        
 		e.preventDefault();
 		console.log("profile: ", profile);
 		if (profile) {

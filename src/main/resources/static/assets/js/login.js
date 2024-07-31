@@ -23,6 +23,11 @@ function login() {
 			data: JSON.stringify(formData),
 			success: function(response) {
 				Cookies.set('username', formData.username, { path: '/' });
+				$.getJSON(`/findByUsername?username=${username}`, function(data) {
+				profile = data;
+				Cookies.set('profile', JSON.stringify(profile), { path: '/' });
+
+			})
 				window.location.href = 'profilepage.html';
 			},
 			error: function(error) {

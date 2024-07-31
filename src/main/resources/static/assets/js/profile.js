@@ -5,17 +5,14 @@ $(document).ready(function() {
 	if (!window.cartItemsLoaded) {
         window.cartItemsLoaded = true;
     }
-	
+    //loadProfile();
 });
 function loadProfile() {
 	const profileCookie = Cookies.get('profile');
     if (profileCookie && profileCookie !== 'null') {
-        try {
             profile = JSON.parse(profileCookie);
-        } catch (e) {
-            profile = null;
-        }
     }
+    console.log(profile);
 	if (profile) {
 		$('#profileName').text(profile.name || 'Unknown Name');
 		$('#profileUsername').text('@' + (profile.username || 'UnknownUsername'));
@@ -29,9 +26,9 @@ function loadProfile() {
 		}
 		fetchCartCards();
 
-	} else {
-		window.location.href = 'login.html';
-	}
+	} //else {
+	//	window.location.href = 'login.html';
+	//}
 }
 
 // Function to update the profile
