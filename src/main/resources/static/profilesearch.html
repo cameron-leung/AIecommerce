@@ -111,8 +111,6 @@
 				url: `/findByUsername`,
 				data: { username: JSON.parse(localStorage.getItem('selectedProfile')).username },
 				success: function(searchProfile) {
-					console.log(searchProfile);
-					
 					const currentProfile = JSON.parse(Cookies.get('profile'));
 					
 					if (searchProfile) {
@@ -128,6 +126,17 @@
 						$('.follow-button').text('Follow');
 						$('.follow-button').css('background', '#FF206E');
 					}
+					const container = $('.character-circ-container');
+
+					// Add the header to the container
+					container.append('<h1 class="mt-3 display-4">Recents</h1>');
+					// Fetch chattercard template
+					$.get('chattercircle.html', function(template) {
+						searchProfile.myChatters.forEach(character => {
+							const populatedCircle = populateCircle(template, character);
+							container.append(populatedCircle);
+						});
+					})
 				}
 			})
 			
