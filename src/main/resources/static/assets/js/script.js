@@ -5,6 +5,7 @@ let profile = null;
 document.addEventListener('DOMContentLoaded', function() {
 	// Check if the backButton element exists before adding event listener
 	$('#cartpopup-placeholder').load('cartpopup.html');
+	;
 
 	const $backButton = $('#backButton');
 	if ($backButton.length) {
@@ -12,17 +13,19 @@ document.addEventListener('DOMContentLoaded', function() {
 			window.history.back();
 		});
 	}
-	fetchProfile(function() {
-		if ($('#profile-link').length) {
-			profileButton();
-		}
-		if ($('#index-page').length) {
-			loadIndex();
-		}
-		if ($('#profile-page').length) {
-			loadProfile();
-		}
-	});
+	$('#navbar-placeholder').load('navbar.html', function() {
+		fetchProfile(function() {
+			if ($('#profile-link').length) {
+				profileButton();
+			}
+			if ($('#index-page').length) {
+				loadIndex();
+			}
+			if ($('#profile-page').length) {
+				loadProfile();
+			}
+		});
+	})
 });
 // Function to fetch the profile and store it in the global variable
 function fetchProfile(callback) {
@@ -34,21 +37,22 @@ function fetchProfile(callback) {
 		callback();
 	} else {
 		if (username) {
-		$.ajax({
-			type: 'POST',
-			url: '/loggedIn',
-			data: { username: username }, 
-		})
 			$.getJSON(`/findByUsername?username=${username}`, function(data) {
 				profile = data;
 				Cookies.set('profile', JSON.stringify(profile), { path: '/' });
-				callback();
+
 			}).fail(function(jqXHR, textStatus, errorThrown) {
 				// Handle the failure
 				profile = null; // Set profile to null if there's an error
 				Cookies.set('profile', null, { path: '/' });
-				callback();
+
 			});
+			$.ajax({
+				type: 'POST',
+				url: '/loggedIn',
+				data: { username: username },
+			})
+			callback();
 		}
 	}
 }
@@ -57,7 +61,6 @@ function profileButton() {
 		e.preventDefault();
 		if (profile) {
 			window.location.href = 'profilepage.html';
-
 		} else {
 			window.location.href = 'login.html';
 		}
@@ -67,9 +70,9 @@ function profileButton() {
 function initializeCart() {
 	const profile = JSON.parse(Cookies.get('profile') || '{}');
 	let username = "";
-	if(profile != null) {
+	if (profile != null) {
 		username = profile.username;
-	
+
 	} else {
 		username = null;
 	}
@@ -84,9 +87,9 @@ function initializeCart() {
 function saveCart(cart) {
 	const profile = JSON.parse(Cookies.get('profile') || '{}');
 	let username = "";
-	if(profile != null) {
+	if (profile != null) {
 		username = profile.username;
-	
+
 	} else {
 		username = null;
 	}
@@ -95,9 +98,9 @@ function saveCart(cart) {
 function fetchCart() {
 	const profile = JSON.parse(Cookies.get('profile') || '{}');
 	let username = "";
-	if(profile != null) {
+	if (profile != null) {
 		username = profile.username;
-	
+
 	} else {
 		username = null;
 	}
@@ -107,7 +110,7 @@ function fetchCart() {
 		cartItems = JSON.parse(cartData);
 	}
 	return cartItems;
-	
+
 }
 
 // Function to fill in card data
