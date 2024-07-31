@@ -9,7 +9,6 @@ $(document).ready(function() {
 });
 function loadProfile() {
 	const username = Cookies.get('username');
-	console.log("loading profile: ", username);
 	if (username) {
 		const profile = JSON.parse(Cookies.get("profile"));
 		$('#profileName').text(profile.name || 'Unknown Name');
