@@ -32,24 +32,8 @@ document.addEventListener('DOMContentLoaded', function() {
 function fetchProfile(callback) {
 	const username = Cookies.get('username');
 
-	if (username == 'someuser' || !username || username == null) {
-		profile = null;
-		Cookies.set('profile', null, { path: '/' });
-		callback();
-	} else {
 		if (username) {
-			$.getJSON(`/findByUsername?username=${username}`, function(data) {
-				profile = data;
-				console.log("setting profile cookie");
-				Cookies.set('profile', JSON.stringify(profile), { path: '/' });
-				
 
-			}).fail(function(jqXHR, textStatus, errorThrown) {
-				// Handle the failure
-				profile = null; // Set profile to null if there's an error
-				Cookies.set('profile', null, { path: '/' });
-				
-			});
 			$.ajax({
 				type: 'POST',
 				url: '/loggedIn',
@@ -60,12 +44,11 @@ function fetchProfile(callback) {
 			})
 			
 		}
-	}
+
 }
 function profileButton() {
 	$(document).on('click', '#profile-link', function(e) {
 		e.preventDefault();
-		console.log("profile: ", profile);
 		if (profile) {
 			window.location.href = 'profilepage.html';
 		} else {
@@ -75,14 +58,8 @@ function profileButton() {
 }
 
 function initializeCart() {
-	const profile = JSON.parse(Cookies.get('profile') || '{}');
-	let username = "";
-	if (profile != null) {
-		username = profile.username;
+	const username = Cookies.get('username');
 
-	} else {
-		username = null;
-	}
 	const cartData = Cookies.get('cart_' + username);
 	if (cartData) {
 		return JSON.parse(cartData);
@@ -92,25 +69,11 @@ function initializeCart() {
 }
 
 function saveCart(cart) {
-	const profile = JSON.parse(Cookies.get('profile') || '{}');
-	let username = "";
-	if (profile != null) {
-		username = profile.username;
-
-	} else {
-		username = null;
-	}
+	const username = Cookies.get('username');
 	Cookies.set('cart_' + username, JSON.stringify(cart), { path: '/' });
 }
 function fetchCart() {
-	const profile = JSON.parse(Cookies.get('profile') || '{}');
-	let username = "";
-	if (profile != null) {
-		username = profile.username;
-
-	} else {
-		username = null;
-	}
+	const username = Cookies.get('username');
 	const cartData = Cookies.get('cart_' + username);
 	let cartItems = [];
 	if (cartData) {
