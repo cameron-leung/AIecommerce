@@ -25,7 +25,7 @@ document.addEventListener('DOMContentLoaded', function() {
 				loadProfile();
 			}
 		});
-	})
+	});
 });
 // Function to fetch the profile and store it in the global variable
 function fetchProfile(callback) {
@@ -34,7 +34,7 @@ function fetchProfile(callback) {
 	if (username == 'someuser' || !username || username == null) {
 		profile = null;
 		Cookies.set('profile', null, { path: '/' });
-		callback();
+		
 	} else {
 		if (username) {
 			$.getJSON(`/findByUsername?username=${username}`, function(data) {
@@ -52,13 +52,16 @@ function fetchProfile(callback) {
 				url: '/loggedIn',
 				data: { username: username },
 			})
-			callback();
+			
 		}
 	}
+	callback();
 }
 function profileButton() {
-	$('#profile-link').on('click', function(e) {
+	$(document).on('click', '#profile-link', function(e) {
+        
 		e.preventDefault();
+		console.log("profile: ", profile);
 		if (profile) {
 			window.location.href = 'profilepage.html';
 		} else {
