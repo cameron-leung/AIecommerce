@@ -8,28 +8,36 @@ $(document).ready(function() {
     //loadProfile();
 });
 function loadProfile() {
-	const profileCookie = Cookies.get('profile');
-    if (profileCookie && profileCookie !== 'null') {
-            profile = JSON.parse(profileCookie);
+    const username = Cookies.get('username');
+	console.log("loading profile: ", username);
+    if (username) {
+        $.ajax({
+            type: 'GET',
+            url: `/findByUsername`,
+            data: { username: username },
+            success: function(profileData) {
+                profile = profileData;
+                $('#profileName').text(profile.name || 'Unknown Name');
+                $('#profileUsername').text('@' + (profile.username || 'UnknownUsername'));
+                $('#followersPlaceholder').text((profile.followers && profile.followers.length) || 0);
+                $('#followingPlaceholder').text((profile.following && profile.following.length) || 0);
+                $('#chattersPlaceholder').text((profile.myChatters && profile.myChatters.length) || 0);
+
+                // Populate the chatters using myChatters from the profile
+                if (profile.myChatters && profile.myChatters.length > 0) {
+                    populateChatterCircles(profile.myChatters);
+                }
+                fetchCartCards();
+            },
+            error: function() {
+                window.location.href = 'login.html';
+            }
+        });
+    } else {
+        window.location.href = 'login.html';
     }
-    console.log(profile);
-	if (profile) {
-		$('#profileName').text(profile.name || 'Unknown Name');
-		$('#profileUsername').text('@' + (profile.username || 'UnknownUsername'));
-		$('#followersPlaceholder').text((profile.followers && profile.followers.length) || 0);
-		$('#followingPlaceholder').text((profile.following && profile.following.length) || 0);
-		$('#chattersPlaceholder').text((profile.myChatters && profile.myChatters.length) || 0);
-
-		// Populate the chatters using myChatters from the profile
-		if (profile.myChatters && profile.myChatters.length > 0) {
-			populateChatterCircles(profile.myChatters);
-		}
-		fetchCartCards();
-
-	} //else {
-	//	window.location.href = 'login.html';
-	//}
 }
+
 
 // Function to update the profile
 function loadUpdateProfile() {
@@ -50,14 +58,6 @@ function loadUpdateProfile() {
 			username: usernameInput,
 			currentUsername: username
 		};
-		$.ajax({
-			type: 'GET',
-			url: '/getLoggedIn',
-			contentType: 'application/json',
-			success: function(response) {
-				console.log(response)
-			}
-			})
 
 		$.ajax({
 			type: 'POST',

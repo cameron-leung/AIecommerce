@@ -21,7 +21,7 @@ document.addEventListener('DOMContentLoaded', function() {
 			if ($('#index-page').length) {
 				loadIndex();
 			}
-			console.log($('#profile-page').length);
+
 			if ($('#profile-page').length) {
 				loadProfile();
 			}
@@ -43,13 +43,15 @@ function fetchProfile(callback) {
 				}
 			})
 			
+		} else {
+			callback();
 		}
 
 }
 function profileButton() {
 	$(document).on('click', '#profile-link', function(e) {
 		e.preventDefault();
-		if (profile) {
+		if (Cookies.get('username')) {
 			window.location.href = 'profilepage.html';
 		} else {
 			window.location.href = 'login.html';
@@ -59,7 +61,6 @@ function profileButton() {
 
 function initializeCart() {
 	const username = Cookies.get('username');
-
 	const cartData = Cookies.get('cart_' + username);
 	if (cartData) {
 		return JSON.parse(cartData);
