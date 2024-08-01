@@ -22,7 +22,7 @@ function login() {
 			contentType: 'application/json',
 			data: JSON.stringify(formData),
 			success: function(response) {
-				Cookies.set('username', formData.username, { path: '/' });
+				Cookies.set('profile', JSON.stringify(profileData), { path: '/' }); 
 				window.location.href = 'profilepage.html';
 			},
 			error: function(error) {
@@ -32,14 +32,14 @@ function login() {
 	});
 }
 function logout() {
-	const username = Cookies.get('username');
+	const username = JSON.parse(Cookies.get('profile')).username;
 	$.ajax({
 		type: 'POST',
 		url: '/logout',
 		data: JSON.stringify({ username: username }),
 		contentType: 'application/json',
 		success: function() {
-			Cookies.remove('username', { path: '/' });
+			Cookies.set('profile', null, { path: '/' }); 
 			window.location.href = 'login.html';
 		},
 	});
@@ -60,7 +60,7 @@ function loadCreateAccount() {
 			contentType: 'application/json',
 			data: JSON.stringify(formData),
 			success: function(response) {
-				Cookies.set('username', formData.username, { path: '/' });
+				Cookies.set('profile', JSON.stringify(profileData), { path: '/' }); 
 				window.location.href = 'profilepage.html';
 			},
 			error: function(error) {

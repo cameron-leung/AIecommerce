@@ -78,10 +78,9 @@
 				$('.discover-icon').addClass('active');
 			});
 			loadProfileSearch();
-			
 		});
 		function follow() {
-			var currentUsername = Cookies.get('username');
+			var currentUsername = JSON.parse(Cookies.get('profile')).username;
 			var otherUsername = (JSON.parse(localStorage.getItem('selectedProfile'))).username;
 			const followData = {
 					currentUsername: currentUsername,
@@ -96,14 +95,10 @@
 					success: function(response) {
 						loadProfileSearch();
 					},
-					error: function(error) {
-						console.log('Follow request failed', error);
-						
-					}
 				});
 		}
 		function unfollow() {
-			var currentUsername = Cookies.get('username');
+			var currentUsername =  JSON.parse(Cookies.get('profile')).username;
 			var otherUsername = (JSON.parse(localStorage.getItem('selectedProfile'))).username;
 			const unfollowData = {
 					currentUsername: currentUsername,
@@ -117,22 +112,19 @@
 					data: JSON.stringify(unfollowData),
 					success: function(response) {
 						loadProfileSearch();
-					},
-					error: function(error) {
-						console.log('Follow request failed', error);
-						
 					}
 				});
 		}
 		function loadProfileSearch() {
-			//var searchProfile = JSON.parse(localStorage.getItem('selectedProfile'));
-
+			//const currentUsername = JSON.parse(Cookies.get('profile')).username;
+			
 			$.ajax({
 				type: 'GET',
 				url: `/findByUsername`,
 				data: { username: JSON.parse(localStorage.getItem('selectedProfile')).username },
 				success: function(searchProfile) {
 					const currentProfile = JSON.parse(Cookies.get('profile'));
+					const currentProfileUsername = JSON.parse(Cookies.get('profile')).username;
 					
 					if (searchProfile) {
 						$('#profileName').text(searchProfile.name);
@@ -141,15 +133,23 @@
 						$('#followingPlaceholder').text((searchProfile.following && searchProfile.following.length) || 0); 
 					}
 					const $followButton = $('.follow-button');
-					if(searchProfile.followers && searchProfile.followers.includes(currentProfile.id)) {
-						$followButton.text('Unfollow');
-	                    $followButton.css('background', '#535355');
-	                    $followButton.off('click').on('click', unfollow);
+					console.log(currentProfileUsername);
+					if(currentProfileUsername) {
+						if(searchProfile.followers && searchProfile.followers.includes(currentProfile.id)) {
+							$followButton.text('Unfollow');
+		                    $followButton.css('background', '#535355');
+		                    $followButton.off('click').on('click', unfollow);
+						} else {
+							$followButton.text('Follow');
+		                    $followButton.css('background', '#FF206E');
+		                    $followButton.off('click').on('click', follow);
+						}
 					} else {
+						$followButton.off('click'); 
 						$followButton.text('Follow');
-	                    $followButton.css('background', '#FF206E');
-	                    $followButton.off('click').on('click', follow);
+	                    $followButton.css('background', '#535355');
 					}
+					
 					const container = $('.character-circ-container');
 
 					// Add the header to the container

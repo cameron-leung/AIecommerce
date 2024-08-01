@@ -30,27 +30,17 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 // Function to fetch the profile and store it in the global variable
 function fetchProfile(callback) {
-	const username = Cookies.get('username');
-
-	if (username) {
+	const currentProfile = JSON.parse(Cookies.get('profile'));
+	console.log(currentProfile);
+	if (currentProfile) {
 		$.ajax({
-			type: 'GET',
-			url: `/findByUsername`,
-			data: { username: username },
-			success: function(profileData) {
-				Cookies.set('profile', JSON.stringify(profileData), { path: '/' });
+			type: 'POST',
+			url: '/loggedIn',
+			data: { username: currentProfile.username },
+			success: function(response) {
 				callback();
 			}
 		})
-
-		//$.ajax({
-		//	type: 'POST',
-		//	url: '/loggedIn',
-		//	data: { username: username },
-		//	success: function(response) {
-		//		callback();
-		//	}
-		//})
 
 	} else {
 		callback();
@@ -69,7 +59,7 @@ function profileButton() {
 }
 
 function initializeCart() {
-	const username = Cookies.get('username');
+	const username = JSON.parse(Cookies.get('profile')).username;
 	const cartData = Cookies.get('cart_' + username);
 	if (cartData) {
 		return JSON.parse(cartData);
@@ -79,11 +69,11 @@ function initializeCart() {
 }
 
 function saveCart(cart) {
-	const username = Cookies.get('username');
+	const username = JSON.parse(Cookies.get('profile')).username;
 	Cookies.set('cart_' + username, JSON.stringify(cart), { path: '/' });
 }
 function fetchCart() {
-	const username = Cookies.get('username');
+	const username = JSON.parse(Cookies.get('profile')).username;
 	const cartData = Cookies.get('cart_' + username);
 	let cartItems = [];
 	if (cartData) {

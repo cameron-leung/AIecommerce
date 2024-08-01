@@ -8,9 +8,8 @@ $(document).ready(function() {
 	//loadProfile();
 });
 function loadProfile() {
-	const username = Cookies.get('username');
-	if (username) {
-		const profile = JSON.parse(Cookies.get("profile"));
+
+		const profile = JSON.parse(Cookies.get('profile'));
 		$('#profileName').text(profile.name || 'Unknown Name');
 		$('#profileUsername').text('@' + (profile.username || 'UnknownUsername'));
 		$('#followersPlaceholder').text((profile.followers && profile.followers.length) || 0);
@@ -22,9 +21,7 @@ function loadProfile() {
 			populateChatterCircles(profile.myChatters);
 		}
 		fetchCartCards();
-	} else {
-	window.location.href = 'login.html';
-}
+	
 }
 
 
@@ -35,7 +32,7 @@ function loadUpdateProfile() {
 
 		var nameInput = $('#nameInput').val().trim();
 		var usernameInput = $('#usernameInput').val().trim();
-		const username = Cookies.get('username');
+		const username = JSON.parse(Cookies.get('profile')).username;
 
 		if (nameInput === '' && usernameInput === '') {
 			$('#error-message').text('Please fill out at least one field.');
@@ -54,7 +51,7 @@ function loadUpdateProfile() {
 			contentType: 'application/json',
 			data: JSON.stringify(formData),
 			success: function(response) {
-				Cookies.set('username', formData.username, { path: '/' });
+				Cookies.set('profile', JSON.stringify(profileData), { path: '/' }); 
 				window.location.href = 'profilepage.html';
 			},
 			error: function(error) {

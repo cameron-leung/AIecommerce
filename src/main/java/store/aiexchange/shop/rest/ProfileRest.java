@@ -129,7 +129,8 @@ public class ProfileRest {
         		response = new ResponseEntity<>("Incorrect password", HttpStatus.UNAUTHORIZED);
             } else {
             	PROFILE_MAP.put(existingProfile.getUsername(), existingProfile); 
-            	response = new ResponseEntity<>(existingProfile.getUsername(), HttpStatus.OK);
+            	ProfileData profileData = new ProfileData(existingProfile, existingProfile.getId());
+            	response = new ResponseEntity<>(profileData, HttpStatus.OK);
             }
             
         }
