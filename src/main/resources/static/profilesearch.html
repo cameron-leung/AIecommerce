@@ -38,7 +38,7 @@
                         
                         <div class="w-auto h-auto">
                             <button class="w-auto h-auto text-white border-0 rounded fs-4 follow-button"
-                                 onclick="follow()">Follow</button>
+                                 ></button>
                         </div>
                     </div>
                 </div>
@@ -81,19 +81,40 @@
 			
 		});
 		function follow() {
-			
 			var currentUsername = Cookies.get('username');
 			var otherUsername = (JSON.parse(localStorage.getItem('selectedProfile'))).username;
 			const followData = {
 					currentUsername: currentUsername,
 					otherUsername: otherUsername,
 				};
-			console.log(followData);
+			
 				$.ajax({
 					type: 'POST',
 					url: '/follow',
 					contentType: 'application/json',
 					data: JSON.stringify(followData),
+					success: function(response) {
+						loadProfileSearch();
+					},
+					error: function(error) {
+						console.log('Follow request failed', error);
+						
+					}
+				});
+		}
+		function unfollow() {
+			var currentUsername = Cookies.get('username');
+			var otherUsername = (JSON.parse(localStorage.getItem('selectedProfile'))).username;
+			const unfollowData = {
+					currentUsername: currentUsername,
+					otherUsername: otherUsername,
+				};
+			
+				$.ajax({
+					type: 'POST',
+					url: '/unfollow',
+					contentType: 'application/json',
+					data: JSON.stringify(unfollowData),
 					success: function(response) {
 						loadProfileSearch();
 					},
@@ -119,24 +140,30 @@
 						$('#followersPlaceholder').text((searchProfile.followers && searchProfile.followers.length) || 0); 
 						$('#followingPlaceholder').text((searchProfile.following && searchProfile.following.length) || 0); 
 					}
+					const $followButton = $('.follow-button');
 					if(searchProfile.followers && searchProfile.followers.includes(currentProfile.id)) {
-						$('.follow-button').text('Unfollow');
-						$('.follow-button').css('background', '#535355');
+						$followButton.text('Unfollow');
+	                    $followButton.css('background', '#535355');
+	                    $followButton.off('click').on('click', unfollow);
 					} else {
-						$('.follow-button').text('Follow');
-						$('.follow-button').css('background', '#FF206E');
+						$followButton.text('Follow');
+	                    $followButton.css('background', '#FF206E');
+	                    $followButton.off('click').on('click', follow);
 					}
 					const container = $('.character-circ-container');
 
 					// Add the header to the container
-					container.append('<h1 class="mt-3 display-4">Recents</h1>');
-					// Fetch chattercard template
-					$.get('chattercircle.html', function(template) {
-						searchProfile.myChatters.forEach(character => {
-							const populatedCircle = populateCircle(template, character);
-							container.append(populatedCircle);
-						});
-					})
+					if(searchProfile.myChatters.length) {
+						container.append('<h1 class="mt-3 display-4">Recents</h1>');
+						// Fetch chattercard template
+						$.get('chattercircle.html', function(template) {
+							searchProfile.myChatters.forEach(character => {
+								const populatedCircle = populateCircle(template, character);
+								container.append(populatedCircle);
+							});
+						})
+					}
+					
 				}
 			})
 			

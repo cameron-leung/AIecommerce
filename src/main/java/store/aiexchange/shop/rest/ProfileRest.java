@@ -181,7 +181,22 @@ public class ProfileRest {
             profileRepository.save(otherProfile);
             return new ResponseEntity<>(response, HttpStatus.OK);
     }
+    @PostMapping("/unfollow")
+    public ResponseEntity<?> unfollow(@RequestBody Map<String, String> unfollowData) {
 
+            String currentUsername = unfollowData.get("currentUsername");
+            String otherUsername = unfollowData.get("otherUsername");
+
+            Profile currentProfile = profileRepository.findByUsername(currentUsername);
+            Profile otherProfile = profileRepository.findByUsername(otherUsername);
+            Map<String, Object> response = new HashMap<>();
+            
+            currentProfile.removeFromFollowing(otherProfile.getId());
+            otherProfile.removeFromFollowers(currentProfile.getId());
+            profileRepository.save(currentProfile);
+            profileRepository.save(otherProfile);
+            return new ResponseEntity<>(response, HttpStatus.OK);
+    }
     
     @GetMapping("/profiles")
     public List<ProfileData> getProfiles() {
