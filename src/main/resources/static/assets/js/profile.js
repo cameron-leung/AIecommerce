@@ -8,11 +8,13 @@ $(document).ready(function() {
 	}
 	loadProfile();
 	$('#followersPlaceholder').on('click', function() {
-        openFollowsPopup('followers');
+        openFollowsPopup("Followers");
+        event.stopPropagation();
     });
 
     $('#followingPlaceholder').on('click', function() {
-        openFollowsPopup('following');
+        openFollowsPopup("Following");
+        event.stopPropagation();
     });
 });
 function loadProfile() {
