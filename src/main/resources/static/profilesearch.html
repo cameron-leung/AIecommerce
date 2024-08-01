@@ -133,7 +133,7 @@
 						$('#followingPlaceholder').text((searchProfile.following && searchProfile.following.length) || 0); 
 					}
 					const $followButton = $('.follow-button');
-					console.log(currentProfileUsername);
+
 					if(currentProfileUsername) {
 						if(searchProfile.followers && searchProfile.followers.includes(currentProfile.id)) {
 							$followButton.text('Unfollow');
@@ -154,7 +154,9 @@
 
 					// Add the header to the container
 					if(searchProfile.myChatters.length) {
+						container.empty();
 						container.append('<h1 class="mt-3 display-4">Recents</h1>');
+						
 						// Fetch chattercard template
 						$.get('chattercircle.html', function(template) {
 							searchProfile.myChatters.forEach(character => {
