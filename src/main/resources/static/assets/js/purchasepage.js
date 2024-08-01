@@ -18,7 +18,7 @@ $(document).ready(function() {
 
 			const orderData = {
 					name: JSON.parse(Cookies.get('profile')).name,
-					username: Cookies.get('username'),
+					username: JSON.parse(Cookies.get('profile')).username,
 					cardholderName: cardholderName,
 					orderItems: fetchCart()
 				};

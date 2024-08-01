@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', function() {
 		});
 	}
 	$('#navbar-placeholder').load('navbar.html', function() {
-		fetchProfile(function() {
+		//fetchProfile(function() {
 			if ($('#profile-link').length) {
 				profileButton();
 			}
@@ -22,27 +22,29 @@ document.addEventListener('DOMContentLoaded', function() {
 				loadIndex();
 			}
 
-			if ($('#profile-page').length) {
-				loadProfile();
-			}
-		});
+			//if ($('#profile-page').length) {
+			//	loadProfile();
+			//}
+		//});
 	});
 });
 // Function to fetch the profile and store it in the global variable
 function fetchProfile(callback) {
 	const currentProfile = JSON.parse(Cookies.get('profile'));
-	console.log(currentProfile);
+	
 	if (currentProfile) {
 		$.ajax({
 			type: 'POST',
 			url: '/loggedIn',
 			data: { username: currentProfile.username },
 			success: function(response) {
+				//Cookies.set('profile', JSON.stringify(response), { path: '/' }); 
 				callback();
 			}
 		})
 
 	} else {
+		Cookies.set('profile', null, { path: '/' }); 
 		callback();
 	}
 
@@ -50,7 +52,9 @@ function fetchProfile(callback) {
 function profileButton() {
 	$(document).on('click', '#profile-link', function(e) {
 		e.preventDefault();
-		if (Cookies.get('username')) {
+		
+		if (JSON.parse(Cookies.get('profile'))) {
+			console.log("sending to profile page");
 			window.location.href = 'profilepage.html';
 		} else {
 			window.location.href = 'login.html';
@@ -59,7 +63,10 @@ function profileButton() {
 }
 
 function initializeCart() {
-	const username = JSON.parse(Cookies.get('profile')).username;
+	let username = null;
+	if(JSON.parse(Cookies.get('profile'))) {
+		username = JSON.parse(Cookies.get('profile')).username;
+	}
 	const cartData = Cookies.get('cart_' + username);
 	if (cartData) {
 		return JSON.parse(cartData);
@@ -69,11 +76,17 @@ function initializeCart() {
 }
 
 function saveCart(cart) {
-	const username = JSON.parse(Cookies.get('profile')).username;
+	let username = null;
+	if(JSON.parse(Cookies.get('profile'))) {
+		username = JSON.parse(Cookies.get('profile')).username;
+	}
 	Cookies.set('cart_' + username, JSON.stringify(cart), { path: '/' });
 }
 function fetchCart() {
-	const username = JSON.parse(Cookies.get('profile')).username;
+	let username = null;
+	if(JSON.parse(Cookies.get('profile'))) {
+		username = JSON.parse(Cookies.get('profile')).username;
+	}
 	const cartData = Cookies.get('cart_' + username);
 	let cartItems = [];
 	if (cartData) {

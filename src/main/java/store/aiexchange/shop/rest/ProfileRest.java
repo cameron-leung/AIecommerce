@@ -145,7 +145,8 @@ public class ProfileRest {
     		if (PROFILE_MAP.get(username) == null) {
     			PROFILE_MAP.put(username, existingProfile);
     		} 
-    		response = new ResponseEntity<>(username, HttpStatus.OK);
+    		ProfileData profileData = new ProfileData(existingProfile, existingProfile.getId());
+    		response = new ResponseEntity<>(profileData, HttpStatus.OK);
     	} else {
     		response = new ResponseEntity<>("Username not found" + username, HttpStatus.NOT_FOUND);
     	}

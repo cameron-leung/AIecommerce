@@ -116,15 +116,15 @@
 				});
 		}
 		function loadProfileSearch() {
-			//const currentUsername = JSON.parse(Cookies.get('profile')).username;
 			
+			const currentProfile = JSON.parse(Cookies.get('profile'));
+					const currentProfileUsername = JSON.parse(Cookies.get('profile')).username;
 			$.ajax({
 				type: 'GET',
 				url: `/findByUsername`,
 				data: { username: JSON.parse(localStorage.getItem('selectedProfile')).username },
 				success: function(searchProfile) {
-					const currentProfile = JSON.parse(Cookies.get('profile'));
-					const currentProfileUsername = JSON.parse(Cookies.get('profile')).username;
+					
 					
 					if (searchProfile) {
 						$('#profileName').text(searchProfile.name);
@@ -164,6 +164,15 @@
 						})
 					}
 					
+				}
+			})
+			$.ajax({
+				type: 'GET',
+				url: `/findByUsername`,
+				data: { username: currentProfileUsername },
+				success: function(response) {
+					console.log(resonse);
+					Cookies.set('profile', JSON.stringify(response), { path: '/' }); 
 				}
 			})
 			

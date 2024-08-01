@@ -4,16 +4,15 @@ function loadQuery() {
 	var query = urlParams.get('query');
 	if (query) {
 		Promise.all([
-            queryCharacterData(query),
-            queryProfileData(query)
-        ]).then(([charDataExists, profDataExists]) => {
-            if (!charDataExists && !profDataExists) {
-                $('#no-data-message').text('No data found');
-            }
-        }).catch((error) => {
-            console.error('Error fetching data:', error);
-            $('#no-data-message').text('No data found');
-        });
+			queryCharacterData(query),
+			queryProfileData(query)
+		]).then(([charDataExists, profDataExists]) => {
+			if (!charDataExists && !profDataExists) {
+				$('#no-data-message').text('No data found');
+			}
+		}).catch((error) => {
+			$('#no-data-message').text('No data found');
+		});
 	}
 	$('#searchInput').on('keypress', function(event) {
 		if (event.key === 'Enter') {
@@ -44,56 +43,59 @@ function saveProfileData(profile) {
 }
 function queryCharacterData(query) {
 	return new Promise((resolve, reject) => {
-        $.getJSON('/chatters', function(characterData) {
-            const filteredData = characterData.filter(character =>
-                character.name.toLowerCase().includes(query.toLowerCase()) ||
-                character.username.toLowerCase().includes(query.toLowerCase()) ||
-                character.blurb.toLowerCase().includes(query.toLowerCase()) ||
-                character.description.toLowerCase().includes(query.toLowerCase()) ||
-                character.category.some(c => c.toLowerCase().includes(query))
-            );
-            const container = $('.character-card-container');
-            container.empty();
-            $.get('chattercard.html', function(template) {
-                if (filteredData.length === 0) {
-                    resolve(false);
-                } else {
-                    filteredData.forEach(character => {
-                        const populatedCard = populateCard(template, character);
-                        container.append(populatedCard);
-                    });
-                    resolve(true);
-                }
-            }).fail(() => resolve(false));
-        }).fail(() => resolve(false));
-    });
+		$.getJSON('/chatters', function(characterData) {
+			const filteredData = characterData.filter(character =>
+				character.name.toLowerCase().includes(query.toLowerCase()) ||
+				character.username.toLowerCase().includes(query.toLowerCase()) ||
+				character.blurb.toLowerCase().includes(query.toLowerCase()) ||
+				character.description.toLowerCase().includes(query.toLowerCase()) ||
+				character.category.some(c => c.toLowerCase().includes(query))
+			);
+			const container = $('.character-card-container');
+			container.empty();
+			$.get('chattercard.html', function(template) {
+				if (filteredData.length === 0) {
+					resolve(false);
+				} else {
+					filteredData.forEach(character => {
+						const populatedCard = populateCard(template, character);
+						container.append(populatedCard);
+					});
+					resolve(true);
+				}
+			}).fail(() => resolve(false));
+		}).fail(() => resolve(false));
+	});
 }
 
 function queryProfileData(query) {
 	return new Promise((resolve, reject) => {
-        $.getJSON('/profiles', function(profileData) {
-            let filteredData = profileData.filter(profile =>
-                profile.name.toLowerCase().includes(query.toLowerCase()) ||
-                profile.username.toLowerCase().includes(query.toLowerCase())
-            );
-            const username = Cookies.get('username');
-            if (!(username == 'someuser' || !username || username == null)) {
+		$.getJSON('/profiles', function(profileData) {
+			let filteredData = profileData.filter(profile =>
+				profile.name.toLowerCase().includes(query.toLowerCase()) ||
+				profile.username.toLowerCase().includes(query.toLowerCase())
+			);
+			let username = null;
+			if (JSON.parse(Cookies.get('profile'))) {
+				username = JSON.parse(Cookies.get('profile')).username;
+			}
+			if (!(username == 'someuser' || !username || username == null)) {
 				filteredData = filteredData.filter(profile =>
 					profile.username !== username);
-			} 
-            const container = $('.profiles-container');
-            container.empty();
-            $.get('chattercircle.html', function() {
-                if (filteredData.length === 0) {
-                    resolve(false);
-                } else {
-                    filteredData.forEach(profile => {
-                        var profileHtml = profileCircleHtml(profile);
-                        container.append(profileHtml);
-                    });
-                    resolve(true);
-                }
-            }).fail(() => resolve(false));
-        }).fail(() => resolve(false));
-    });
+			}
+			const container = $('.profiles-container');
+			container.empty();
+			$.get('chattercircle.html', function() {
+				if (filteredData.length === 0) {
+					resolve(false);
+				} else {
+					filteredData.forEach(profile => {
+						var profileHtml = profileCircleHtml(profile);
+						container.append(profileHtml);
+					});
+					resolve(true);
+				}
+			}).fail(() => resolve(false));
+		}).fail(() => resolve(false));
+	});
 }
