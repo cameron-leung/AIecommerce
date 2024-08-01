@@ -2,10 +2,18 @@ $(document).ready(function() {
 	// Load chatter circles & cards
 	//$('.chattercircles-placeholder').load('chattercircles.html');
 	$('#editprofilepopup-placeholder').load('editprofilepopup.html');
+	$('#followspopup-placeholder').load('followspopup.html');
 	if (!window.cartItemsLoaded) {
 		window.cartItemsLoaded = true;
 	}
 	loadProfile();
+	$('#followersPlaceholder').on('click', function() {
+        openFollowsPopup('followers');
+    });
+
+    $('#followingPlaceholder').on('click', function() {
+        openFollowsPopup('following');
+    });
 });
 function loadProfile() {
 		const profile = JSON.parse(Cookies.get('profile'));
