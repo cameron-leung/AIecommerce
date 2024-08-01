@@ -171,7 +171,6 @@
 				url: `/findByUsername`,
 				data: { username: currentProfileUsername },
 				success: function(response) {
-					console.log(resonse);
 					Cookies.set('profile', JSON.stringify(response), { path: '/' }); 
 				}
 			})

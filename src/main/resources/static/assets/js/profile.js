@@ -8,9 +8,7 @@ $(document).ready(function() {
 	loadProfile();
 });
 function loadProfile() {
-
 		const profile = JSON.parse(Cookies.get('profile'));
-		console.log(profile);
 		$('#profileName').text(profile.name || 'Unknown Name');
 		$('#profileUsername').text('@' + (profile.username || 'UnknownUsername'));
 		$('#followersPlaceholder').text((profile.followers && profile.followers.length) || 0);
@@ -22,7 +20,6 @@ function loadProfile() {
 			populateChatterCircles(profile.myChatters);
 		}
 		fetchCartCards();
-	
 }
 
 
