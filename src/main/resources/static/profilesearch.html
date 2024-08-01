@@ -118,7 +118,18 @@
 		function loadProfileSearch() {
 			
 			const currentProfile = JSON.parse(Cookies.get('profile'));
-					const currentProfileUsername = JSON.parse(Cookies.get('profile')).username;
+			let currentProfileUsername = null;
+			if(JSON.parse(Cookies.get('profile'))) {
+				currentProfileUsername = JSON.parse(Cookies.get('profile')).username;
+				$.ajax({
+					type: 'GET',
+					url: `/findByUsername`,
+					data: { username: currentProfileUsername },
+					success: function(response) {
+						Cookies.set('profile', JSON.stringify(response), { path: '/' }); 
+					}
+				})
+			}
 			$.ajax({
 				type: 'GET',
 				url: `/findByUsername`,
@@ -168,14 +179,8 @@
 					
 				}
 			})
-			$.ajax({
-				type: 'GET',
-				url: `/findByUsername`,
-				data: { username: currentProfileUsername },
-				success: function(response) {
-					Cookies.set('profile', JSON.stringify(response), { path: '/' }); 
-				}
-			})
+
+			
 			
 		}
 	</script>
