@@ -53,7 +53,10 @@ function unfollow() {
 }
 function loadProfileSearch() {
 	const currentProfile = JSON.parse(Cookies.get('profile'));
-	let currentProfileUsername = null;
+	if(currentProfile.username == JSON.parse(localStorage.getItem('selectedProfile')).username) {
+		window.location.href = "profilepage.html";
+	} else {
+		let currentProfileUsername = null;
 	if (JSON.parse(Cookies.get('profile'))) {
 		currentProfileUsername = JSON.parse(Cookies.get('profile')).username;
 		$.ajax({
@@ -79,7 +82,7 @@ function loadProfileSearch() {
 			}
 			const $followButton = $('.follow-button');
 
-			if (currentProfileUsername) {
+			if (currentProfileUsername || currentProfileUsername == searchProfile.username) {
 				if (searchProfile.followers && searchProfile.followers.includes(currentProfile.id)) {
 					$followButton.text('Unfollow');
 					$followButton.css('background', '#535355');
@@ -113,4 +116,6 @@ function loadProfileSearch() {
 
 		}
 	})
+	}
+	
 }
