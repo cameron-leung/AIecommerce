@@ -12,15 +12,23 @@ function followProfileHtml(name) {
 		if (!followsPopupOpen) {
 			$('#followsPopupOverlay').removeClass('d-none').fadeIn();
 			$('#follows-header').text(followString);
+			
 			followsPopupOpen = true;
 			const profile = JSON.parse(Cookies.get('profile'));
 			const profilesContainer = $('#profiles-container');
 			profilesContainer.empty();
-			if(profile.followers.length) {
+			var follows = null;
+			if(followString == "Following") {
+				follows = profile.following;
+			} 
+			if(followString == "Followers") {
+				follows = profile.followers;
+			}
+			if(follows.length) {
             $.ajax({
                 type: 'GET',
                 url: '/findByIds',
-                data: { ids: profile.followers },
+                data: { ids: follows },
                 success: function(profiles) {
 					console.log(profiles);
                     if (profiles.length > 0) {
@@ -34,7 +42,6 @@ function followProfileHtml(name) {
                     }
                 },
                 error: function(error) {
-                    console.error('Error fetching profiles:', error);
                     $('#no-follows-message').show();
                     $('#no-follows-message').text('Error fetching profiles');
                 }
