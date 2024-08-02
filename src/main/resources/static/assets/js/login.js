@@ -24,7 +24,8 @@ function login() {
 			data: JSON.stringify(formData),
 			success: function(response) {
 				Cookies.set('profile', JSON.stringify(response), { path: '/' }); 
-				window.location.href = 'profilepage.html';
+				console.log("logged in: ", Cookies.get('profile'));
+				//window.location.href = 'profilepage.html';
 			},
 			error: function(error) {
 				$('#error-message').text('Invalid username or password');

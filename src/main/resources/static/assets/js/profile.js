@@ -41,7 +41,7 @@ function loadUpdateProfile() {
 
 		var nameInput = $('#nameInput').val().trim();
 		var usernameInput = $('#usernameInput').val().trim();
-		const username = JSON.parse(Cookies.get('profile')).username;
+		const username = (JSON.parse(Cookies.get('profile'))).username;
 
 		if (nameInput === '' && usernameInput === '') {
 			$('#error-message').text('Please fill out at least one field.');

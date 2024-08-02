@@ -19,14 +19,11 @@ $(document).ready(function() {
 
 });
 function loadIndex() {
-	const profileCookie = Cookies.get('profile');
-    if (profileCookie && profileCookie !== 'null') {
-            profile = JSON.parse(profileCookie);
-    }
 	$.getJSON('/chatters', function(characters) {
 		characterData.push(...characters);
 		populateIndexChatters();
-		if (profile) {
+		if (Cookies.get('profile')) {
+			profile = JSON.parse(Cookies.get('profile'));
 			// Populate the chatters using myChatters from the profile
 			if (Array.isArray(profile.myChatters) && profile.myChatters.length > 0) {
 				populateChatterCircles(profile.myChatters);

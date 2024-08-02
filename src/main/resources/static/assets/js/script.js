@@ -1,11 +1,9 @@
 const characterData = [];
-let profile = null;
 
 // Wrap your code in DOMContentLoaded event listener
 document.addEventListener('DOMContentLoaded', function() {
 	// Check if the backButton element exists before adding event listener
 	$('#cartpopup-placeholder').load('cartpopup.html');
-	;
 
 	const $backButton = $('#backButton');
 	if ($backButton.length) {
@@ -28,27 +26,7 @@ document.addEventListener('DOMContentLoaded', function() {
 		//});
 	});
 });
-// Function to fetch the profile and store it in the global variable
-function fetchProfile(callback) {
-	const currentProfile = JSON.parse(Cookies.get('profile'));
-	
-	if (currentProfile) {
-		$.ajax({
-			type: 'POST',
-			url: '/loggedIn',
-			data: { username: currentProfile.username },
-			success: function(response) {
-				//Cookies.set('profile', JSON.stringify(response), { path: '/' }); 
-				callback();
-			}
-		})
 
-	} else {
-		Cookies.set('profile', null, { path: '/' }); 
-		callback();
-	}
-
-}
 function saveProfileData(profile) {
 	localStorage.setItem('selectedProfile', JSON.stringify(profile));
 }
@@ -56,7 +34,7 @@ function profileButton() {
 	$(document).on('click', '#profile-link', function(e) {
 		e.preventDefault();
 		
-		if (JSON.parse(Cookies.get('profile'))) {
+		if (Cookies.get('profile')) {
 			console.log("sending to profile page");
 			window.location.href = 'profilepage.html';
 		} else {
@@ -67,7 +45,7 @@ function profileButton() {
 
 function initializeCart() {
 	let username = null;
-	if(JSON.parse(Cookies.get('profile'))) {
+	if(Cookies.get('profile')) {
 		username = JSON.parse(Cookies.get('profile')).username;
 	}
 	const cartData = Cookies.get('cart_' + username);
@@ -80,14 +58,14 @@ function initializeCart() {
 
 function saveCart(cart) {
 	let username = null;
-	if(JSON.parse(Cookies.get('profile'))) {
+	if(Cookies.get('profile')) {
 		username = JSON.parse(Cookies.get('profile')).username;
 	}
 	Cookies.set('cart_' + username, JSON.stringify(cart), { path: '/' });
 }
 function fetchCart() {
 	let username = null;
-	if(JSON.parse(Cookies.get('profile'))) {
+	if(Cookies.get('profile')) {
 		username = JSON.parse(Cookies.get('profile')).username;
 	}
 	const cartData = Cookies.get('cart_' + username);
