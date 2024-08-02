@@ -20,7 +20,6 @@ $(document).ready(function() {
 });
 function loadProfile() {
 	var profile = Cookies.get('profile');
-	console.log(profile);
 	if (profile && JSON.parse(profile)) {
 		profile = JSON.parse(profile);
 

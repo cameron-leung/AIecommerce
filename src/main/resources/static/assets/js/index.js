@@ -22,11 +22,12 @@ function loadIndex() {
 	$.getJSON('/chatters', function(characters) {
 		characterData.push(...characters);
 		populateIndexChatters();
-		if (Cookies.get('profile')) {
+		if (Cookies.get('profile') && JSON.parse(Cookies.get('profile'))) {
 			profile = JSON.parse(Cookies.get('profile'));
 			// Populate the chatters using myChatters from the profile
 			if (Array.isArray(profile.myChatters) && profile.myChatters.length > 0) {
 				populateChatterCircles(profile.myChatters);
+				populateFriendsCards(profile.following);
 			}
 		}
 	});
@@ -34,7 +35,6 @@ function loadIndex() {
 // Index page cards filtering
 function populateIndexChatters() {
 	const Bcards = $('.B-character-card-container');
-	const Friendscards = $('.Friends-character-card-container');
 	const Metacards = $('.Meta-character-card-container');
 
 	// Fetch character data from the backend
@@ -50,9 +50,16 @@ function populateIndexChatters() {
 			const populatedCard = populateCard(template, character);
 			Bcards.append(populatedCard);
 		});
+		
+	});
+}
+function populateFriendsCards(friends) {
+	const Friendscards = $('.Friends-character-card-container');
+	$('.friends-chatters-header').text('<h1 class="mt-3 display-4">Recents</h1>');
+	$.get('chattercard.html', function(template) {
 		characterData.forEach(character => {
 			const populatedCard = populateCard(template, character);
 			Friendscards.append(populatedCard);
 		});
-	});
+		})
 }
