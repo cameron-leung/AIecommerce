@@ -17,11 +17,28 @@ function followProfileHtml(name) {
 			const profilesContainer = $('#profiles-container');
 			profilesContainer.empty();
 			if(profile.followers.length) {
-				profile.followers.forEach(function(profileId) {
-					
-					var profileHtml = followProfileHtml(profile);
-						container.append(profileHtml);
-				})
+            $.ajax({
+                type: 'GET',
+                url: '/findByIds',
+                data: { ids: profile.followers },
+                success: function(profiles) {
+					console.log(profiles);
+                    if (profiles.length > 0) {
+                        profiles.forEach(function(profile) {
+                            var profileHtml = followProfileHtml(profile.username); // Assuming you have a function to create HTML for profiles
+                            profilesContainer.append(profileHtml);
+                        });
+                    } else {
+                        $('#no-follows-message').show();
+                        $('#no-follows-message').text('No followers');
+                    }
+                },
+                error: function(error) {
+                    console.error('Error fetching profiles:', error);
+                    $('#no-follows-message').show();
+                    $('#no-follows-message').text('Error fetching profiles');
+                }
+            });
 			} else {
 				$('#no-follows-message').show();
         		$('#no-follows-message').text('no followers');

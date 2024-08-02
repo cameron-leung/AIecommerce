@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -91,13 +92,16 @@ public class ProfileRest {
         return response;
     }
 
-    @GetMapping("/getLoggedIn") 
-    public List<String> getMap() {
-    	List<String> returnList = new ArrayList<>();
-    	for (Map.Entry<String, Profile> entry : PROFILE_MAP.entrySet()) {
-            returnList.add(entry.getKey());
-        }
-    	return returnList;
+    @GetMapping("/findByIds")
+    public List<ProfileData> getProfilesByIds(@RequestParam List<String> ids) {
+    	List<Profile> profiles = profileRepository.findAll();
+    	List<ProfileData> profileDatas = new ArrayList<ProfileData>();
+    	for(Profile profile : profiles) {
+    		if(ids.contains(profile.getId())) {
+    			profileDatas.add(new ProfileData(profile, profile.getId()));
+    		}
+    	}
+    	return profileDatas;
     }
     @GetMapping("/findByUsername")
     public ResponseEntity<ProfileData> findByUsername(@RequestParam(value = "username") String username) {
