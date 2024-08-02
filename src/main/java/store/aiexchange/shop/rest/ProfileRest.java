@@ -163,10 +163,11 @@ public class ProfileRest {
     
     
     public void addChatters(String username, List<Chatter> chatters) {
+    	System.out.print(username);
         Profile profile = PROFILE_MAP.get(username);
 
         for (Chatter chatter : chatters) {
-            profile.addToMyChatters(chatter);
+        	profile.addToMyChatters(chatter);
         }
         profileRepository.save(profile);
     }

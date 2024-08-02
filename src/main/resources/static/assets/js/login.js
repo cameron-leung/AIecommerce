@@ -1,3 +1,4 @@
+
 $(document).ready(function() {
 	// Load navbar and activate profile icon
 	$('#navbar-placeholder').load('navbar.html', function() {
@@ -73,4 +74,3 @@ function loadCreateAccount() {
 		});
 	});
 }
-

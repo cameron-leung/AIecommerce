@@ -31,7 +31,6 @@ public class OrderRest {
     	if(orderData.getUsername() != null) {
     		Order newOrder = new Order(orderData.getName(), orderData.getUsername(),
                     orderData.getCardholderName(), orderData.getOrderItems());
-
              // Call addChatters with the constructed requestBody map
              profileRest.addChatters(orderData.getUsername(), orderData.getOrderItems());
              returnOrder = orderRepository.save(newOrder);  
