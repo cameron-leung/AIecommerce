@@ -49,6 +49,9 @@ function fetchProfile(callback) {
 	}
 
 }
+function saveProfileData(profile) {
+	localStorage.setItem('selectedProfile', JSON.stringify(profile));
+}
 function profileButton() {
 	$(document).on('click', '#profile-link', function(e) {
 		e.preventDefault();

@@ -8,12 +8,12 @@ $(document).ready(function() {
 	}
 	loadProfile();
 	$('#followersPlaceholder').on('click', function() {
-        openFollowsPopup("Followers");
+        openFollowsPopup(JSON.parse(Cookies.get('profile')), "Followers");
         event.stopPropagation();
     });
 
     $('#followingPlaceholder').on('click', function() {
-        openFollowsPopup("Following");
+        openFollowsPopup(JSON.parse(Cookies.get('profile')), "Following");
         event.stopPropagation();
     });
 });

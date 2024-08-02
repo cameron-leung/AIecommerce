@@ -10,12 +10,11 @@ function followProfileHtml(profile) {
     `;
 }
 	// Open the cart popup
-	function openFollowsPopup(followString) {
+	function openFollowsPopup(profile, followString) {
 		if (!followsPopupOpen) {
 			$('#followsPopupOverlay').removeClass('d-none').fadeIn();
 			$('#follows-header').text(followString);
-			
-			const profile = JSON.parse(Cookies.get('profile'));
+
 			const profilesContainer = $('#profiles-container');
 			profilesContainer.empty();
 			$('#no-follows-message').hide();

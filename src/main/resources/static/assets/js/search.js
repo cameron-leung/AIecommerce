@@ -38,9 +38,7 @@ function profileCircleHtml(profile) {
 		</a>
    `;
 }
-function saveProfileData(profile) {
-	localStorage.setItem('selectedProfile', JSON.stringify(profile));
-}
+
 function queryCharacterData(query) {
 	return new Promise((resolve, reject) => {
 		$.getJSON('/chatters', function(characterData) {
