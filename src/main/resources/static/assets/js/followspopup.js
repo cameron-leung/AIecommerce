@@ -13,7 +13,6 @@ function followProfileHtml(name) {
 			$('#followsPopupOverlay').removeClass('d-none').fadeIn();
 			$('#follows-header').text(followString);
 			
-			followsPopupOpen = true;
 			const profile = JSON.parse(Cookies.get('profile'));
 			const profilesContainer = $('#profiles-container');
 			profilesContainer.empty();
@@ -50,7 +49,8 @@ function followProfileHtml(name) {
 				$('#no-follows-message').show();
         		$('#no-follows-message').text('no followers');
 			}
-}
+			followsPopupOpen = true;
+		}
 	}
 	// Close the cart popup
 	function closeFollowsPopup() {
@@ -59,8 +59,8 @@ function followProfileHtml(name) {
 	}
 
 	// 
-	//$(document).on('click', function (event) {
-	//	if (followsPopupOpen && !$(event.target).closest('#followsPopupContent').length) {
-	//		closeFollowsPopup();
-	//	}
-	////});
+	$(document).on('click', function (event) {
+		if (followsPopupOpen && !$(event.target).closest('#followsPopupContent').length) {
+			closeFollowsPopup();
+		}
+	});
