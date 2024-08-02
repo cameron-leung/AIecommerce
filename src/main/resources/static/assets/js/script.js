@@ -14,23 +14,22 @@ document.addEventListener('DOMContentLoaded', function() {
 	$('#navbar-placeholder').load('navbar.html', function() {
 		var profile = null;
 		if (Cookies.get('profile')) {
-    try {
-        profile = JSON.parse(Cookies.get('profile'));
-    } catch (e) {
-        console.error("Error parsing profile cookie:", e);
-    }
-} else {
-    console.log("profile doesn't exist", Cookies.get('profile'));
-}
+			try {
+				profile = JSON.parse(Cookies.get('profile'));
+			} catch (e) {
+				console.error("Error parsing profile cookie:", e);
+			}
+		} else {
+			console.log("profile doesn't exist", Cookies.get('profile'));
+		}
 
 		if (profile) {
-			console.log(profile);
 			$.ajax({
 				type: 'POST',
 				url: '/loggedIn',
 				data: { username: profile.username },
 				success: function(response) {
-					Cookies.set('profile', JSON.stringify(response), { path: '/' }); 
+					Cookies.set('profile', JSON.stringify(response), { path: '/' });
 					if ($('#profile-link').length) {
 						profileButton();
 					}
@@ -43,7 +42,7 @@ document.addEventListener('DOMContentLoaded', function() {
 				},
 			});
 		} else {
-			Cookies.set('profile', null, { path: '/' }); 
+			Cookies.set('profile', null, { path: '/' });
 			// This code will execute if the profile cookie does not exist
 			if ($('#profile-link').length) {
 				profileButton();
@@ -67,7 +66,6 @@ function profileButton() {
 		e.preventDefault();
 
 		if (Cookies.get('profile')) {
-			console.log("sending to profile page");
 			window.location.href = 'profilepage.html';
 		} else {
 			window.location.href = 'login.html';
