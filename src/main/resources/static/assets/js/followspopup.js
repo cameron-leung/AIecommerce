@@ -1,10 +1,12 @@
 var followsPopupOpen = false;
-function followProfileHtml(name) {
+function followProfileHtml(profile) {
 	return `
+	<a href="profilesearch.html" onclick='saveProfileData(${JSON.stringify(profile)})'>
         <div class="d-flex flex-row align-items-center pt-2">
         	<i class="fa-solid fa-circle-user responsive-icon" style="color: #535355; font-size: 3em; padding-right: 0.5rem;"></i>
-        	<h3>${name}</h3>
+        	<h3>${profile.name}</h3>
         </div>
+    </a>
     `;
 }
 	// Open the cart popup
@@ -30,10 +32,9 @@ function followProfileHtml(name) {
                 url: '/findByIds',
                 data: { ids: follows },
                 success: function(profiles) {
-					console.log(profiles);
                     if (profiles.length > 0) {
                         profiles.forEach(function(profile) {
-                            var profileHtml = followProfileHtml(profile.username); // Assuming you have a function to create HTML for profiles
+                            var profileHtml = followProfileHtml(profile); // Assuming you have a function to create HTML for profiles
                             profilesContainer.append(profileHtml);
                         });
                     } else {
