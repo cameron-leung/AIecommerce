@@ -81,7 +81,6 @@ function initializeCart() {
             let profile = JSON.parse(profileCookie);
             username = profile.username;
         } catch (error) {
-            //console.error("Error parsing profile cookie:", error);
         }
 	}
 	const cartData = Cookies.get('cart_' + username);
@@ -100,7 +99,7 @@ function saveCart(cart) {
             let profile = JSON.parse(profileCookie);
             username = profile.username;
         } catch (error) {
-            //console.error("Error parsing profile cookie:", error);
+            
         }
 	}
 	Cookies.set('cart_' + username, JSON.stringify(cart), { path: '/' });
@@ -113,7 +112,7 @@ function fetchCart() {
             let profile = JSON.parse(profileCookie);
             username = profile.username;
         } catch (error) {
-            //console.error("Error parsing profile cookie:", error);
+            
         }
 	}
 	const cartData = Cookies.get('cart_' + username);
