@@ -16,6 +16,7 @@ function followProfileHtml(name) {
 			const profile = JSON.parse(Cookies.get('profile'));
 			const profilesContainer = $('#profiles-container');
 			profilesContainer.empty();
+			$('#no-follows-message').hide();
 			var follows = null;
 			if(followString == "Following") {
 				follows = profile.following;
