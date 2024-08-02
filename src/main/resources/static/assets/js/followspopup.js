@@ -1,9 +1,9 @@
 var followsPopupOpen = false;
 function followProfileHtml(name) {
 	return `
-        <div class="d-flex flex-row">
-        	<i class="fa-solid fa-circle-user responsive-icon w-25 pr-1 pt-1" style="color: #535355;"></i>
-        	<h3 ">${name}</h3>
+        <div class="d-flex flex-row align-items-center justify-content-center pt-2 ">
+        	<i class="fa-solid fa-circle-user responsive-icon" style="color: #535355; font-size: 3em; padding-right: 0.5rem;"></i>
+        	<h3>${name}</h3>
         </div>
     `;
 }
