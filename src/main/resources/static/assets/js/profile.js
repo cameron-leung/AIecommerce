@@ -7,7 +7,7 @@ $(document).ready(function() {
 	if (!window.cartItemsLoaded) {
 		window.cartItemsLoaded = true;
 	}
-	loadProfile();
+	//loadProfile();
 	$('#followersPlaceholder').on('click', function() {
         openFollowsPopup(JSON.parse(Cookies.get('profile')), "Followers");
         event.stopPropagation();

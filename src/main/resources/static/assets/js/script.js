@@ -12,18 +12,50 @@ document.addEventListener('DOMContentLoaded', function() {
 		});
 	}
 	$('#navbar-placeholder').load('navbar.html', function() {
-		//fetchProfile(function() {
+		var profile = null;
+		if (Cookies.get('profile')) {
+    try {
+        profile = JSON.parse(Cookies.get('profile'));
+    } catch (e) {
+        console.error("Error parsing profile cookie:", e);
+    }
+} else {
+    console.log("profile doesn't exist", Cookies.get('profile'));
+}
+
+		if (profile) {
+			console.log(profile);
+			$.ajax({
+				type: 'POST',
+				url: '/loggedIn',
+				data: { username: profile.username },
+				success: function(response) {
+					Cookies.set('profile', JSON.stringify(response), { path: '/' }); 
+					if ($('#profile-link').length) {
+						profileButton();
+					}
+					if ($('#index-page').length) {
+						loadIndex();
+					}
+					if ($('#profile-page').length) {
+						loadProfile();
+					}
+				},
+			});
+		} else {
+			Cookies.set('profile', null, { path: '/' }); 
+			// This code will execute if the profile cookie does not exist
 			if ($('#profile-link').length) {
 				profileButton();
 			}
 			if ($('#index-page').length) {
 				loadIndex();
 			}
+			if ($('#profile-page').length) {
+				loadProfile();
+			}
+		}
 
-			//if ($('#profile-page').length) {
-			//	loadProfile();
-			//}
-		//});
 	});
 });
 
@@ -33,7 +65,7 @@ function saveProfileData(profile) {
 function profileButton() {
 	$(document).on('click', '#profile-link', function(e) {
 		e.preventDefault();
-		
+
 		if (Cookies.get('profile')) {
 			console.log("sending to profile page");
 			window.location.href = 'profilepage.html';
@@ -45,7 +77,7 @@ function profileButton() {
 
 function initializeCart() {
 	let username = null;
-	if(Cookies.get('profile')) {
+	if (Cookies.get('profile')) {
 		username = JSON.parse(Cookies.get('profile')).username;
 	}
 	const cartData = Cookies.get('cart_' + username);
@@ -58,14 +90,14 @@ function initializeCart() {
 
 function saveCart(cart) {
 	let username = null;
-	if(Cookies.get('profile')) {
+	if (Cookies.get('profile')) {
 		username = JSON.parse(Cookies.get('profile')).username;
 	}
 	Cookies.set('cart_' + username, JSON.stringify(cart), { path: '/' });
 }
 function fetchCart() {
 	let username = null;
-	if(Cookies.get('profile')) {
+	if (Cookies.get('profile')) {
 		username = JSON.parse(Cookies.get('profile')).username;
 	}
 	const cartData = Cookies.get('cart_' + username);
@@ -98,7 +130,6 @@ function populateCircle(template, character) {
 
 function populateChatterCircles(myChatters) {
 	const container = $('.character-circ-container');
-
 	// Add the header to the container
 	container.append('<h1 class="mt-3 display-4">Recents</h1>');
 	// Fetch chattercard template

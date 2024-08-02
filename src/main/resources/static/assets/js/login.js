@@ -23,10 +23,9 @@ function login() {
 			contentType: 'application/json',
 			data: JSON.stringify(formData),
 			success: function(response) {
-				console.log("Server Response:", response);
+				console.log(response);
 				Cookies.set('profile', JSON.stringify(response), { path: '/' }); 
-				console.log("logged in: ", Cookies.get('profile'));
-				window.location.href = 'profilepage.html';
+				//window.location.href = 'profilepage.html';
 			},
 			error: function(error) {
 				$('#error-message').text('Invalid username or password');

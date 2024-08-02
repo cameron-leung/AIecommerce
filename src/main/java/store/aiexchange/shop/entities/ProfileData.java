@@ -123,7 +123,9 @@ public class ProfileData{
         }
     }
     public void addToMyChatters(Chatter chatter) {
-        this.myChatters.add(chatter);
+    	if(!myChatters.contains(chatter)) {
+    		this.myChatters.add(chatter);
+    	}
     }
 
     public void removeFromMyChatters(Chatter chatter) {

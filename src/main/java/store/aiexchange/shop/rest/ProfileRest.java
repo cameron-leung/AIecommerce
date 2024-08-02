@@ -138,6 +138,7 @@ public class ProfileRest {
             }
             
         }
+        System.out.print(PROFILE_MAP);
         return response;
     }
     
@@ -163,9 +164,8 @@ public class ProfileRest {
     
     
     public void addChatters(String username, List<Chatter> chatters) {
-    	System.out.print(username);
         Profile profile = PROFILE_MAP.get(username);
-
+        
         for (Chatter chatter : chatters) {
         	profile.addToMyChatters(chatter);
         }

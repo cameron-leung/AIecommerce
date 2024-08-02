@@ -15,7 +15,6 @@ $(document).ready(function() {
             $('#purchase-error-message').text('Please fill out all required fields.');
         } else {
 		const cardholderName = $('#cardholder-name').val().trim();
-
 			const orderData = {
 					name: JSON.parse(Cookies.get('profile')).name,
 					username: JSON.parse(Cookies.get('profile')).username,
