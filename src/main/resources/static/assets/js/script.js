@@ -75,8 +75,14 @@ function profileButton() {
 
 function initializeCart() {
 	let username = null;
-	if (Cookies.get('profile')) {
-		username = JSON.parse(Cookies.get('profile')).username;
+	let profile = Cookies.get('profile');
+	if (profile) {
+		try {
+            let profile = JSON.parse(profileCookie);
+            username = profile.username;
+        } catch (error) {
+            //console.error("Error parsing profile cookie:", error);
+        }
 	}
 	const cartData = Cookies.get('cart_' + username);
 	if (cartData) {
@@ -88,15 +94,27 @@ function initializeCart() {
 
 function saveCart(cart) {
 	let username = null;
-	if (Cookies.get('profile')) {
-		username = JSON.parse(Cookies.get('profile')).username;
+	let profile = Cookies.get('profile');
+	if (profile) {
+		try {
+            let profile = JSON.parse(profileCookie);
+            username = profile.username;
+        } catch (error) {
+            //console.error("Error parsing profile cookie:", error);
+        }
 	}
 	Cookies.set('cart_' + username, JSON.stringify(cart), { path: '/' });
 }
 function fetchCart() {
 	let username = null;
-	if (Cookies.get('profile')) {
-		username = JSON.parse(Cookies.get('profile')).username;
+	let profile = Cookies.get('profile');
+	if (profile) {
+		try {
+            let profile = JSON.parse(profileCookie);
+            username = profile.username;
+        } catch (error) {
+            //console.error("Error parsing profile cookie:", error);
+        }
 	}
 	const cartData = Cookies.get('cart_' + username);
 	let cartItems = [];

@@ -34,6 +34,8 @@ function loadProfile() {
 				populateChatterCircles(profile.myChatters);
 			}
 			fetchCartCards();
+	} else {
+		window.location.href = 'login.html';
 	}
 }
 
