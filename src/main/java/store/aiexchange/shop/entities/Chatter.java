@@ -87,12 +87,12 @@ public class Chatter {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Chatter chatter = (Chatter) o;
-        return username.equals(chatter.username);
+        return name.equals(chatter.name);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(username);
+        return Objects.hash(name);
     }
     
     @Override
