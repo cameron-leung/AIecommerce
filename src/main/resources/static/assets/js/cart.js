@@ -102,7 +102,14 @@ function fetchCartPopup() {
 function updateCheckoutButton() {
 		let cartItems = fetchCart();
 		// Check if there are items in the cart
-		const profile = Cookies.get('profile');
+		let profile = Cookies.get('profile');
+		if (profile) {
+			try {
+				profile = JSON.parse(Cookies.get('profile'));
+			} catch (e) {
+				
+			}
+		} 
 		if (cartItems.length > 0 && profile) {
 			// Cart has items: Make button pink and enable click to go to purchase page
 			$('#checkoutButton')

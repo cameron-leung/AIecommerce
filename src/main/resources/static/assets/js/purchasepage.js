@@ -28,7 +28,6 @@ $(document).ready(function() {
 				contentType: 'application/json',
 				data: JSON.stringify(orderData),
 				success: function(response) {
-					console.log(orderData.username);
 					Cookies.remove('cart_' + orderData.username);
 					window.location.href = 'profilepage.html';
 				},

@@ -26,14 +26,19 @@ public class OrderRest {
 
     @PostMapping("/addOrder")
     public Order addOrder(@RequestBody Order orderData) {
+    	System.out.println("Received order data: " + orderData);
 
     	Order returnOrder = null;
     	if(orderData.getUsername() != null) {
+    		System.out.println("Processing order for username: " + orderData.getUsername());
     		Order newOrder = new Order(orderData.getName(), orderData.getUsername(),
                     orderData.getCardholderName(), orderData.getOrderItems());
              // Call addChatters with the constructed requestBody map
              profileRest.addChatters(orderData.getUsername(), orderData.getOrderItems());
              returnOrder = orderRepository.save(newOrder);  
+             System.out.println("Order saved: " + returnOrder);
+    	} else {
+    		System.out.println("Invalid order data: missing username");
     	}
     	return returnOrder;
     }

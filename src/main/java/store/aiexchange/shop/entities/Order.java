@@ -45,6 +45,6 @@ public class Order {
     }
     @Override
     public String toString() {
-    	return cardholderName + " " + orderItems;
+    	return this.username + " " + orderItems;
     }
 }

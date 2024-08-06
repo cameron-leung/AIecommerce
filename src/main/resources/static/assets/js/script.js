@@ -17,11 +17,9 @@ document.addEventListener('DOMContentLoaded', function() {
 			try {
 				profile = JSON.parse(Cookies.get('profile'));
 			} catch (e) {
-				console.error("Error parsing profile cookie:", e);
+				
 			}
-		} else {
-			console.log("profile doesn't exist", Cookies.get('profile'));
-		}
+		} 
 
 		if (profile) {
 			$.ajax({
