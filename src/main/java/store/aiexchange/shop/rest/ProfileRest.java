@@ -165,13 +165,16 @@ public class ProfileRest {
     
     public void addChatters(String username, List<Chatter> chatters) {
         Profile profile = PROFILE_MAP.get(username);
+        System.out.println("adding chatters to: " + username);
         if (profile == null) {
             return;
         }
         for (Chatter chatter : chatters) {
+        	System.out.println("adding: " + chatter);
         	profile.addToMyChatters(chatter);
         }
         profileRepository.save(profile);
+        System.out.println("profile: " + profile.toString());
     }
     
     @PostMapping("/follow")
