@@ -78,11 +78,12 @@ function initializeCart() {
 	let profile = Cookies.get('profile');
 	if (profile) {
 		try {
-            let profile = JSON.parse(profileCookie);
+            profile = JSON.parse(profile);
             username = profile.username;
         } catch (error) {
         }
 	}
+
 	const cartData = Cookies.get('cart_' + username);
 	if (cartData) {
 		return JSON.parse(cartData);
@@ -96,7 +97,7 @@ function saveCart(cart) {
 	let profile = Cookies.get('profile');
 	if (profile) {
 		try {
-            let profile = JSON.parse(profileCookie);
+            profile = JSON.parse(profile);
             username = profile.username;
         } catch (error) {
             
@@ -109,7 +110,7 @@ function fetchCart() {
 	let profile = Cookies.get('profile');
 	if (profile) {
 		try {
-            let profile = JSON.parse(profileCookie);
+            profile = JSON.parse(profile);
             username = profile.username;
         } catch (error) {
             

@@ -66,7 +66,7 @@ function loadUpdateProfile() {
 			contentType: 'application/json',
 			data: JSON.stringify(formData),
 			success: function(response) {
-				Cookies.set('profile', JSON.stringify(profileData), { path: '/' });
+				Cookies.set('profile', JSON.stringify(response), { path: '/' });
 				window.location.href = 'profilepage.html';
 			},
 			error: function(error) {
